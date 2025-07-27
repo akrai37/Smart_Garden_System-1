@@ -28,7 +28,8 @@ import javafx.util.Duration;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
+        System.out.println("Loading FXML from: " + HelloApplication.class.getResource("/com/example/ooad_project/hello-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/com/example/ooad_project/hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1200, 800);
         scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
         stage.setTitle("DIA Organics - Smart Garden");
@@ -53,7 +54,7 @@ public class HelloApplication extends Application {
     }
 
 
-//    This is for testing the API
+    //    This is for testing the API
 //    I assume Prof is going to do something similar
     private void runAPIScheduledTasks() {
         SmartGardenAPI api = new SmartGardenAPI();
@@ -156,9 +157,5 @@ public class HelloApplication extends Application {
         }
     }
 }
-
-
-
-
 
 

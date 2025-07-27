@@ -145,7 +145,6 @@ public class GardenUIController {
         gardenGrid.printGrid();
     }
 
-
 //    @FXML
 //    private TextArea logTextArea;
 
@@ -1613,7 +1612,7 @@ public class GardenUIController {
 
     private void setupTreePartHoverEffect(javafx.scene.shape.Shape shape) {
         shape.setOnMouseEntered(e -> {
-            shape.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 0);");
+            shape.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 6, 0, 0, 0);");
         });
 
         shape.setOnMouseExited(e -> {
@@ -1930,7 +1929,7 @@ public class GardenUIController {
 
         // Create a label for the text
         Label label = new Label(name);
-        label.setStyle("-fx-font-size: 28px;");
+        label.setStyle("-fx-font-size: 2800px;");
 
         // Add the image and text to the HBox
         hBox.getChildren().addAll(imageView, label);
@@ -2092,10 +2091,10 @@ public class GardenUIController {
         javafx.scene.shape.Line rightUpBranch = new javafx.scene.shape.Line();
         rightUpBranch.setStartX(treePlaceholder.getLayoutX() + 5);
         rightUpBranch.setStartY(treePlaceholder.getLayoutY() + 30);
-        rightUpBranch.setEndX(treeMenuButton.getLayoutX() + 30);
+        rightUpBranch.setEndX(treeMenuButton.getLayoutX() + 60);
         rightUpBranch.setEndY(treeMenuButton.getLayoutY() + 30);
         rightUpBranch.setStrokeWidth(8);
-        rightUpBranch.setStroke(javafx.scene.paint.Color.web("#8B4513"));
+        rightUpBranch.setStroke(javafx.scene.paint.Color.web("blue"));
 
         // Create branch to the left for flower button
         javafx.scene.shape.Line leftBranch = new javafx.scene.shape.Line();
@@ -2104,7 +2103,7 @@ public class GardenUIController {
         leftBranch.setEndX(flowerMenuButton.getLayoutX() + 30);
         leftBranch.setEndY(flowerMenuButton.getLayoutY() + 30);
         leftBranch.setStrokeWidth(8);
-        leftBranch.setStroke(javafx.scene.paint.Color.web("#8B4513"));
+        leftBranch.setStroke(javafx.scene.paint.Color.web("green"));
 
         // Create branch to the right-down for vegetable button
         javafx.scene.shape.Line rightDownBranch = new javafx.scene.shape.Line();
@@ -2145,12 +2144,12 @@ public class GardenUIController {
         vegetableMenuButton.setPopupSide(Side.BOTTOM);
 
         // Apply styling with hidden arrows to make buttons perfectly circular
-        String baseStyle = "-fx-background-radius: 30px; -fx-text-fill: white; -fx-font-weight: bold; " +
-                "-fx-mark-color: transparent; -fx-padding: 5px;";
+        String baseStyle = "-fx-background-radius: 0px; -fx-text-fill: black; -fx-font-weight: bold; " +
+                "-fx-mark-color: transparent; -fx-padding: 500px;";
 
-        treeMenuButton.setStyle(baseStyle + "-fx-background-color: #2E8B57;");
-        flowerMenuButton.setStyle(baseStyle + "-fx-background-color: #FF69B4;");
-        flowerMenuButton.setStyle("-fx-padding: 15px; -fx-background-radius: 50%;");
+        treeMenuButton.setStyle(baseStyle + "-fx-background-color: black;");
+        flowerMenuButton.setStyle(baseStyle + "-fx-background-color: black");
+        flowerMenuButton.setStyle("-fx-padding: 665px; -fx-background-radius: 0%;");
 
         vegetableMenuButton.setStyle(baseStyle + "-fx-background-color: #FF8C00;");
 
@@ -2736,7 +2735,7 @@ public class GardenUIController {
 
     // Update the hover animation to be smoother for the cartoon style
     private void addHoverAnimation(MenuButton button) {
-        ScaleTransition growTransition = new ScaleTransition(Duration.millis(200), button);
+        ScaleTransition growTransition = new ScaleTransition(Duration.millis(400), button);
         growTransition.setToX(1.1);
         growTransition.setToY(1.1);
 
@@ -2746,7 +2745,7 @@ public class GardenUIController {
 
         // Add a slight bounce effect
         button.setOnMouseEntered(e -> {
-            button.setStyle(button.getStyle() + "-fx-effect: dropshadow(gaussian, rgba(255,255,255,0.8), 15, 0.7, -5, -5);");
+            button.setStyle(button.getStyle() + "-fx-effect: dropshadow(gaussian, rgba(255,255,255,0.4), 15, 0.7, -5, -5);");
             growTransition.playFromStart();
         });
 
@@ -2808,8 +2807,8 @@ public class GardenUIController {
             if (newVal) {
                 button.getContextMenu().setStyle(
                         "-fx-background-color: rgba(255, 255, 255, 0.95); " +
-                                "-fx-background-radius: 15px; " +
-                                "-fx-padding: 8px; " +
+                                "-fx-background-radius: 70px; " +
+                                "-fx-padding: px; " +
                                 "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 3);"
                 );
             }
@@ -2901,9 +2900,9 @@ public class GardenUIController {
     private void createSimpleGradientGrid(GridPane gridPane, int numRows, int numCols) {
         // Enhanced color palette for better visibility against the background
         javafx.scene.paint.Color[] colors = {
-                javafx.scene.paint.Color.web("#e8f5e9", 0.75),  // Very light green with transparency
-                javafx.scene.paint.Color.web("#c8e6c9", 0.75),  // Light green with transparency
-                javafx.scene.paint.Color.web("#a5d6a7", 0.75),  // Medium light green with transparency
+                javafx.scene.paint.Color.web("#e8f5e9", 0.65),  // Very light green with transparency
+                javafx.scene.paint.Color.web("#c8e6c9", 0.55),  // Light green with transparency
+                javafx.scene.paint.Color.web("#a5d6a7", 0.45),  // Medium light green with transparency
                 javafx.scene.paint.Color.web("#81c784", 0.75)   // Medium green with transparency
         };
 
@@ -2912,7 +2911,7 @@ public class GardenUIController {
                 int colorIndex = (row + col) % colors.length;
 
                 StackPane cell = new StackPane();
-                cell.setPrefSize(80, 80);
+                cell.setPrefSize(40, 20);
 
                 // Create a more vibrant background color with rounded corners
                 javafx.scene.layout.BackgroundFill backgroundFill = new javafx.scene.layout.BackgroundFill(
@@ -3207,8 +3206,8 @@ public class GardenUIController {
                         logger.info("Found parasite label, applying force animation");
 
                         // Get anchor dimensions
-                        double width = anchorPane.getWidth() > 0 ? anchorPane.getWidth() : 1000;
-                        double height = anchorPane.getHeight() > 0 ? anchorPane.getHeight() : 600;
+                        double width = anchorPane.getWidth() > 0 ? anchorPane.getWidth() : 500;
+                        double height = anchorPane.getHeight() > 0 ? anchorPane.getHeight() : 1000;
 
                         // Apply animation directly
                         animateParasiteStatusLabel(label, width, height, 80);
@@ -5293,7 +5292,7 @@ public class GardenUIController {
             if (anchorHeight <= 0) anchorHeight = 700;
 
             // Calculate position - SHIFT LEFT BY 80px AND UP BY 30px
-            double xPos = anchorWidth - 160 - 240; // From right edge, shifted 80px left
+            double xPos = anchorWidth - 160 - 280; // From right edge, shifted 80px left
             double yPos = anchorHeight -165 - 80; // From bottom, shifted 30px up
 
             // Position the pesticide box
@@ -6140,8 +6139,8 @@ public class GardenUIController {
     }
 
     /**
-     * Creates a single particle for the application trail.
-     * Extracted to separate method to avoid lambda issues.
+     * Createing a single particle for the application trail.
+     * Extracted to separate method to avoid some lambda related issues.
      */
     private void createTrailParticle(
             final Group trailGroup,
