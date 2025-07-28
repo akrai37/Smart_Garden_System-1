@@ -3,26 +3,26 @@
 package com.example.ooad_project.Events;
 
 public class PesticideApplicationEvent {
-    private final int row;
-    private final int col;
-    private final String pesticideType;
+    private final int targetRowPosition;
+    private final int targetColumnPosition;
+    private final String chemicalSprayType;
 
     public PesticideApplicationEvent(int row, int col, String pesticideType) {
-        this.row = row;
-        this.col = col;
-        this.pesticideType = pesticideType;
+        this.targetRowPosition = row;
+        this.targetColumnPosition = col;
+        this.chemicalSprayType = pesticideType;
     }
 
     public int getRow() {
-        return row;
+        return targetRowPosition;
     }
 
     public int getCol() {
-        return col;
+        return targetColumnPosition;
     }
 
     public String getPesticideType() {
-        return pesticideType;
+        return chemicalSprayType;
     }
 }
 

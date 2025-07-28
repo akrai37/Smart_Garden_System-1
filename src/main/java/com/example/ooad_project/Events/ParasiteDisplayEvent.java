@@ -4,27 +4,27 @@ import com.example.ooad_project.Parasite.Parasite;
 
 public class ParasiteDisplayEvent {
 
-    private final Parasite parasite;
-    private final int row;
-    private final int column;
+    private final Parasite detectedParasite;
+    private final int gardenRowLocation;
+    private final int gardenColumnLocation;
 
 
     public ParasiteDisplayEvent(Parasite parasite, int row, int column) {
-        this.parasite = parasite;
-        this.row = row;
-        this.column = column;
+        this.detectedParasite = parasite;
+        this.gardenRowLocation = row;
+        this.gardenColumnLocation = column;
     }
 
     public Parasite getParasite() {
-        return parasite;
+        return detectedParasite;
     }
 
     public int getRow() {
-        return row;
+        return gardenRowLocation;
     }
 
     public int getColumn() {
-        return column;
+        return gardenColumnLocation;
     }
 
 }

@@ -2,26 +2,26 @@ package com.example.ooad_project.Events;
 
 public class ParasiteDamageEvent {
 
-    int row;
-    int col;
-    int damage;
+    int plantRowPosition;
+    int plantColumnPosition;
+    int parasiteDamageAmount;
 
     public ParasiteDamageEvent(int row, int col, int damage) {
-        this.row = row;
-        this.col = col;
-        this.damage = damage;
+        this.plantRowPosition = row;
+        this.plantColumnPosition = col;
+        this.parasiteDamageAmount = damage;
     }
 
     public int getRow() {
-        return row;
+        return plantRowPosition;
     }
 
     public int getCol() {
-        return col;
+        return plantColumnPosition;
     }
 
     public int getDamage() {
-        return damage;
+        return parasiteDamageAmount;
     }
 
 

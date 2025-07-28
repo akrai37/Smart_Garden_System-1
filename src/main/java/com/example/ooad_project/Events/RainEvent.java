@@ -1,13 +1,13 @@
 package com.example.ooad_project.Events;
 
 public class RainEvent {
-    private final int amount;
+    private final int precipitationAmount;
 
     public RainEvent(int amount) {
-        this.amount = amount;
+        this.precipitationAmount = amount;
     }
 
     public int getAmount() {
-        return amount;
+        return precipitationAmount;
     }
 }

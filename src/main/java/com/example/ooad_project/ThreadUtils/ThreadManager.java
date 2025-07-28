@@ -7,7 +7,7 @@ public class ThreadManager {
 
     public static void run(Runnable runnable) {
         Thread thread = new Thread(runnable);
-        thread.setDaemon(true);  // Ensure threads don't prevent the application from exiting
+        thread.setDaemon(true);  // Ensure that threads do not prevent application from exiting
         thread.start();
     }
 }

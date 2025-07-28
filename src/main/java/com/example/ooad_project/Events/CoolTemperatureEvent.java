@@ -2,28 +2,28 @@ package com.example.ooad_project.Events;
 
 public class CoolTemperatureEvent {
 
-    int tempDiff;
-    int row;
-    int col;
+    int temperatureDelta;
+    int plantRowPosition;
+    int plantColumnPosition;
 
 
-    public CoolTemperatureEvent(int row, int col, int tempDiff) {
+    public CoolTemperatureEvent(int plantRowPosition, int plantColumnPosition, int temperatureDelta) {
 
-        this.row = row;
-        this.col = col;
-        this.tempDiff = tempDiff;
+        this.plantRowPosition = plantRowPosition;
+        this.plantColumnPosition = plantColumnPosition;
+        this.temperatureDelta = temperatureDelta;
     }
 
     public int getRow() {
-        return row;
+        return plantRowPosition;
     }
 
     public int getCol() {
-        return col;
+        return plantColumnPosition;
     }
 
     public int getTempDiff() {
-        return tempDiff;
+        return temperatureDelta;
     }
 
 

@@ -3,27 +3,27 @@ package com.example.ooad_project.Events;
     public class SprinklerEvent {
 
 
-    int waterNeeded;
+    int requiredWaterAmount;
 
-    int row;
-    int col;
+    int gridRowPosition;
+    int gridColumnPosition;
 
     public SprinklerEvent(int row, int col, int waterNeeded) {
-        this.row = row;
-        this.col = col;
-        this.waterNeeded = waterNeeded;
+        this.gridRowPosition = row;
+        this.gridColumnPosition = col;
+        this.requiredWaterAmount = waterNeeded;
     }
 
     public int getRow() {
-        return row;
+        return gridRowPosition;
     }
 
     public int getCol() {
-        return col;
+        return gridColumnPosition;
     }
 
     public int getWaterNeeded() {
-        return waterNeeded;
+        return requiredWaterAmount;
     }
 
 
