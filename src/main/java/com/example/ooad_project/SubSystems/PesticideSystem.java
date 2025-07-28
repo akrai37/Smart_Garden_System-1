@@ -12,64 +12,63 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class PesticideSystem implements Runnable{
-    private int currentDay;
-    private final GardenGrid gardenGrid;
-    private static final Logger logger = LogManager.getLogger("PesticideSystemLogger");
+    private int currentSimulationDay;
+    private final GardenGrid gardenArea;
+    private static final Logger systemLogger = LogManager.getLogger("PesticideSystemLogger");
 
     public PesticideSystem() {
-        this.gardenGrid = GardenGrid.getInstance();
-//        System.out.println("Pesticide System Initialized");
-        logger.info("Pesticide System Initialized");
+        this.gardenArea = GardenGrid.getInstance();
+        // Print message removed, using logger instead
+        systemLogger.info("Pesticide System Initialized");
 
         EventBus.subscribe("DayUpdateEvent", event -> handleDayChangeEvent((DayUpdateEvent) event));
-//        Subscribe to the ParasiteEvent that will be published by the SmartGardenAPI
+        // Listen for bug attacks from the main garden system
         EventBus.subscribe("ParasiteEvent", event -> handlePesticideEvent((ParasiteEvent) event));
     }
 
-    private void handleDayChangeEvent(DayUpdateEvent event) {
-        this.currentDay = event.getDay(); // Update currentDay
+    private void handleDayChangeEvent(DayUpdateEvent dayUpdateEvent) {
+        this.currentSimulationDay = dayUpdateEvent.getDay(); // Update current simulation day
     }
 
-    private void handlePesticideEvent(ParasiteEvent event) {
-        Parasite parasite = event.getParasite();
-        // Loop through all the plants in the garden grid
-        for (int i = 0; i < gardenGrid.getNumRows(); i++) {
-            for (int j = 0; j < gardenGrid.getNumCols(); j++) {
-                Plant plant = gardenGrid.getPlant(i, j);
-                if (plant != null && parasite.getAffectedPlants().contains(plant.getName())) {
-                    // Publish an event to display the parasite on the plant
-                    EventBus.publish("DisplayParasiteEvent", new ParasiteDisplayEvent(parasite, i, j));
+    private void handlePesticideEvent(ParasiteEvent parasiteDetectionEvent) {
+        Parasite detectedParasite = parasiteDetectionEvent.getParasite();
+        // Check every plant in our garden to see if this bug can hurt it
+        for (int rowIndex = 0; rowIndex < gardenArea.getNumRows(); rowIndex++) {
+            for (int columnIndex = 0; columnIndex < gardenArea.getNumCols(); columnIndex++) {
+                Plant currentPlant = gardenArea.getPlant(rowIndex, columnIndex);
+                if (currentPlant != null && detectedParasite.getAffectedPlants().contains(currentPlant.getName())) {
+                    // Show the bug on the plant first
+                    EventBus.publish("DisplayParasiteEvent", new ParasiteDisplayEvent(detectedParasite, rowIndex, columnIndex));
 
-                    // Apply the parasite to the plant
-                    parasite.affectPlant(plant);
-                    logger.info("Day: " + currentDay + " Pesticide system applied {} to {} at position ({}, {})",
-                            parasite.getName(), plant.getName(), i, j);
+                    // Let the bug damage the plant
+                    detectedParasite.affectPlant(currentPlant);
+                    systemLogger.info("Day: " + currentSimulationDay + " Pesticide system applied {} to {} at position ({}, {})",
+                            detectedParasite.getName(), currentPlant.getName(), rowIndex, columnIndex);
 
-                    // Publish a new event for pesticide application
+                    // Spray pesticide to help the plant
                     EventBus.publish("PesticideApplicationEvent",
-                            new PesticideApplicationEvent(i, j, "standard"));
+                            new PesticideApplicationEvent(rowIndex, columnIndex, "standard"));
 
-                    // Heal the plant by half the damage of the parasite
-                    plant.healPlant(parasite.getDamage()/2);
+                    // Help the plant recover from the attack
+                    currentPlant.healPlant(detectedParasite.getDamage()/2);
                 }
             }
         }
     }
 
 
-//    When handling parasite attacks we will sleep the thread for 5 seconds
-//    so that we can see the effects of the parasite attack on the plants in JavaFX
+//    We pause the system to give time for the UI to show the bug attack effects
 
 
     public void run() {
         while (true) {
             try {
 
-//          Will just loop saying that plants are safe or sm
+//          Just keeps the thread running in the background
 
                 Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            } catch (InterruptedException exception) {
+                exception.printStackTrace();
             }
         }
     }

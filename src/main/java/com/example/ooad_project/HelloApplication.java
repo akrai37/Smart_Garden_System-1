@@ -27,132 +27,132 @@ import javafx.util.Duration;
 
 public class HelloApplication extends Application {
     @Override
-    public void start(Stage mainApplicationWindow) throws IOException {
+    public void start(Stage stage) throws IOException {
         System.out.println("Loading FXML from: " + HelloApplication.class.getResource("/com/example/ooad_project/hello-view.fxml"));
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/com/example/ooad_project/hello-view.fxml"));
-        Scene mainApplicationScene = new Scene(fxmlLoader.load(), 1200, 800);
-        mainApplicationScene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
-        mainApplicationWindow.setTitle("Green Tech - Smart Garden");
-        mainApplicationWindow.setScene(mainApplicationScene) ;
-        mainApplicationWindow.show();
+        Scene scene = new Scene(fxmlLoader.load(), 1200, 800);
+        scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
+        stage.setTitle("Green Tech - Smart Garden");
+        stage.setScene(scene) ;
+        stage.show();
         initializeBackgroundServices();
 
-        // Start automated environmental simulation tasks for realistic garden behavior
+        // Schedule API rain calls using JavaFX Timeline
         runAPIScheduledTasks();
     }
 
     private void initializeBackgroundServices() {
-        Runnable waterManagementService = new WateringSystem();
-        Runnable temperatureControlService = new TemperatureSystem();
-        Runnable pestControlService = new PesticideSystem();
-        DaySystem dayTracker = DaySystem.getInstance();
+        Runnable wateringSystem = new WateringSystem();
+        Runnable temperatureSystem = new TemperatureSystem();
+        Runnable pesticideSystem = new PesticideSystem();
+        DaySystem daySystem = DaySystem.getInstance();
 
-        ThreadManager.run(waterManagementService);
-        ThreadManager.run(temperatureControlService);
-        ThreadManager.run(pestControlService);
+        ThreadManager.run(wateringSystem);
+        ThreadManager.run(temperatureSystem);
+        ThreadManager.run(pesticideSystem);
 
     }
 
 
-    // Setting up the simulation to mimic real-world garden conditions
-    // This method creates realistic environmental changes that a garden might experience
+    //    This is for testing the API
+//    I assume Prof is going to do something similar
     private void runAPIScheduledTasks() {
-        SmartGardenAPI gardenAPI = new SmartGardenAPI();
-        gardenAPI.initializeGarden();
-        Random weatherRandomizer = new Random();
+        SmartGardenAPI api = new SmartGardenAPI();
+        api.initializeGarden();
+        Random rand = new Random();
 
-        // Setting up our virtual pest management system
-        ParasiteManager pestManagementSystem = ParasiteManager.getInstance();
+//        This is for testing the parasites thread
+        ParasiteManager parasiteManager = ParasiteManager.getInstance();
 
-        // Simulate natural rainfall patterns - occurs every 60 seconds in our accelerated time
-        Timeline weatherSimulation = new Timeline(new KeyFrame(Duration.seconds(60), rainfallEvent -> {
-            // Mimicking unpredictable rainfall amounts that gardens experience
-            gardenAPI.rain(weatherRandomizer.nextInt(40));
+//        Schedule rain every 15 seconds
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(60), ev -> {
+//            the api.rain is from the SmartGardenAPI
+            api.rain(rand.nextInt(40));
         }));
-        weatherSimulation.setCycleCount(Timeline.INDEFINITE);
-        weatherSimulation.play();
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
 
 
-        // Simulate daily temperature fluctuations that affect plant growth
-        Timeline temperatureSimulation = new Timeline(new KeyFrame(Duration.seconds(40), temperatureChangeEvent -> {
-            // Creating realistic temperature variations for plant stress testing
-            gardenAPI.temperature(weatherRandomizer.nextInt(70));
+//        Schedule temperature every 10 seconds
+        Timeline timeline2 = new Timeline(new KeyFrame(Duration.seconds(40), ev -> {
+//            the api.temperature is from the SmartGardenAPI
+            api.temperature(rand.nextInt(70));
         }));
-        temperatureSimulation.setCycleCount(Timeline.INDEFINITE);
-        temperatureSimulation.play();
+        timeline2.setCycleCount(Timeline.INDEFINITE);
+        timeline2.play();
 
-        // Simulate natural pest occurrences that gardeners face regularly
-        Timeline pestOccurrenceSimulation = new Timeline(new KeyFrame(Duration.seconds(10), pestAttackEvent -> {
-            List<Parasite> knownGardenPests = pestManagementSystem.getParasites();
-            if (!knownGardenPests.isEmpty()) {
-                Parasite randomPestThreat = knownGardenPests.get(weatherRandomizer.nextInt(knownGardenPests.size()));
-                gardenAPI.parasite(randomPestThreat.getName()); // Introducing a realistic pest challenge
+        // Schedule parasite every 10 seconds
+        Timeline timeline3 = new Timeline(new KeyFrame(Duration.seconds(10), ev -> {
+            List<Parasite> parasites = parasiteManager.getParasites();
+            if (!parasites.isEmpty()) {
+                Parasite randomParasite = parasites.get(rand.nextInt(parasites.size()));
+                api.parasite(randomParasite.getName()); // Use a random parasite
             }
         }));
-        pestOccurrenceSimulation.setCycleCount(Timeline.INDEFINITE);
-        pestOccurrenceSimulation.play();
+        timeline3.setCycleCount(Timeline.INDEFINITE);
+        timeline3.play();
 
 
     }
 
     private void runAPIScheduledTasksWithoutJavaFX() {
-        SmartGardenAPI simulationAPI = new SmartGardenAPI();
-        simulationAPI.initializeGarden();
-        Random environmentalRandomizer = new Random();
+        SmartGardenAPI api = new SmartGardenAPI();
+        api.initializeGarden();
+        Random rand = new Random();
 
-        // Initializing our comprehensive pest management system for testing
-        ParasiteManager pestControlManager = ParasiteManager.getInstance();
+        // This is for testing the parasites thread
+        ParasiteManager parasiteManager = ParasiteManager.getInstance();
 
-        // Creating a multi-threaded task scheduler for realistic garden simulation
-        ScheduledExecutorService gardenSimulationScheduler = Executors.newScheduledThreadPool(4);
+        // Create a scheduled executor service
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(4);
 
-        // Scheduling realistic rainfall patterns every 60 seconds
-        gardenSimulationScheduler.scheduleAtFixedRate(() -> {
-            int naturalRainfallAmount = environmentalRandomizer.nextInt(40);
-            System.out.println("Nature provides rainfall with amount: " + naturalRainfallAmount);
-            simulationAPI.rain(naturalRainfallAmount);
+        // Schedule rain every 60 seconds
+        scheduler.scheduleAtFixedRate(() -> {
+            int rainAmount = rand.nextInt(40);
+            System.out.println("Triggering rain with amount: " + rainAmount);
+            api.rain(rainAmount);
         }, 0, 60, TimeUnit.SECONDS);
 
-        // Scheduling natural temperature fluctuations every 40 seconds
-        gardenSimulationScheduler.scheduleAtFixedRate(() -> {
-            int dailyTemperatureReading = environmentalRandomizer.nextInt(70);
-            System.out.println("Weather system adjusting temperature to: " + dailyTemperatureReading);
-            simulationAPI.temperature(dailyTemperatureReading);
+        // Schedule temperature every 40 seconds
+        scheduler.scheduleAtFixedRate(() -> {
+            int temperature = rand.nextInt(70);
+            System.out.println("Changing temperature to: " + temperature);
+            api.temperature(temperature);
         }, 0, 40, TimeUnit.SECONDS);
 
-        // Scheduling realistic pest encounters every 10 seconds
-        gardenSimulationScheduler.scheduleAtFixedRate(() -> {
-            List<Parasite> environmentalThreats = pestControlManager.getParasites();
-            if (!environmentalThreats.isEmpty()) {
-                Parasite naturePestChallenge = environmentalThreats.get(environmentalRandomizer.nextInt(environmentalThreats.size()));
-                System.out.println("Environmental challenge detected - pest arrival: " + naturePestChallenge.getName());
-                simulationAPI.parasite(naturePestChallenge.getName());
+        // Schedule parasite every 10 seconds
+        scheduler.scheduleAtFixedRate(() -> {
+            List<Parasite> parasites = parasiteManager.getParasites();
+            if (!parasites.isEmpty()) {
+                Parasite randomParasite = parasites.get(rand.nextInt(parasites.size()));
+                System.out.println("Sending parasite: " + randomParasite.getName());
+                api.parasite(randomParasite.getName());
             }
         }, 0, 10, TimeUnit.SECONDS);
 
-        // Monitoring garden health status every 30 seconds
-        gardenSimulationScheduler.scheduleAtFixedRate(() -> {
-            System.out.println("\n------ COMPREHENSIVE GARDEN HEALTH REPORT ------");
-            simulationAPI.getState();
-            System.out.println("------------------------------------------------\n");
+        // Check garden state every 30 seconds
+        scheduler.scheduleAtFixedRate(() -> {
+            System.out.println("\n------ GARDEN STATE ------");
+            api.getState();
+            System.out.println("-------------------------\n");
         }, 30, 30, TimeUnit.SECONDS);
     }
 
     public static void main(String[] args) {
         if (args.length > 0 && args[0].equals("--no-ui")) {
-            // Running the garden simulation in headless mode without visual interface
-            HelloApplication smartGardenApplication = new HelloApplication();
-            smartGardenApplication.initializeBackgroundServices();
-            smartGardenApplication.runAPIScheduledTasksWithoutJavaFX();
+            // Run without JavaFX UI
+            HelloApplication app = new HelloApplication();
+            app.initializeBackgroundServices();
+            app.runAPIScheduledTasksWithoutJavaFX();
 
-            // Keeping the simulation running continuously for comprehensive testing
+            // Keep the main thread alive
             try {
                 Thread.sleep(Long.MAX_VALUE);
-            } catch (InterruptedException simulationInterruption) {
-                System.out.println("Garden simulation interrupted: " + simulationInterruption.getMessage());
+            } catch (InterruptedException e) {
+                System.out.println("Main thread interrupted: " + e.getMessage());
             }
         } else {
-            // Launching the full interactive garden management interface
+            // Regular JavaFX launch
             launch(args);
         }
     }
