@@ -9,11 +9,12 @@ import java.util.Random;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+// Sneaky rodent that sometimes gets scared away
 public class Rat extends Parasite {
 
-    private Random random = new Random();
-    private static final double MISS_CHANCE = 0.15;  // 15% chance to miss
-    private static final Logger logger = LogManager.getLogger("PesticideSystemLogger");
+    private Random damageRandomizer = new Random();
+    private static final double ATTACK_FAILURE_RATE = 0.15;  // Gets scared and runs away 15% of the time
+    private static final Logger parasiteLogger = LogManager.getLogger("PesticideSystemLogger");
 
 
     public Rat(String name, int damage , String imageName, ArrayList<String> affectedPlants) {
@@ -23,19 +24,19 @@ public class Rat extends Parasite {
 
     @Override
     public void affectPlant(Plant plant) {
-        if (random.nextDouble() >= MISS_CHANCE) {
-            // If not missed, apply the damage
-            int oldHealth = plant.getCurrentHealth();
-            int newHealth = Math.max(0, plant.getCurrentHealth() - this.getDamage());
+        if (damageRandomizer.nextDouble() >= ATTACK_FAILURE_RATE) {
+            // Rat nibbles on the plant roots and stems
+            int previousHealthValue = plant.getCurrentHealth();
+            int updatedHealthValue = Math.max(0, plant.getCurrentHealth() - this.getDamage());
             super.publishDamageEvent(new ParasiteDamageEvent(plant.getRow(),plant.getCol(), this.getDamage()));
 
-            plant.setCurrentHealth(newHealth);
-            logger.info("Rat has successfully damaged the plant {} at position ({}, {}). Old health: {}. New health: {}",
-                    plant.getName(), plant.getRow(), plant.getCol(), oldHealth, newHealth);
+            plant.setCurrentHealth(updatedHealthValue);
+            parasiteLogger.info("Rat has successfully damaged the plant {} at position ({}, {}). Old health: {}. New health: {}",
+                    plant.getName(), plant.getRow(), plant.getCol(), previousHealthValue, updatedHealthValue);
 
         } else {
-            // If missed, do nothing
-            logger.info("Rat attempted to damage the plant {} at position ({}, {}) but missed.",
+            // Rat hears a noise and scurries away
+            parasiteLogger.info("Rat attempted to damage the plant {} at position ({}, {}) but missed.",
                     plant.getName(), plant.getRow(), plant.getCol());
         }
     }

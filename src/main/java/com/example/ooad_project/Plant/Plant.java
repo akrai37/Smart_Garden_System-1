@@ -10,127 +10,125 @@ import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 
 /**
- * This is abstract class that represents a plant in the garden.
- * It is the parent class for all the plants in the garden.
- * i.e. flowers, trees, shrubs, etc.
+ * This is what all plants are made from.
+ * Every plant needs water and sun to grow.
+ * All flowers, trees, and vegetables use this.
  */
 public abstract class Plant {
 
-    private final String name;
-    private final int waterRequirement;
-    private String currentImage;
-    private Boolean isWatered = false;
-    private int currentWater = 0;
-    private final int temperatureRequirement;
+    private final String botanicalName;
+    private final int hydrationRequirement;
+    private String currentImageFilePath;
+    private Boolean isFullyHydrated = false;
+    private int collectedMoisture = 0;
+    private final int climateRequirement;
     private static final Logger logger = LogManager.getLogger("PesticideSystemLogger");
-    private ArrayList<String> allImages;
+    private ArrayList<String> visualAssetLibrary;
 
-    private final int healthSmall;
-    private final int healthMedium;
-    private final int healthFull;
-    private int currentHealth;
+    private final int baseHealthThreshold;
+    private final int intermediateHealthThreshold;
+    private final int peakHealthThreshold;
+    private int vitality;
 
-    private ArrayList<String> vulnerableTo;
+    private ArrayList<String> threatList;
 
-//    Default row and col are -1
-//    i.e. the plant is not in the garden
-    private int row = -1;
-    private int col = -1;
+    // Plant starts without a position until placed in garden
+    private int gardenRowIndex = -1;
+    private int gardenColumnIndex = -1;
 
     public Plant(String name, int waterRequirement, String imageName, int temperatureRequirement, ArrayList<String> vulnerableTo, int healthSmall, int healthMedium, int healthFull, ArrayList<String> allImages) {
-        this.name = name;
-        this.waterRequirement = waterRequirement;
-        this.currentImage = imageName;
-        this.temperatureRequirement = temperatureRequirement;
-        this.vulnerableTo = vulnerableTo;
-        this.healthSmall = healthSmall;
-        this.healthMedium = healthMedium;
-        this.healthFull = healthFull;
-        this.allImages = allImages;
-//        Plant starts at small health
-//        i.e. it is newly planted
-        this.currentHealth = healthSmall;
+        this.botanicalName = name;
+        this.hydrationRequirement = waterRequirement;
+        this.currentImageFilePath = imageName;
+        this.climateRequirement = temperatureRequirement;
+        this.threatList = vulnerableTo;
+        this.baseHealthThreshold = healthSmall;
+        this.intermediateHealthThreshold = healthMedium;
+        this.peakHealthThreshold = healthFull;
+        this.visualAssetLibrary = allImages;
+        // New plants start small and grow over time
+        this.vitality = healthSmall;
     }
 
-//    Heal plant function
+    // Give water to help the plant grow
 
     public synchronized void addWater(int amount) {
-        this.currentWater = Math.min(currentWater + amount, waterRequirement);
-        this.isWatered = currentWater >= waterRequirement;
+        this.collectedMoisture = Math.min(collectedMoisture + amount, hydrationRequirement);
+        this.isFullyHydrated = collectedMoisture >= hydrationRequirement;
     }
 
     public synchronized void healPlant(int healAmount) {
         int previousStage = getHealthStage();
-        // Increase current health by the heal amount but do not exceed the maximum possible health
-        this.currentHealth = Math.min(this.currentHealth + healAmount, this.healthFull);
+        // Help the plant recover but don't exceed maximum health
+        this.vitality = Math.min(this.vitality + healAmount, this.peakHealthThreshold);
 
-//        this.currentHealth += 10;
-        // Determine the new health stage after healing
+        // Check if plant grew to next stage
         int currentStage = getHealthStage();
 
-        // Update the plant image if the stage has changed due to healing
+        // Update plant appearance if it grew
         if (previousStage != currentStage) {
             updatePlantImage(currentStage);
             logger.info("Plant: {} at position ({}, {}) health stage changed to {}, updated image to {}",
-                    this.name, this.row, this.col, currentStage, this.currentImage);
+                    this.botanicalName, this.gardenRowIndex, this.gardenColumnIndex, currentStage, this.currentImageFilePath);
         }
 
-        // Log the healing action
+        // Record what happened to the plant
         logger.info("Plant: {} at position ({}, {}) healed by {} points, new health: {}",
-                this.name, this.row, this.col, healAmount, this.currentHealth);
+                this.botanicalName, this.gardenRowIndex, this.gardenColumnIndex, healAmount, this.vitality);
     }
 
 
     public synchronized void setCurrentHealth(int health) {
         int previousStage = getHealthStage();
 
-        int oldHealth = this.currentHealth;
+        int oldHealth = this.vitality;
 
-        this.currentHealth = health;
+        this.vitality = health;
 
-        if (this.currentHealth <= 0) {
-            this.currentHealth = 0;
+        if (this.vitality <= 0) {
+            this.vitality = 0;
             EventBus.publish("PlantDeathEvent", this);
             return;
         }
 
 
-        EventBus.publish("PlantHealthUpdateEvent", new PlantHealthUpdateEvent(this.row, this.col, oldHealth, this.currentHealth));
+        EventBus.publish("PlantHealthUpdateEvent", new PlantHealthUpdateEvent(this.gardenRowIndex, this.gardenColumnIndex, oldHealth, this.vitality));
 
         int currentStage = getHealthStage();
 
-        // Check if the health stage has changed, then update the image
+        // Update plant appearance if health changed enough
         if (previousStage != currentStage) {
             updatePlantImage(currentStage);
-            logger.info("Plant: {} at position ({}, {}) updated to new health stage: {}, image updated to {}", this.name, this.row, this.col, currentStage, this.currentImage);
+            logger.info("Plant: {} at position ({}, {}) updated to new health stage: {}, image updated to {}", this.botanicalName, this.gardenRowIndex, this.gardenColumnIndex, currentStage, this.currentImageFilePath);
         }
     }
 
     /**
-     * Updates the current image based on the health stage.
-     * @param stage the current health stage of the plant.
+     * Changes how the plant looks based on its health.
+     * @param stage how healthy the plant is right now.
      */
     private void updatePlantImage(int stage) {
-        if (stage >= 0 && stage < this.allImages.size()) {
-            this.currentImage = this.allImages.get(stage);
+        if (stage >= 0 && stage < this.visualAssetLibrary.size()) {
+            this.currentImageFilePath = this.visualAssetLibrary.get(stage);
             EventBus.publish("PlantImageUpdateEvent", new PlantImageUpdateEvent(this));
         }
     }
 
     /**
-     * Determines the health stage of the plant.
-     * @return an integer representing the stage: 0 for small, 1 for medium, 2 for full health.
+     * Figures out if the plant is small, medium, or fully grown.
+     * @return a number: 0 for small, 1 for medium, 2 for fully grown.
      */
     private int getHealthStage() {
-        if (this.currentHealth < this.healthMedium) {
-            return 0; // Small
-        } else if (this.currentHealth < this.healthFull) {
-            return 1; // Medium
+        if (this.vitality < this.intermediateHealthThreshold) {
+            return 0; // Tiny sprout
+        } else if (this.vitality < this.peakHealthThreshold) {
+            return 1; // Growing nicely
         } else {
-            return 2; // Full
+            return 2; // Fully grown
         }
     }
 
+    // Easy way to get plant size in words
     public String getGrowthStageDescription() {
         if (this.getCurrentHealth() < this.getHealthMedium()) {
             return "Small";
@@ -141,103 +139,96 @@ public abstract class Plant {
         }
     }
 
-    // Standard getters and setters
+    // Simple ways to get and set plant information
 
     public ArrayList<String> getVulnerableTo() {
-        return vulnerableTo;
+        return threatList;
     }
 
     public String getName() {
-        return name;
+        return botanicalName;
     }
 
     public Boolean getIsWatered() {
-        return isWatered;
+        return isFullyHydrated;
     }
 
     public synchronized void  setIsWatered(Boolean isWatered) {
-        this.isWatered = isWatered;
+        this.isFullyHydrated = isWatered;
     }
 
     public int getCurrentWater() {
-        return currentWater;
+        return collectedMoisture;
     }
 
     public void setCurrentWater(int currentWater) {
-        this.currentWater = currentWater;
+        this.collectedMoisture = currentWater;
     }
 
 
 
     public int getWaterRequirement() {
-        return waterRequirement;
+        return hydrationRequirement;
     }
 
 
     public String getCurrentImage() {
-        return currentImage;
+        return currentImageFilePath;
     }
 
     public void setCurrentImage(String currentImage) {
-        this.currentImage = currentImage;
+        this.currentImageFilePath = currentImage;
     }
 
     public int getTemperatureRequirement() {
-        return temperatureRequirement;
+        return climateRequirement;
     }
 
     public int getRow() {
-        return row;
+        return gardenRowIndex;
     }
 
     public void setRow(int row) {
-        this.row = row;
+        this.gardenRowIndex = row;
     }
 
     public int getCol() {
-        return col;
+        return gardenColumnIndex;
     }
 
     public void setCol(int col) {
-        this.col = col;
+        this.gardenColumnIndex = col;
     }
 
     public int getHealthSmall() {
-        return healthSmall;
+        return baseHealthThreshold;
     }
 
     public int getHealthMedium() {
-        return healthMedium;
+        return intermediateHealthThreshold;
     }
 
     public int getHealthFull() {
-        return healthFull;
+        return peakHealthThreshold;
     }
 
     public ArrayList<String> getAllImages() {
-        return allImages;
+        return visualAssetLibrary;
     }
 
 
 
     /**
-     * Retrieves the current health of the plant.
-     * This method is synchronized to ensure thread safety.
-     * @return the current health of the plant.
+     * Gets how healthy the plant is right now.
+     * Safe to use with multiple garden systems running.
+     * @return the plant's current health points.
      */
     public synchronized int getCurrentHealth() {
-        return currentHealth;
+        return vitality;
     }
 
-//    /**
-//     * Sets the current health of the plant.
-//     * This method is synchronized to ensure that updates are atomic and changes
-//     * are visible to other threads.
-//     * @param health the new health value for the plant.
-//     */
-//    public synchronized void setCurrentHealth(int health) {
-//        this.currentHealth = health;
-//    }
+    // Old code kept just in case we need it later
+    // Sets plant health directly - not used right now
 
 
 

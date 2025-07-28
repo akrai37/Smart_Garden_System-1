@@ -9,11 +9,11 @@ import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.Random;
 
-// Locust class with a 5% miss chance
+// Hungry grasshopper that rarely misses its target
 public class Locust extends Parasite {
-    private static final double MISS_CHANCE = 0.05;  // 5% chance to miss
-    private Random random = new Random();
-    private static final Logger logger = LogManager.getLogger("PesticideSystemLogger");
+    private static final double ATTACK_FAILURE_RATE = 0.05;  // Very accurate insect, misses only 1 in 20 times
+    private Random damageRandomizer = new Random();
+    private static final Logger parasiteLogger = LogManager.getLogger("PesticideSystemLogger");
 
     public Locust(String name, int damage, String imageName, ArrayList<String> affectedPlants) {
         super(name, damage, imageName, affectedPlants);
@@ -21,19 +21,19 @@ public class Locust extends Parasite {
 
     @Override
     public void affectPlant(Plant plant) {
-        if (random.nextDouble() >= MISS_CHANCE) {
-            // If not missed, apply the damage
-            int oldHealth = plant.getCurrentHealth();
-            int newHealth = Math.max(0, plant.getCurrentHealth() - this.getDamage());
+        if (damageRandomizer.nextDouble() >= ATTACK_FAILURE_RATE) {
+            // Locust chomps down on the plant leaves
+            int previousHealthValue = plant.getCurrentHealth();
+            int updatedHealthValue = Math.max(0, plant.getCurrentHealth() - this.getDamage());
             super.publishDamageEvent(new ParasiteDamageEvent(plant.getRow(),plant.getCol(), this.getDamage()));
 
-            plant.setCurrentHealth(newHealth);
-            logger.info("Locust has successfully damaged the plant {} at position ({}, {}). Old health: {}. New health: {}",
-                    plant.getName(), plant.getRow(), plant.getCol(), oldHealth, newHealth);
+            plant.setCurrentHealth(updatedHealthValue);
+            parasiteLogger.info("Locust has successfully damaged the plant {} at position ({}, {}). Old health: {}. New health: {}",
+                    plant.getName(), plant.getRow(), plant.getCol(), previousHealthValue, updatedHealthValue);
 
         } else {
-            // If missed, do nothing
-            logger.info("Locust attempted to damage the plant {} at position ({}, {}) but missed.",
+            // Locust gets distracted and hops away
+            parasiteLogger.info("Locust attempted to damage the plant {} at position ({}, {}) but missed.",
                     plant.getName(), plant.getRow(), plant.getCol());
         }
     }

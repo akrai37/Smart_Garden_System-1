@@ -10,11 +10,11 @@ import java.util.ArrayList;
 import java.util.Random;
 
 
-// Aphids class with a 10% miss chance
+// Small green bugs that sometimes miss their target
 public class Aphids extends Parasite {
-    private static final double MISS_CHANCE = 0.10;  // 10% chance to miss
-    private Random random = new Random();
-    private static final Logger logger = LogManager.getLogger("PesticideSystemLogger");
+    private static final double ATTACK_FAILURE_RATE = 0.10;  // These bugs fail to attack 1 out of 10 times
+    private Random damageRandomizer = new Random();
+    private static final Logger parasiteLogger = LogManager.getLogger("PesticideSystemLogger");
 
     public Aphids(String name, int damage, String imageName, ArrayList<String> affectedPlants) {
         super(name, damage, imageName, affectedPlants);
@@ -22,19 +22,19 @@ public class Aphids extends Parasite {
 
     @Override
     public void affectPlant(Plant plant) {
-        if (random.nextDouble() >= MISS_CHANCE) {
-            // If not missed, apply the damage
-            int oldHealth = plant.getCurrentHealth();
-            int newHealth = Math.max(0, plant.getCurrentHealth() - this.getDamage());
+        if (damageRandomizer.nextDouble() >= ATTACK_FAILURE_RATE) {
+            // Successfully hits the plant and causes damage
+            int previousHealthValue = plant.getCurrentHealth();
+            int updatedHealthValue = Math.max(0, plant.getCurrentHealth() - this.getDamage());
             super.publishDamageEvent(new ParasiteDamageEvent(plant.getRow(),plant.getCol(), this.getDamage()));
 
-            plant.setCurrentHealth(newHealth);
-            logger.info("Aphid has successfully damaged the plant {} at position ({}, {}). Old health: {}. New health: {}",
-                    plant.getName(), plant.getRow(), plant.getCol(), oldHealth, newHealth);
+            plant.setCurrentHealth(updatedHealthValue);
+            parasiteLogger.info("Aphid has successfully damaged the plant {} at position ({}, {}). Old health: {}. New health: {}",
+                    plant.getName(), plant.getRow(), plant.getCol(), previousHealthValue, updatedHealthValue);
 
         } else {
-            // If missed, do nothing
-            logger.info("Aphid attempted to damage the plant {} at position ({}, {}) but missed.",
+            // Bug misses the target completely
+            parasiteLogger.info("Aphid attempted to damage the plant {} at position ({}, {}) but missed.",
                     plant.getName(), plant.getRow(), plant.getCol());
         }
     }

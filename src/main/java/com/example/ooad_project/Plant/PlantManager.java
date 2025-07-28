@@ -12,57 +12,57 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-// Plant Manager will get plant data from the JSON file and store it in lists of flowers, trees, and vegetables
+// Keeps track of all plants by loading data from JSON files
 public class PlantManager {
-    private static PlantManager instance;
-    private List<Flower> flowers;
-    private List<Tree> trees;
-    private List<Vegetable> vegetables;
+    private static PlantManager managerInstance;
+    private List<Flower> bloomingPlants;
+    private List<Tree> woodyPlants;
+    private List<Vegetable> ediblePlants;
 
     private PlantManager() {
-        flowers = new ArrayList<>();
-        trees = new ArrayList<>();
-        vegetables = new ArrayList<>();
+        bloomingPlants = new ArrayList<>();
+        woodyPlants = new ArrayList<>();
+        ediblePlants = new ArrayList<>();
         loadPlantsData();
     }
 
     public static synchronized PlantManager getInstance() {
-        if (instance == null) {
-            instance = new PlantManager();
+        if (managerInstance == null) {
+            managerInstance = new PlantManager();
         }
-        return instance;
+        return managerInstance;
     }
 
 
     public Plant getPlantByName(String name) {
-        // Check in flowers
-        for (Flower flower : flowers) {
+        // Look through all flowers first
+        for (Flower flower : bloomingPlants) {
             if (flower.getName().equals(name)) {
-                // Create a new Flower instance with the same properties
+                // Make a fresh copy with the same details
                 return new Flower(flower.getName(), flower.getWaterRequirement(), flower.getCurrentImage(),
                         flower.getTemperatureRequirement(), new ArrayList<>(flower.getVulnerableTo()),
                         flower.getHealthSmall(), flower.getHealthMedium(), flower.getHealthFull(), flower.getAllImages());
             }
         }
-        // Check in trees
-        for (Tree tree : trees) {
+        // Now check all trees
+        for (Tree tree : woodyPlants) {
             if (tree.getName().equals(name)) {
-                // Create a new Tree instance with the same properties
+                // Make a fresh copy with the same details
                 return new Tree(tree.getName(), tree.getWaterRequirement(), tree.getCurrentImage(),
                         tree.getTemperatureRequirement(), new ArrayList<>(tree.getVulnerableTo()),
                         tree.getHealthSmall(), tree.getHealthMedium(), tree.getHealthFull(), tree.getAllImages());
             }
         }
-        // Check in vegetables
-        for (Vegetable vegetable : vegetables) {
+        // Finally check vegetables
+        for (Vegetable vegetable : ediblePlants) {
             if (vegetable.getName().equals(name)) {
-                // Create a new Vegetable instance with the same properties
+                // Make a fresh copy with the same details
                 return new Vegetable(vegetable.getName(), vegetable.getWaterRequirement(), vegetable.getCurrentImage(),
                         vegetable.getTemperatureRequirement(), new ArrayList<>(vegetable.getVulnerableTo()),
                         vegetable.getHealthSmall(), vegetable.getHealthMedium(), vegetable.getHealthFull(),vegetable.getAllImages() );
             }
         }
-        return null; // Or throw an exception if preferred
+        return null; // Couldn't find that plant anywhere
     }
 
 
@@ -81,103 +81,107 @@ public class PlantManager {
         }
     }
 
-    private void loadFlowers(JSONArray flowerData) {
-        for (int i = 0; i < flowerData.length(); i++) {
-            JSONObject flower = flowerData.getJSONObject(i);
-            ArrayList<String> vulnerableTo = new ArrayList<>();
-            ArrayList<String> allImages = new ArrayList<>();
-            JSONArray vulnerabilities = flower.getJSONArray("vulnerableTo");
-            JSONArray images = flower.getJSONArray("allImages");
+    private void loadFlowers(JSONArray flowerDataArray) {
+        for (int i = 0; i < flowerDataArray.length(); i++) {
+            JSONObject flowerJsonObject = flowerDataArray.getJSONObject(i);
+            ArrayList<String> parasiteVulnerabilities = new ArrayList<>();
+            ArrayList<String> resourceImageArray = new ArrayList<>();
+            JSONArray vulnerabilityArray = flowerJsonObject.getJSONArray("vulnerableTo");
+            JSONArray imageArray = flowerJsonObject.getJSONArray("allImages");
 
-            for (int j = 0; j < vulnerabilities.length(); j++) {
-                vulnerableTo.add(vulnerabilities.getString(j));
+            for (int j = 0; j < vulnerabilityArray.length(); j++) {
+                parasiteVulnerabilities.add(vulnerabilityArray.getString(j));
             }
-            for (int j = 0; j < images.length(); j++) {
-                allImages.add(images.getString(j));
+            for (int j = 0; j < imageArray.length(); j++) {
+                resourceImageArray.add(imageArray.getString(j));
             }
 
-            flowers.add(new Flower(
-                    flower.getString("name"),
-                    flower.getInt("waterRequirement"),
-                    flower.getString("currentImage"),
-                    flower.getInt("temperatureRequirement"),
-                    vulnerableTo,
-                    flower.getInt("healthSmall"),
-                    flower.getInt("healthMedium"),
-                    flower.getInt("healthFull"),
-                    allImages  // Pass the list of all images
+            bloomingPlants.add(new Flower(
+                    flowerJsonObject.getString("name"),
+                    flowerJsonObject.getInt("waterRequirement"),
+                    flowerJsonObject.getString("currentImage"),
+                    flowerJsonObject.getInt("temperatureRequirement"),
+                    parasiteVulnerabilities,
+                    flowerJsonObject.getInt("healthSmall"),
+                    flowerJsonObject.getInt("healthMedium"),
+                    flowerJsonObject.getInt("healthFull"),
+                    resourceImageArray  // Pass the list of all images
             ));
         }
     }
 
+    // Load tree data from the JSON file
     private void loadTrees(JSONArray treeData) {
         for (int i = 0; i < treeData.length(); i++) {
-            JSONObject tree = treeData.getJSONObject(i);
-            ArrayList<String> vulnerableTo = new ArrayList<>();
-            ArrayList<String> allImages = new ArrayList<>();
-            JSONArray vulnerabilities = tree.getJSONArray("vulnerableTo");
-            JSONArray images = tree.getJSONArray("allImages");
+            JSONObject treeObject = treeData.getJSONObject(i);
+            ArrayList<String> threatTypes = new ArrayList<>();
+            ArrayList<String> visualResources = new ArrayList<>();
+            JSONArray vulnerabilities = treeObject.getJSONArray("vulnerableTo");
+            JSONArray images = treeObject.getJSONArray("allImages");
 
             for (int j = 0; j < vulnerabilities.length(); j++) {
-                vulnerableTo.add(vulnerabilities.getString(j));
+                threatTypes.add(vulnerabilities.getString(j));
             }
             for (int j = 0; j < images.length(); j++) {
-                allImages.add(images.getString(j));
+                visualResources.add(images.getString(j));
             }
 
-            trees.add(new Tree(
-                    tree.getString("name"),
-                    tree.getInt("waterRequirement"),
-                    tree.getString("currentImage"),
-                    tree.getInt("temperatureRequirement"),
-                    vulnerableTo,
-                    tree.getInt("healthSmall"),
-                    tree.getInt("healthMedium"),
-                    tree.getInt("healthFull"),
-                    allImages  // Pass the list of all images
+            woodyPlants.add(new Tree(
+                    treeObject.getString("name"),
+                    treeObject.getInt("waterRequirement"),
+                    treeObject.getString("currentImage"),
+                    treeObject.getInt("temperatureRequirement"),
+                    threatTypes,
+                    treeObject.getInt("healthSmall"),
+                    treeObject.getInt("healthMedium"),
+                    treeObject.getInt("healthFull"),
+                    visualResources  // Pass the list of all images
             ));
         }
     }
 
+    // Load vegetable data from the JSON file
     private void loadVegetables(JSONArray vegetableData) {
         for (int i = 0; i < vegetableData.length(); i++) {
-            JSONObject vegetable = vegetableData.getJSONObject(i);
-            ArrayList<String> vulnerableTo = new ArrayList<>();
-            ArrayList<String> allImages = new ArrayList<>();
-            JSONArray vulnerabilities = vegetable.getJSONArray("vulnerableTo");
-            JSONArray images = vegetable.getJSONArray("allImages");
+            JSONObject cropObject = vegetableData.getJSONObject(i);
+            ArrayList<String> vulnerabilityList = new ArrayList<>();
+            ArrayList<String> graphicAssets = new ArrayList<>();
+            JSONArray vulnerabilities = cropObject.getJSONArray("vulnerableTo");
+            JSONArray images = cropObject.getJSONArray("allImages");
 
             for (int j = 0; j < vulnerabilities.length(); j++) {
-                vulnerableTo.add(vulnerabilities.getString(j));
+                vulnerabilityList.add(vulnerabilities.getString(j));
             }
             for (int j = 0; j < images.length(); j++) {
-                allImages.add(images.getString(j));
+                graphicAssets.add(images.getString(j));
             }
 
-            vegetables.add(new Vegetable(
-                    vegetable.getString("name"),
-                    vegetable.getInt("waterRequirement"),
-                    vegetable.getString("currentImage"),
-                    vegetable.getInt("temperatureRequirement"),
-                    vulnerableTo,
-                    vegetable.getInt("healthSmall"),
-                    vegetable.getInt("healthMedium"),
-                    vegetable.getInt("healthFull"),
-                    allImages  // Pass the list of all images
+            ediblePlants.add(new Vegetable(
+                    cropObject.getString("name"),
+                    cropObject.getInt("waterRequirement"),
+                    cropObject.getString("currentImage"),
+                    cropObject.getInt("temperatureRequirement"),
+                    vulnerabilityList,
+                    cropObject.getInt("healthSmall"),
+                    cropObject.getInt("healthMedium"),
+                    cropObject.getInt("healthFull"),
+                    graphicAssets  // Pass the list of all images
             ));
         }
     }
 
-
+    // Get all flowers we know about
     public List<Flower> getFlowers() {
-        return flowers;
+        return bloomingPlants;
     }
 
+    // Get all trees we know about
     public List<Tree> getTrees() {
-        return trees;
+        return woodyPlants;
     }
 
+    // Get all vegetables we know about
     public List<Vegetable> getVegetables() {
-        return vegetables;
+        return ediblePlants;
     }
 }
