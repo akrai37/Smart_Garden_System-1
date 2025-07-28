@@ -18,14 +18,14 @@ import java.util.List;
 import java.util.Map;
 
 public class SmartGardenAPI implements SmartGardenAPIInterface {
-    private static final Logger logger = LogManager.getLogger("GardenSimulationAPILogger");
-    private ParasiteManager parasiteManager = ParasiteManager.getInstance();
+    private static final Logger apiLogger = LogManager.getLogger("GardenSimulationAPILogger");
+    private ParasiteManager parasiteController = ParasiteManager.getInstance();
 
     @Override
     public void initializeGarden() {
-        logger.info("Initializing Garden");
-        GardenGrid gardenGrid = GardenGrid.getInstance();
-        PlantManager plantManager = PlantManager.getInstance();
+        apiLogger.info("Initializing Garden");
+        GardenGrid gardenGridInstance = GardenGrid.getInstance();
+        PlantManager plantManagerInstance = PlantManager.getInstance();
 
         EventBus.publish("InitializeGarden", null);
 
@@ -37,82 +37,82 @@ public class SmartGardenAPI implements SmartGardenAPIInterface {
     @Override
     public Map<String, Object> getPlants() {
         try {
-            logger.info("API called to get plant information");
+            apiLogger.info("API called to get plant information");
 
-            List<String> plantNames = new ArrayList<>();
-            List<Integer> waterRequirements = new ArrayList<>();
-            List<List<String>> parasiteLists = new ArrayList<>();
+            List<String> allPlantNames = new ArrayList<>();
+            List<Integer> allWaterRequirements = new ArrayList<>();
+            List<List<String>> allParasiteVulnerabilities = new ArrayList<>();
 
-            for (Plant plant : GardenGrid.getInstance().getPlants()) {
-                plantNames.add(plant.getName());
-                waterRequirements.add(plant.getWaterRequirement());
-                parasiteLists.add(plant.getVulnerableTo());
+            for (Plant currentPlant : GardenGrid.getInstance().getPlants()) {
+                allPlantNames.add(currentPlant.getName());
+                allWaterRequirements.add(currentPlant.getWaterRequirement());
+                allParasiteVulnerabilities.add(currentPlant.getVulnerableTo());
             }
 
-            Map<String, Object> response = Map.of(
-                    "plants", plantNames,
-                    "waterRequirement", waterRequirements,
-                    "parasites", parasiteLists
+            Map<String, Object> plantDataResponse = Map.of(
+                    "plants", allPlantNames,
+                    "waterRequirement", allWaterRequirements,
+                    "parasites", allParasiteVulnerabilities
             );
 
             System.out.println("\n\nResponse: from getPlants\n\n");
-            System.out.println(response);
+            System.out.println(plantDataResponse);
 
-            return response;
-        } catch (Exception e) {
-            logger.error("Error occurred while retrieving plant information", e);
+            return plantDataResponse;
+        } catch (Exception exception) {
+            apiLogger.error("Error occurred while retrieving plant information", exception);
             return null;
         }
     }
 
     @Override
     public void rain(int amount) {
-        logger.info("API called rain with amount: {}", amount);
+        apiLogger.info("API called rain with amount: {}", amount);
         EventBus.publish("RainEvent", new RainEvent(amount));
     }
 
     @Override
     public void temperature(int amount) {
-        logger.info("API called temperature set to: {}", amount);
+        apiLogger.info("API called temperature set to: {}", amount);
         EventBus.publish("TemperatureEvent", new TemperatureEvent(amount));
     }
 
     @Override
     public void parasite(String name) {
-        logger.info("API called to handle parasite: {}", name);
-        Parasite parasite = parasiteManager.getParasiteByName(name);
-        if(parasite == null) {
-            logger.info("API - Parasite with name {} not found", name);
+        apiLogger.info("API called to handle parasite: {}", name);
+        Parasite parasiteInstance = parasiteController.getParasiteByName(name);
+        if(parasiteInstance == null) {
+            apiLogger.info("API - Parasite with name {} not found", name);
             return;
         }
-        EventBus.publish("ParasiteEvent", new ParasiteEvent(parasite));
+        EventBus.publish("ParasiteEvent", new ParasiteEvent(parasiteInstance));
 
     }
 
     @Override
     public void getState() {
-        logger.info("Day: " + DaySystem.getInstance().getCurrentDay() + "API called to get current state of the garden.");
-        StringBuilder stateBuilder = new StringBuilder();
-        stateBuilder.append(String.format("Current Garden State as of Day %d:\n", DaySystem.getInstance().getCurrentDay()));
+        apiLogger.info("Day: " + DaySystem.getInstance().getCurrentDay() + "API called to get current state of the garden.");
+        StringBuilder gardenStateBuilder = new StringBuilder();
+        gardenStateBuilder.append(String.format("Current Garden State as of Day %d:\n", DaySystem.getInstance().getCurrentDay()));
 
-        GardenGrid gardenGrid = GardenGrid.getInstance();
-        ArrayList<Plant> plants = gardenGrid.getPlants();
+        GardenGrid currentGardenGrid = GardenGrid.getInstance();
+        ArrayList<Plant> gardenPlants = currentGardenGrid.getPlants();
 
-        if (plants.isEmpty()) {
-            stateBuilder.append("No plants are currently in the garden.\n");
+        if (gardenPlants.isEmpty()) {
+            gardenStateBuilder.append("No plants are currently in the garden.\n");
         } else {
-            for (Plant plant : plants) {
-                stateBuilder.append(String.format("\nPlant Name: %s (Position: Row %d, Col %d)\n", plant.getName(), plant.getRow(), plant.getCol()));
-                stateBuilder.append(String.format("  - Current Health: %d/%d\n", plant.getCurrentHealth(), plant.getHealthFull()));
-                stateBuilder.append(String.format("  - Growth Stage: %s\n", plant.getGrowthStageDescription()));
-                stateBuilder.append(String.format("  - Water Status: %s (Current Water: %d, Requirement: %d)\n", plant.getIsWatered() ? "Watered" : "Needs Water", plant.getCurrentWater(), plant.getWaterRequirement()));
-                stateBuilder.append(String.format("  - Temperature Requirement: %d degrees\n", plant.getTemperatureRequirement()));
-                stateBuilder.append(String.format("  - Current Image: %s\n", plant.getCurrentImage()));
-                stateBuilder.append(String.format("  - Vulnerable to: %s\n", String.join(", ", plant.getVulnerableTo())));
+            for (Plant individualPlant : gardenPlants) {
+                gardenStateBuilder.append(String.format("\nPlant Name: %s (Position: Row %d, Col %d)\n", individualPlant.getName(), individualPlant.getRow(), individualPlant.getCol()));
+                gardenStateBuilder.append(String.format("  - Current Health: %d/%d\n", individualPlant.getCurrentHealth(), individualPlant.getHealthFull()));
+                gardenStateBuilder.append(String.format("  - Growth Stage: %s\n", individualPlant.getGrowthStageDescription()));
+                gardenStateBuilder.append(String.format("  - Water Status: %s (Current Water: %d, Requirement: %d)\n", individualPlant.getIsWatered() ? "Watered" : "Needs Water", individualPlant.getCurrentWater(), individualPlant.getWaterRequirement()));
+                gardenStateBuilder.append(String.format("  - Temperature Requirement: %d degrees\n", individualPlant.getTemperatureRequirement()));
+                gardenStateBuilder.append(String.format("  - Current Image: %s\n", individualPlant.getCurrentImage()));
+                gardenStateBuilder.append(String.format("  - Vulnerable to: %s\n", String.join(", ", individualPlant.getVulnerableTo())));
             }
         }
 
-        logger.info(stateBuilder.toString());
+        apiLogger.info(gardenStateBuilder.toString());
     }
 
 
