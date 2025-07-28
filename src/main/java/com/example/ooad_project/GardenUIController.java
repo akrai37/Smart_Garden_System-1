@@ -766,7 +766,7 @@ public class GardenUIController {
             gridPane.getChildren().add(heatImageView);
 
             PauseTransition pause = new PauseTransition(Duration.seconds(5)); // Set duration to 10 seconds
-            pause.setOnFinished(e -> gridPane.getChildren().remove(heatImageView));
+            pause.setOnFinished(_ -> gridPane.getChildren().remove(heatImageView));
             pause.play();
         });
     }
@@ -795,7 +795,7 @@ public class GardenUIController {
             gridPane.getChildren().add(coolImageView);
 
             PauseTransition pause = new PauseTransition(Duration.seconds(5)); // Set duration to 10 seconds
-            pause.setOnFinished(e -> gridPane.getChildren().remove(coolImageView));
+            pause.setOnFinished(_ -> gridPane.getChildren().remove(coolImageView));
             pause.play();
         });
     }
@@ -849,7 +849,7 @@ public class GardenUIController {
 
             // Remove animation after it completes
             PauseTransition pause = new PauseTransition(Duration.seconds(3)); // Total duration for animation to persist
-            pause.setOnFinished(e -> gridPane.getChildren().remove(sprinklerAnimationGroup));
+            pause.setOnFinished(_ -> gridPane.getChildren().remove(sprinklerAnimationGroup));
             pause.play();
         });
     }
@@ -1972,7 +1972,7 @@ public class GardenUIController {
 
                     PauseTransition pause = new PauseTransition(Duration.seconds(3));
 
-                    pause.setOnFinished(e -> {
+                    pause.setOnFinished(_ -> {
                         gridPane.getChildren().remove(farmerPane);  // Remove the rat image from the grid
 //            System.out.println("Rat removed from row " + row + " and column " + col);
                         //gridPane.getChildren().remove(pestControlImageView);
@@ -5077,7 +5077,7 @@ public class GardenUIController {
         // Create a pause transition before applying pesticide
         PauseTransition pause = new PauseTransition(Duration.seconds(2));
 
-        pause.setOnFinished(e -> {
+        pause.setOnFinished(_ -> {
             // Remove the parasite image
             gridPane.getChildren().remove(parasiteImageView);
 

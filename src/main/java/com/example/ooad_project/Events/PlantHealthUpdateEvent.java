@@ -2,32 +2,32 @@ package com.example.ooad_project.Events;
 
 public class PlantHealthUpdateEvent {
 
-        int plantRowIndex;
-        int plantColumnIndex;
-        int previousHealthLevel;
-        int currentHealthLevel;
+        int row;
+        int col;
+        int oldHealth;
+        int newHealth;
 
         public PlantHealthUpdateEvent(int row, int col, int oldHealth, int newHealth) {
-            this.plantRowIndex = row;
-            this.plantColumnIndex = col;
-            this.previousHealthLevel = oldHealth;
-            this.currentHealthLevel = newHealth;
+            this.row = row;
+            this.col = col;
+            this.oldHealth = oldHealth;
+            this.newHealth = newHealth;
         }
 
         public int getRow() {
-            return plantRowIndex;
+            return row;
         }
 
         public int getCol() {
-            return plantColumnIndex;
+            return col;
         }
 
         public int getOldHealth() {
-            return previousHealthLevel;
+            return oldHealth;
         }
 
         public int getNewHealth() {
-            return currentHealthLevel;
+            return newHealth;
         }
 
 }

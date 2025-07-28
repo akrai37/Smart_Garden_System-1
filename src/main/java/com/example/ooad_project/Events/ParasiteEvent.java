@@ -4,14 +4,14 @@ import com.example.ooad_project.Parasite.Parasite;
 
 public class ParasiteEvent {
 
-    private final Parasite detectedInvader;
+    private final Parasite parasite;
 
-    public ParasiteEvent(Parasite invasiveOrganism) {
-        this.detectedInvader = invasiveOrganism;
+    public ParasiteEvent(Parasite parasite) {
+        this.parasite = parasite;
     }
 
     public Parasite getParasite() {
-        return detectedInvader;
+        return parasite;
     }
 
 

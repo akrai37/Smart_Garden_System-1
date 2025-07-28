@@ -4,14 +4,14 @@ import com.example.ooad_project.Plant.Plant;
 
 public class PlantImageUpdateEvent {
 
-    private final Plant affectedPlant;
+    private final Plant plant;
 
     public PlantImageUpdateEvent(Plant plant) {
-        this.affectedPlant = plant;
+        this.plant = plant;
     }
 
     public Plant getPlant() {
-        return affectedPlant;
+        return plant;
     }
 
 

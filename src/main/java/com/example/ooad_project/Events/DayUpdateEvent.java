@@ -2,14 +2,14 @@ package com.example.ooad_project.Events;
 
 public class DayUpdateEvent {
 
-    private final int currentDayNumber;
+    private final int day;
 
-    public DayUpdateEvent(int dayNumber) {
-        this.currentDayNumber = dayNumber;
+    public DayUpdateEvent(int day) {
+        this.day = day;
     }
 
     public int getDay() {
-        return currentDayNumber;
+        return day;
     }
 
 }

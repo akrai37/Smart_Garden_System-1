@@ -1,11 +1,11 @@
 package com.example.ooad_project.Events;
 
 public class TemperatureEvent {
-        private final int temperatureValue;
+        private final int amount;
         public TemperatureEvent(int amount) {
-            this.temperatureValue = amount;
+            this.amount = amount;
         }
         public int getAmount() {
-            return temperatureValue;
+            return amount;
         }
 }

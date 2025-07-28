@@ -1,0 +1,25 @@
+# Ignore build artifacts
+target/
+*.class
+.DS_Store
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.swp
+
+# Maven
+/logs/
+/*.log
+!.mvn/wrapper/maven-wrapper.jar
+
+# JavaFX-specific
+bin/
+out/
