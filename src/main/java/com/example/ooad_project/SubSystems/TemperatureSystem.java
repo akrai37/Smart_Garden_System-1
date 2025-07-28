@@ -8,43 +8,43 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class TemperatureSystem implements Runnable{
-    private int currentDay;
-    private final GardenGrid gardenGrid;
-    private static final Logger logger = LogManager.getLogger("TemperatureSystemLogger");
+    private int simulationDayNumber;
+    private final GardenGrid plantLayout;
+    private static final Logger temperatureLogger = LogManager.getLogger("TemperatureSystemLogger");
 
 
     public TemperatureSystem() {
-//        Subscribe to the TemperatureEvent
-//        Published from SmartGardenAPI
-        this.gardenGrid = GardenGrid.getInstance();
-        logger.info("Temperature System Initialized");
+        // Set up our garden temperature controller
+        // We listen for temperature changes from the weather API
+        this.plantLayout = GardenGrid.getInstance();
+        temperatureLogger.info("Temperature System Initialized");
         EventBus.subscribe("DayUpdateEvent", event -> handleDayChangeEvent((DayUpdateEvent) event));
         EventBus.subscribe("TemperatureEvent", event -> handleTemperatureEvent((TemperatureEvent) event));
     }
 
     private void handleDayChangeEvent(DayUpdateEvent event) {
-        this.currentDay = event.getDay(); // Update currentDay
+        this.simulationDayNumber = event.getDay(); // Keep track of what day we're on
     }
 
     private void handleTemperatureEvent(TemperatureEvent event) {
-        int currentTemperature = event.getAmount();
-        logger.info("Day: " + currentDay + " API called temperature set to: {}", currentTemperature);
+        int environmentalTemperature = event.getAmount();
+        temperatureLogger.info("Day: " + simulationDayNumber + " API called temperature set to: {}", environmentalTemperature);
 
-        for (int i = 0; i < gardenGrid.getNumRows(); i++) {
-            for (int j = 0; j < gardenGrid.getNumCols(); j++) {
-                Plant plant = gardenGrid.getPlant(i, j);
-                if (plant != null) {
-                    int tempDiff = currentTemperature - plant.getTemperatureRequirement();
-                    if (tempDiff > 0) {
-                        EventBus.publish("Day: " + currentDay + " CoolTemperatureEvent", new CoolTemperatureEvent(plant.getRow(), plant.getCol(), Math.abs(tempDiff)));
-                        logger.info("Day: " + currentDay + " Temperature system cooled {} at position ({}, {}) by {} degrees F.", plant.getName(), i, j, Math.abs(tempDiff));
-                        EventBus.publish("SprinklerEvent", new SprinklerEvent(plant.getRow(), plant.getCol(), tempDiff));
-                        logger.info("Day: " + currentDay + " Sprinklers started at position ({}, {}) to cool down the plant.", i, j);
-                    } else if (tempDiff < 0) {
-                        EventBus.publish("HeatTemperatureEvent", new HeatTemperatureEvent(plant.getRow(), plant.getCol(), Math.abs(tempDiff)));
-                        logger.info("Day: " + currentDay + " Temperature system heated {} at position ({}, {}) by {} degrees F.", plant.getName(), i, j, Math.abs(tempDiff));
+        for (int rowPosition = 0; rowPosition < plantLayout.getNumRows(); rowPosition++) {
+            for (int columnPosition = 0; columnPosition < plantLayout.getNumCols(); columnPosition++) {
+                Plant gardenPlant = plantLayout.getPlant(rowPosition, columnPosition);
+                if (gardenPlant != null) {
+                    int temperatureDifference = environmentalTemperature - gardenPlant.getTemperatureRequirement();
+                    if (temperatureDifference > 0) {
+                        EventBus.publish("Day: " + simulationDayNumber + " CoolTemperatureEvent", new CoolTemperatureEvent(gardenPlant.getRow(), gardenPlant.getCol(), Math.abs(temperatureDifference)));
+                        temperatureLogger.info("Day: " + simulationDayNumber + " Temperature system cooled {} at position ({}, {}) by {} degrees F.", gardenPlant.getName(), rowPosition, columnPosition, Math.abs(temperatureDifference));
+                        EventBus.publish("SprinklerEvent", new SprinklerEvent(gardenPlant.getRow(), gardenPlant.getCol(), temperatureDifference));
+                        temperatureLogger.info("Day: " + simulationDayNumber + " Sprinklers started at position ({}, {}) to cool down the plant.", rowPosition, columnPosition);
+                    } else if (temperatureDifference < 0) {
+                        EventBus.publish("HeatTemperatureEvent", new HeatTemperatureEvent(gardenPlant.getRow(), gardenPlant.getCol(), Math.abs(temperatureDifference)));
+                        temperatureLogger.info("Day: " + simulationDayNumber + " Temperature system heated {} at position ({}, {}) by {} degrees F.", gardenPlant.getName(), rowPosition, columnPosition, Math.abs(temperatureDifference));
                     } else {
-                        logger.info("Day: " + currentDay + " {} at position ({}, {}) is at optimal temperature.", plant.getName(), i, j);
+                        temperatureLogger.info("Day: " + simulationDayNumber + " {} at position ({}, {}) is at optimal temperature.", gardenPlant.getName(), rowPosition, columnPosition);
                     }
                 }
             }
@@ -56,9 +56,9 @@ public class TemperatureSystem implements Runnable{
 
         while (true) {
             try {
-                logger.info("Day: " + currentDay + " All Levels are optimal");
+                temperatureLogger.info("Day: " + simulationDayNumber + " All Levels are optimal");
                 Thread.sleep(20000);
-//                System.out.println("Temperature System is running");
+                // Taking a break to check temperatures again
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

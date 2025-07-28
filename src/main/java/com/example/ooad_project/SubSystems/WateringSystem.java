@@ -12,91 +12,81 @@ import com.example.ooad_project.Events.SprinklerEvent;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class WateringSystem implements Runnable {
-    private final AtomicBoolean rainRequested = new AtomicBoolean(false);
-    private static final Logger logger = LogManager.getLogger("WateringSystemLogger");
-    private int rainAmount = 0;
-    private final GardenGrid gardenGrid;
-    private int currentDay;
+    private final AtomicBoolean isRainPending = new AtomicBoolean(false);
+    private static final Logger wateringLogger = LogManager.getLogger("WateringSystemLogger");
+    private int precipitationVolume = 0;
+    private final GardenGrid plantGarden;
+    private int simulationDay;
     @Override
     public void run() {
         while (true) {
             try {
-                Thread.sleep(1000); // Check every second
+                Thread.sleep(1000); // Wait a bit before checking again
             } catch (InterruptedException e) {
-                logger.error("Watering System interrupted");
-                return; // Exit if interrupted
+                wateringLogger.error("Watering System interrupted");
+                return; // Stop everything if something goes wrong
             }
         }
     }
 
     public WateringSystem() {
-        logger.info("Watering System Initialized");
-//        So our watering system is subscribed to the RainEvent
-//        When a rain event is published, the watering system will handle it
+        wateringLogger.info("Watering System Initialized");
+        // We watch for when it starts raining
         EventBus.subscribe("RainEvent", event -> handleRain((RainEvent) event));
         EventBus.subscribe("SprinklerActivationEvent", event -> sprinkle());
         EventBus.subscribe("DayUpdateEvent", event -> handleDayChangeEvent((DayUpdateEvent) event));
-        //        Get the garden grid instance
-//        This is the grid that holds all the plants
-        this.gardenGrid = GardenGrid.getInstance();
+        // Get access to our garden
+        this.plantGarden = GardenGrid.getInstance();
     }
 
     private void handleDayChangeEvent(DayUpdateEvent event) {
-        this.currentDay = event.getDay(); // Update currentDay
+        this.simulationDay = event.getDay(); // Remember what day it is
     }
 
-//    This method is called when a rain event is published
-//    It waters all the plants in the garden grid
-//    The amount of water each plant gets is the same
+    // Rain waters everything the same amount
     private void handleRain(RainEvent event) {
 
-        for (int i = 0; i < gardenGrid.getNumRows(); i++) {
-            for (int j = 0; j < gardenGrid.getNumCols(); j++) {
-                Plant plant = gardenGrid.getPlant(i, j);
-                if (plant != null) {
-                    plant.addWater(event.getAmount());
-                    logger.info("Day: " + currentDay + " Watered {} at position ({}, {}) with {} water from rain", plant.getName(), i, j, event.getAmount());
+        for (int rowIndex = 0; rowIndex < plantGarden.getNumRows(); rowIndex++) {
+            for (int columnIndex = 0; columnIndex < plantGarden.getNumCols(); columnIndex++) {
+                Plant plantInGrid = plantGarden.getPlant(rowIndex, columnIndex);
+                if (plantInGrid != null) {
+                    plantInGrid.addWater(event.getAmount());
+                    wateringLogger.info("Day: " + simulationDay + " Watered {} at position ({}, {}) with {} water from rain", plantInGrid.getName(), rowIndex, columnIndex, event.getAmount());
                 }
             }
         }
 
     }
 
-
-
-//    This method is called when the sprinklers are activated
-//    It waters all the plants in the garden grid
-//    The amount of water each plant gets depends on how much water it needs
+    // Smart sprinklers water plants based on what they need
     private void sprinkle() {
-//        System.out.println("Sprinklers activated!");
-        logger.info("Day: " + currentDay + " Sprinklers activated!");
-        int counter = 0; // Counter to keep track of how many plants are watered
+        wateringLogger.info("Day: " + simulationDay + " Sprinklers activated!");
+        int wateredPlantsCount = 0; // Let's count how many we help
 
-        for (int i = 0; i < gardenGrid.getNumRows(); i++) {
-            for (int j = 0; j < gardenGrid.getNumCols(); j++) {
-                Plant plant = gardenGrid.getPlant(i, j);
-                if (plant != null && !plant.getIsWatered()) {
-                    int waterNeeded = plant.getWaterRequirement() - plant.getCurrentWater();
-                    if (waterNeeded > 0) {
+        for (int rowIndex = 0; rowIndex < plantGarden.getNumRows(); rowIndex++) {
+            for (int columnIndex = 0; columnIndex < plantGarden.getNumCols(); columnIndex++) {
+                Plant plantInGrid = plantGarden.getPlant(rowIndex, columnIndex);
+                if (plantInGrid != null && !plantInGrid.getIsWatered()) {
+                    int requiredWaterAmount = plantInGrid.getWaterRequirement() - plantInGrid.getCurrentWater();
+                    if (requiredWaterAmount > 0) {
 
-//                        Publish water needed later
+                        // Show the sprinkler working on screen
 
-                        EventBus.publish("Day: " + currentDay + " SprinklerEvent", new SprinklerEvent(plant.getRow(), plant.getCol(), waterNeeded));
+                        EventBus.publish("Day: " + simulationDay + " SprinklerEvent", new SprinklerEvent(plantInGrid.getRow(), plantInGrid.getCol(), requiredWaterAmount));
 
 
-                        plant.addWater(waterNeeded);
-//                        Want to specify that the water is from sprinklers
-                        logger.info("Day: " + currentDay + " Sprinkled {} at position ({}, {}) with {} water from sprinklers", plant.getName(), i, j, waterNeeded);
-                        counter++;
+                        plantInGrid.addWater(requiredWaterAmount);
+                        // Write down what we did
+                        wateringLogger.info("Day: " + simulationDay + " Sprinkled {} at position ({}, {}) with {} water from sprinklers", plantInGrid.getName(), rowIndex, columnIndex, requiredWaterAmount);
+                        wateredPlantsCount++;
                     }else {
-                        logger.info("Day: " + currentDay + " {} at position ({}, {}) does not need water", plant.getName(), i, j);
+                        wateringLogger.info("Day: " + simulationDay + " {} at position ({}, {}) does not need water", plantInGrid.getName(), rowIndex, columnIndex);
                     }
                 }
             }
         }
 
-        logger.info("Day: " + currentDay + " In total Sprinkled {} plants", counter);
-//        gardenGrid.printAllPlantStats();
+        wateringLogger.info("Day: " + simulationDay + " In total Sprinkled {} plants", wateredPlantsCount);
     }
 }
 
