@@ -13,60 +13,36 @@ import org.apache.logging.log4j.core.layout.PatternLayout;
 @Plugin(name = "LoggerAppender", category = "Core", elementType = Appender.ELEMENT_TYPE, printObject = true)
 public class LoggerAppender extends AbstractAppender {
 
-    // Reference to the garden UI controller for displaying log messages in the interface
-    private static GardenUIController gardenControllerReference;
+    private static GardenUIController controller;
 
-    // Constructor that sets up the log appender with a name and formatting layout
-    protected LoggerAppender(String loggerIdentifier, Layout<?> messageFormatter) {
-        super(loggerIdentifier, null, messageFormatter, true, null);
+    protected LoggerAppender(String name, Layout<?> layout) {
+        super(name, null, layout, true, null);
     }
 
-    /**
-     * Factory method to create a new LoggerAppender instance
-     * This method is called by Log4j2 when creating appenders from configuration
-     * 
-     * @param appenderName The unique name for this appender
-     * @param layoutConfiguration The layout that defines how log messages are formatted
-     * @return A new LoggerAppender instance, or null if creation fails
-     */
     @PluginFactory
-    public static LoggerAppender createAppender(@PluginAttribute("name") String appenderName,
-                                                @PluginElement("Layout") Layout<?> layoutConfiguration) {
-        // Validate that we have a proper name for the appender
-        if (appenderName == null) {
+    public static LoggerAppender createAppender(@PluginAttribute("name") String name,
+                                                @PluginElement("Layout") Layout<?> layout) {
+        if (name == null) {
             LOGGER.error("No name provided for LoggerAppender");
             return null;
         }
 
-        // Use default layout if none was provided
-        if (layoutConfiguration == null) {
-            layoutConfiguration = PatternLayout.createDefaultLayout();
+        if (layout == null) {
+            layout = PatternLayout.createDefaultLayout();
         }
 
-        return new LoggerAppender(appenderName, layoutConfiguration);
+        return new LoggerAppender(name, layout);
     }
 
-    /**
-     * This method is called whenever a log event needs to be processed
-     * Currently disabled but would send log messages to the garden UI
-     * 
-     * @param logEvent The log event containing the message and metadata
-     */
     @Override
-    public void append(LogEvent logEvent) {
-//        if (gardenControllerReference != null) {
-//            String message = new String(getLayout().toByteArray(logEvent));
-//            gardenControllerReference.appendLogText(message.trim());
+    public void append(LogEvent event) {
+//        if (controller != null) {
+//            String message = new String(getLayout().toByteArray(event));
+//            controller.appendLogText(message.trim());
 //        }
     }
 
-    /**
-     * Sets the garden UI controller that will receive log messages
-     * This allows the appender to display logs in the user interface
-     * 
-     * @param gardenController The garden UI controller instance
-     */
-    public static void setController(GardenUIController gardenController) {
-//        LoggerAppender.gardenControllerReference = gardenController;
+    public static void setController(GardenUIController controller) {
+//        LoggerAppender.controller = controller;
     }
 }

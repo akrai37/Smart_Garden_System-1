@@ -1,0 +1,27 @@
+# === Build Artifacts ===
+target/
+bin/
+out/
+*.class
+*.jar
+
+# === OS Specific ===
+.DS_Store
+
+# === IDE Files ===
+.idea/
+*.iml
+.vscode/
+
+# === Logs and Temp Files ===
+*.log
+*.tmp
+*.swp
+logs/
+
+# === Maven ===
+.mvn/
+!/.mvn/wrapper/maven-wrapper.jar
+
+# === JavaFX / Misc ===
+*.launch
