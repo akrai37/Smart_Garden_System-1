@@ -18,9 +18,13 @@
     <!-- Main UI Layout -->
     <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1187.0">
         <children>
-            <!-- VBox for centering the GridPane -->
-            <VBox alignment="CENTER" prefHeight="561.0" prefWidth="1007.0" spacing="5" AnchorPane.topAnchor="20.0">
-                <HBox alignment="CENTER" spacing="60">
+            <!-- VBox for centering the GridPane exactly in the center -->
+            <VBox alignment="CENTER" spacing="5" 
+                  AnchorPane.topAnchor="0.0" 
+                  AnchorPane.bottomAnchor="0.0" 
+                  AnchorPane.leftAnchor="0.0" 
+                  AnchorPane.rightAnchor="0.0">
+                <HBox alignment="CENTER">
                     <GridPane fx:id="gridPane" gridLinesVisible="true"
                               style=" -fx-background-color: rgba(123, 63, 0, 0.5);">
                         <!-- Column and Row constraints will be added dynamically in the controller -->
@@ -98,7 +102,6 @@
 
                     <!-- Weather Label with more appealing style -->
 
-
             </VBox>
 
             <VBox layoutY="350.0" spacing="5" AnchorPane.leftAnchor="50.0"  AnchorPane.bottomAnchor="180.0">
@@ -112,14 +115,14 @@
                 <Label fx:id="temperatureStatusLabel" text="Optimal" style="-fx-font-family: serif; -fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #770737;"/>
             </VBox>
 
-<!--            <VBox layoutY="500.0" spacing="5" AnchorPane.leftAnchor="20.0">-->
-<!--                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="PARASITE">-->
-<!--                    <font>-->
-<!--                        <Font name="System Bold" size="20.0" />-->
-<!--                    </font>-->
-<!--                </Text>-->
-<!--                <Label fx:id="parasiteStatusLabel" text="No Parasites" style="-fx-font-family: serif; -fx-font-size: 25px; -fx-font-weight: bold; -fx-text-fill: green;"/>-->
-<!--            </VBox>-->
+            <VBox layoutY="35.0" spacing="5" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="50.0" alignment="TOP_RIGHT">
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="PARASITE" textAlignment="RIGHT">
+                    <font>
+                        <Font name="System Bold" size="20.0" />
+                    </font>
+                </Text>
+                <Label fx:id="parasiteStatusLabel" text="No Parasites" style="-fx-font-family: serif; -fx-font-size: 25px; -fx-font-weight: bold; -fx-text-fill: green;" alignment="CENTER_RIGHT"/>
+            </VBox>
         </children>
     </AnchorPane>
 </StackPane>

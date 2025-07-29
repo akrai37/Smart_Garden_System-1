@@ -18,12 +18,12 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>22-ea+11</version>
+            <version>21.0.2</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>22-ea+11</version>
+            <version>21.0.2</version>
         </dependency>
 
         <dependency>
@@ -65,9 +65,9 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
                 <configuration>
-                    <release>24</release>
-                    <source>24</source>
-                    <target>24</target>
+                    <release>21</release>
+                    <source>21</source>
+                    <target>21</target>
                 </configuration>
             </plugin>
             <plugin>
