@@ -1069,10 +1069,10 @@ public class GardenUIController {
             // Always restart sun animation (fixes issue where animation doesn't restart after rain)
             startSunAnimation();
 
-            // Set the label text with smaller yellow font
+            // Set simple sunny text with tomato color for light pink background
             rainStatusLabel.setGraphic(null); // Remove any existing graphics
             rainStatusLabel.setText("Sunny");
-            rainStatusLabel.setStyle("-fx-font-size: 20px; -fx-text-fill: #a81c07; -fx-font-weight: bold;");
+            rainStatusLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #FF6347; -fx-font-weight: bold;");
         });
     }
 
@@ -1148,10 +1148,10 @@ public class GardenUIController {
             // Add multiple clouds with different positions
             addMultipleClouds(cloudGroup, event.getAmount());
 
-            // Set the text with the rain amount in small blue font
+            // Set simple rain text with blue color for light pink background
             rainStatusLabel.setGraphic(null); // Remove any existing graphics
-            rainStatusLabel.setText(event.getAmount() + "mm");
-            rainStatusLabel.setStyle("-fx-font-size: 20px; -fx-text-fill: #4B9CD3; -fx-font-weight: bold;");
+            rainStatusLabel.setText(event.getAmount() + "mm Rain");
+            rainStatusLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #1E90FF; -fx-font-weight: bold;");
 
             // Create a pause transition
             PauseTransition pause = new PauseTransition(Duration.seconds(5));
@@ -1261,78 +1261,37 @@ public class GardenUIController {
         logger.info("Day: " + logDay + " Temperature changed to: " + event.getAmount() + "°F");
 
         Platform.runLater(() -> {
-            // Create a VBox to hold the temperature elements
-            VBox tempBox = new VBox(10);
-            tempBox.setAlignment(Pos.CENTER);
-
             int temp = event.getAmount();
-            javafx.scene.paint.Color bgColor, borderColor, textColor;
-            String imageName;
+            String tempText;
+            javafx.scene.paint.Color textColor;
 
-            // Set colors and image based on temperature
+            // Set text and color based on temperature
             if (temp <= 50) {
-                // Cold temperature
-                bgColor = javafx.scene.paint.Color.rgb(210, 230, 255, 0.85);  // Light blue
-                borderColor = javafx.scene.paint.Color.rgb(70, 130, 180, 0.7);  // Steel blue
-                textColor = javafx.scene.paint.Color.rgb(0, 0, 139);  // Dark blue
-                imageName = "coldTemperature.png";
+                tempText = temp + "°F (Cold)";
+                textColor = javafx.scene.paint.Color.BLUE;
             } else if (temp >= 60) {
-                // Hot temperature
-                bgColor = javafx.scene.paint.Color.rgb(255, 222, 222, 0.85);  // Light red
-                borderColor = javafx.scene.paint.Color.rgb(220, 20, 60, 0.7);  // Crimson
-                textColor = javafx.scene.paint.Color.rgb(139, 0, 0);  // Dark red
-                imageName = "hotTemperature.png";
+                tempText = temp + "°F (Hot)";
+                textColor = javafx.scene.paint.Color.RED;
             } else {
-                // Optimal temperature
-                bgColor = javafx.scene.paint.Color.rgb(220, 255, 220, 0.85);  // Light green
-                borderColor = javafx.scene.paint.Color.rgb(50, 205, 50, 0.7);  // Lime green
-                textColor = javafx.scene.paint.Color.rgb(0, 100, 0);  // Dark green
-                imageName = "normalTemperature.png";
+                tempText = temp + "°F (Optimal)";
+                textColor = javafx.scene.paint.Color.GREEN;
             }
 
-            // Add a background with rounded corners
-            tempBox.setBackground(new Background(new BackgroundFill(
-                    bgColor,
-                    new CornerRadii(15),
-                    Insets.EMPTY
-            )));
-
-            // Add a border
-            tempBox.setBorder(new Border(new BorderStroke(
-                    borderColor,
-                    BorderStrokeStyle.SOLID,
-                    new CornerRadii(15),
-                    new BorderWidths(2)
-            )));
-
-            // Add padding
-            tempBox.setPadding(new Insets(10));
-
-            // Create an ImageView for the temperature icon
-            Image tempImage = new Image(getClass().getResourceAsStream("/images/Temperature/" + imageName));
-            ImageView tempImageView = new ImageView(tempImage);
-            tempImageView.setFitHeight(80);
-            tempImageView.setFitWidth(20);
-
-            // Create a label for temperature text
-            Label tempLabel = new Label(temp + "°F");
-            tempLabel.setFont(new Font("System Bold", 18));
-            tempLabel.setTextFill(textColor);
-
-            // Add the components to the VBox
-            tempBox.getChildren().addAll(tempImageView, tempLabel);
-
-            // Add a drop shadow to the whole temperature display
-            javafx.scene.effect.DropShadow dropShadow = new javafx.scene.effect.DropShadow();
-            dropShadow.setColor(javafx.scene.paint.Color.rgb(0, 0, 0, 0.3));
-            dropShadow.setRadius(10);
-            dropShadow.setOffsetX(0);
-            dropShadow.setOffsetY(5);
-            tempBox.setEffect(dropShadow);
-
-            // Set the VBox as the graphic
-            temperatureStatusLabel.setGraphic(tempBox);
-            temperatureStatusLabel.setText("");  // Clear the text since we're using the graphic
+            // Clear any graphic and set simple text
+            temperatureStatusLabel.setGraphic(null);
+            temperatureStatusLabel.setText(tempText);
+            
+            String colorHex;
+            if (temp <= 50) {
+                colorHex = "#4169E1"; // Royal blue for cold
+            } else if (temp >= 60) {
+                colorHex = "#DC143C"; // Crimson for hot
+            } else {
+                colorHex = "#228B22"; // Forest green for optimal
+            }
+            
+            temperatureStatusLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: " + 
+                                          colorHex + ";");
 
             // Create a pause transition of 5 seconds
             PauseTransition pause = new PauseTransition(Duration.seconds(5));
@@ -1348,53 +1307,10 @@ public class GardenUIController {
         logger.info("Day: " + logDay + " Displayed optimal temperature");
 
         Platform.runLater(() -> {
-            // Create a VBox to hold the temperature elements
-            VBox tempBox = new VBox(10);
-            tempBox.setAlignment(Pos.CENTER);
-
-            // Add a background with rounded corners - green for optimal
-            tempBox.setBackground(new Background(new BackgroundFill(
-                    javafx.scene.paint.Color.rgb(220, 255, 220, 0.85),  // Light green with transparency
-                    new CornerRadii(15),
-                    Insets.EMPTY
-            )));
-
-            // Add a border
-            tempBox.setBorder(new Border(new BorderStroke(
-                    javafx.scene.paint.Color.rgb(50, 205, 50, 0.7),  // Lime green border
-                    BorderStrokeStyle.SOLID,
-                    new CornerRadii(15),
-                    new BorderWidths(2)
-            )));
-
-            // Add padding
-            tempBox.setPadding(new Insets(10));
-
-            // Create an ImageView for the optimal temperature icon
-            Image optimalImage = new Image(getClass().getResourceAsStream("/images/Temperature/normalTemperature.png"));
-            ImageView optimalImageView = new ImageView(optimalImage);
-            optimalImageView.setFitHeight(100);
-            optimalImageView.setFitWidth(30);
-
-            // Create a label for "Optimal" text
-            Label optimalLabel = new Label("Optimal");
-            optimalLabel.setFont(new Font("System Bold", 22));
-            optimalLabel.setTextFill(javafx.scene.paint.Color.rgb(0, 100, 0));  // Dark green text
-
-            // Add the components to the VBox
-            tempBox.getChildren().addAll(optimalImageView, optimalLabel);
-
-            // Add a drop shadow to the whole temperature display
-            javafx.scene.effect.DropShadow dropShadow = new javafx.scene.effect.DropShadow();
-            dropShadow.setColor(javafx.scene.paint.Color.rgb(0, 0, 0, 0.3));
-            dropShadow.setRadius(10);
-            dropShadow.setOffsetX(0);
-            dropShadow.setOffsetY(5);
-            tempBox.setEffect(dropShadow);
-
-            // Set the VBox as the graphic
-            temperatureStatusLabel.setGraphic(tempBox);
-            temperatureStatusLabel.setText("");  // Clear the text since we're using the graphic
+            // Clear any graphic and set simple optimal text with forest green for light pink background
+            temperatureStatusLabel.setGraphic(null);
+            temperatureStatusLabel.setText("Optimal");
+            temperatureStatusLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #228B22;");
         });
     }
 
@@ -1429,6 +1345,7 @@ public class GardenUIController {
                     // Load the parasite image
                     Image parasiteImage = new Image(getClass().getResourceAsStream(parasiteImagePath));
                     ImageView iconView = new ImageView(parasiteImage);
+
                     iconView.setFitHeight(20);
                     iconView.setFitWidth(20);
 
@@ -1789,21 +1706,21 @@ public class GardenUIController {
 //        }
 //    }
 
-    // Method to setup only the three menu buttons without the trunk
+    // Method to setup the three menu buttons in a horizontal line
     private void setupMenuButtonsOnly() {
         try {
             // Get anchor dimensions
             double anchorWidth = anchorPane.getWidth() > 0 ? anchorPane.getWidth() : 1187.0;
             // double anchorHeight = anchorPane.getHeight() > 0 ? anchorPane.getHeight() : 780.0; // Unused
 
-            // Position buttons on the RIGHT side of the screen
-            double buttonX = anchorWidth - 150; // Position on right side (150px from right edge)
-            double buttonStartY = 200; // Start position from top
-            double spacing = 160; // Spacing between buttons
+            // Position buttons vertically on the RIGHT side of the screen
+            double startX = anchorWidth - 150; // Fixed X position for all buttons  
+            double buttonSpacing = 70; // Increased vertical spacing to prevent overlap (button height is 50px)
+            double startY = 200; // Start Y position for the first button
 
             // Remove any existing menu button elements to prevent duplicates (updated for rectangles)
             anchorPane.getChildren().removeIf(node ->
-                    node instanceof StackPane && node.getLayoutX() > anchorWidth - 200);
+                    node instanceof StackPane && node.getLayoutX() > anchorWidth - 400);
 
             // Create smaller green RECTANGLES for each button (all green now)
             Rectangle treeRectangle = createEnhancedRectangleButton("#228B22");
@@ -1820,15 +1737,15 @@ public class GardenUIController {
             StackPane flowerButton = new StackPane(flowerRectangle, flowerLabel);
             StackPane vegButton = new StackPane(vegRectangle, vegLabel);
 
-            // Position the rectangle buttons vertically on the RIGHT side
-            treeButton.setLayoutX(buttonX);
-            treeButton.setLayoutY(buttonStartY);
+            // Position the rectangle buttons vertically in a single column
+            treeButton.setLayoutX(startX);
+            treeButton.setLayoutY(startY);
 
-            flowerButton.setLayoutX(buttonX);
-            flowerButton.setLayoutY(buttonStartY + spacing);
+            flowerButton.setLayoutX(startX);
+            flowerButton.setLayoutY(startY + buttonSpacing);
 
-            vegButton.setLayoutX(buttonX);
-            vegButton.setLayoutY(buttonStartY + spacing * 2);
+            vegButton.setLayoutX(startX);
+            vegButton.setLayoutY(startY + buttonSpacing * 2);
 
             // Create context menus with functional plant selection
             ContextMenu treeMenu = createFunctionalMenuForPlants(plantManager.getTrees());
@@ -5268,29 +5185,31 @@ public class GardenUIController {
             if (anchorWidth <= 0) anchorWidth = 1187.0;
             if (anchorHeight <= 0) anchorHeight = 780.0;
 
-            // Position below the vegetable button
-            // Vegetable button is at: X = anchorWidth - 150, Y = 200 + 160 * 2 = 520
-            // The vegetable button has a height of approximately 80px
-            double xPos = anchorWidth - 150 + 15; // Align with vegetable button + small offset for centering
-            double yPos = 520 + 80 + 10; // Below vegetable button + small gap
+            // Position aligned below the vertical menu buttons
+            // Menu buttons are now positioned vertically starting at Y = 200
+            // Tree button: Y = 200, Flower button: Y = 270, Veg button: Y = 340
+            // Each button has width 80px and height 50px, so veg button ends at Y = 390
+            // Button left edge is at (anchorWidth - 150), so center is at (anchorWidth - 150 + 40) = (anchorWidth - 110)
+            double buttonCenterX = anchorWidth - 110; // Center of vertical menu buttons
+            double yPos = 390 + 15; // Below vertical menu buttons + gap
 
-            // Position the pesticide box
-            pesticideBox.setLayoutX(xPos);
+            // Position the pesticide box aligned with the center of menu buttons
+            pesticideBox.setLayoutX(buttonCenterX - (pesticideBox.getPrefWidth() / 2)); // Center horizontally with button centers
             pesticideBox.setLayoutY(yPos);
 
-            logger.info("Pesticide box positioned below vegetable button at: " + xPos + ", " + yPos);
+            logger.info("Pesticide box positioned below vertical menu buttons at: " + (buttonCenterX - (pesticideBox.getPrefWidth() / 2)) + ", " + yPos);
         } catch (Exception e) {
             logger.error("Error positioning pesticide box: " + e.getMessage());
 
-            // Fallback position - also adjusted
-            pesticideBox.setLayoutX(770); // 850 - 80
-            pesticideBox.setLayoutY(550); // 580 - 30
+            // Fallback position - centered below vertical menu buttons
+            // Assume standard window width of 1187, so button center would be at 1187 - 110 = 1077
+            pesticideBox.setLayoutX(1077 - (pesticideBox.getPrefWidth() / 2)); // Align with button centers
+            pesticideBox.setLayoutY(405); // Below vertical menu buttons with new spacing
         }
     }
 
-    /**
-     * Shows a particle burst effect when refilling the pesticide.
-     */
+    /*
+    // Commented out - not used in simplified pesticide box
     private void showRefillParticles() {
         // Find the position of the pesticide box
         double pestX = 0;
@@ -5395,6 +5314,7 @@ public class GardenUIController {
             });
         }
     }
+    */
 
 
 
@@ -5555,232 +5475,106 @@ public class GardenUIController {
         }
     }
     /**
-     * Creates an enhanced vertical pesticide system status box with
-     * better styling to match the screenshot.
+     * Creates a simple pesticide system status box with only refill button and level bar.
      */
     private void createEnhancedVerticalPesticideBox() {
         Platform.runLater(() -> {
             try {
-                // Create the main container - using VBox for vertical layout with smaller size
-                VBox pesticideBox = new VBox(8); // Reduced spacing for smaller layout
-                pesticideBox.setPadding(new Insets(8)); // Reduced padding
-                pesticideBox.setPrefWidth(120); // Smaller width to match vegetable button
-                pesticideBox.setPrefHeight(50); // Smaller height
-                pesticideBox.setAlignment(Pos.TOP_CENTER);
+                // Create the main container - larger rectangular VBox with curved corners
+                VBox pesticideBox = new VBox(8);
+                pesticideBox.setPadding(new Insets(15));
+                pesticideBox.setPrefWidth(140); // Increased width for rectangular shape
+                pesticideBox.setPrefHeight(110); // Increased height
+                pesticideBox.setAlignment(Pos.CENTER);
 
-                // Style with light purple background and border (matching screenshot)
-                pesticideBox.setBackground(new Background(new BackgroundFill(
-                        Color.rgb(230, 220, 255, 0.9), // Slightly more opaque to match screenshot
-                        new CornerRadii(10),
-                        Insets.EMPTY
-                )));
+                // Rectangular styling with curved corners
+                pesticideBox.setStyle(
+                    "-fx-background-color: #f5f5f5;" +
+                    "-fx-border-color: #cccccc;" +
+                    "-fx-border-width: 2;" +
+                    "-fx-border-radius: 15;" +  // More curved corners for rectangular shape
+                    "-fx-background-radius: 15;"
+                );
 
-                pesticideBox.setBorder(new Border(new BorderStroke(
-                        Color.rgb(160, 120, 200, 0.7), // Purple border
-                        BorderStrokeStyle.SOLID,
-                        new CornerRadii(10),
-                        new BorderWidths(2)
-                )));
+                // Add simple black label with larger font
+                Label titleLabel = new Label("Pesticide Refill");
+                titleLabel.setStyle(
+                    "-fx-text-fill: black;" +
+                    "-fx-font-size: 12px;" +  // Increased font size for larger box
+                    "-fx-font-weight: bold;"  // Made bold for better visibility
+                );
+                titleLabel.setAlignment(Pos.CENTER);
 
-
-                // Add icon at the top - smaller size
-                ImageView pesticideIcon = new ImageView(new Image(getClass().getResourceAsStream("/images/pControl1.png")));
-                pesticideIcon.setFitHeight(24); // Reduced from 32
-                pesticideIcon.setFitWidth(20);  // Reduced from 28
-
-                // Add title - "PESTICIDE" with smaller font
-                Label titleLabel = new Label("PESTICIDE");
-                titleLabel.setFont(Font.font("System", FontWeight.BOLD, 10)); // Reduced from 14
-                titleLabel.setTextFill(Color.rgb(80, 40, 120)); // Darker purple text
-                HBox titleContainer = new HBox(3); // Reduced spacing
-                titleContainer.setAlignment(Pos.CENTER);
-                titleContainer.getChildren().addAll(pesticideIcon, titleLabel);
-                
-                // Add status label with smaller font
-                Label statusLabel = new Label("READY");
-                statusLabel.setFont(Font.font("System", FontWeight.BOLD, 10)); // Reduced from 14
-                statusLabel.setTextFill(Color.rgb(0, 100, 0)); // Green for READY state
-                statusLabel.setPadding(new Insets(3, 0, 3, 0)); // Reduced padding
-
-                // Add level label with smaller font
-                Label levelLabel = new Label("LEVEL");
-                levelLabel.setFont(Font.font("System", FontWeight.BOLD, 8)); // Reduced from 10
-                levelLabel.setTextFill(Color.rgb(80, 40, 120)); // Purple text
-
-                VBox progressContainer = new VBox(1); // Reduced spacing
-                progressContainer.setPadding(new Insets(1, 0, 5, 0)); // Reduced spacing
-                progressContainer.setAlignment(Pos.CENTER); // Center align the level bar
-
-                // Add level indicator (progress bar) - smaller size
+                // Add larger level indicator (progress bar)
                 ProgressBar levelBar = new ProgressBar(0.8); // Start at 80%
-                levelBar.setPrefWidth(70); // Reduced from 90
-                levelBar.setPrefHeight(8); // Reduced from 10
-                levelBar.setMinHeight(8);
-                levelBar.setMaxHeight(8);
-                levelBar.setStyle("-fx-accent: #9370DB;"); // Medium purple progress color
+                levelBar.setPrefWidth(110); // Wider progress bar
+                levelBar.setPrefHeight(12);  // Slightly taller
+                levelBar.setStyle("-fx-accent: #4CAF50;"); // Simple green color
 
                 // Make progress bar visible
                 levelBar.setVisible(true);
                 levelBar.setManaged(true);
-
-                progressContainer.getChildren().add(levelBar);
                 
-                // Add a refill button with smaller styling
+                // Add a larger refill button
                 Button refillButton = new Button("Refill");
-                refillButton.setPrefWidth(60); // Reduced from 80
+                refillButton.setPrefWidth(90); // Wider button
+                refillButton.setPrefHeight(25); // Taller button
                 refillButton.setStyle(
-                        "-fx-background-color: linear-gradient(to bottom, #f0e6ff, #d8c6ff);" +
-                                "-fx-border-color: #9370DB;" +
-                                "-fx-border-width: 1;" +
-                                "-fx-border-radius: 5;" +
-                                "-fx-text-fill: #4B0082;" +
-                                "-fx-font-weight: bold;" +
-                                "-fx-font-size: 10px;" + // Reduced from 12px
-                                "-fx-padding: 3 8 3 8;" + // Reduced padding
-                                "-fx-cursor: hand;"
+                    "-fx-background-color: #e0e0e0;" +
+                    "-fx-border-color: #999999;" +
+                    "-fx-border-width: 1;" +
+                    "-fx-border-radius: 8;" +  // More curved button corners
+                    "-fx-text-fill: #333333;" +
+                    "-fx-font-size: 11px;" +   // Larger font for button
+                    "-fx-font-weight: bold;" + // Bold button text
+                    "-fx-padding: 6 12 6 12;"  // More padding
                 );
 
-                // Define styles as constants to avoid lambda issues - smaller button
-                final String normalStyle =
-                        "-fx-background-color: linear-gradient(to bottom, #f0e6ff, #d8c6ff);" +
-                                "-fx-border-color: #9370DB;" +
-                                "-fx-border-width: 1;" +
-                                "-fx-border-radius: 5;" +
-                                "-fx-text-fill: #4B0082;" +
-                                "-fx-font-weight: bold;" +
-                                "-fx-font-size: 10px;" +
-                                "-fx-padding: 3 8 3 8;" +
-                                "-fx-cursor: hand;";
+                // Simple hover effect with updated styling
+                final String normalStyle = refillButton.getStyle();
+                final String hoverStyle = 
+                    "-fx-background-color: #d0d0d0;" +
+                    "-fx-border-color: #999999;" +
+                    "-fx-border-width: 1;" +
+                    "-fx-border-radius: 8;" +
+                    "-fx-text-fill: #333333;" +
+                    "-fx-font-size: 11px;" +
+                    "-fx-font-weight: bold;" +
+                    "-fx-padding: 6 12 6 12;";
 
-                final String hoverStyle =
-                        "-fx-background-color: linear-gradient(to bottom, #e0d0ff, #c0a0ff);" +
-                                "-fx-border-color: #9370DB;" +
-                                "-fx-border-width: 1;" +
-                                "-fx-border-radius: 5;" +
-                                "-fx-text-fill: #4B0082;" +
-                                "-fx-font-weight: bold;" +
-                                "-fx-font-size: 10px;" +
-                                "-fx-padding: 3 8 3 8;" +
-                                "-fx-cursor: hand;";
+                refillButton.setOnMouseEntered(e -> refillButton.setStyle(hoverStyle));
+                refillButton.setOnMouseExited(e -> refillButton.setStyle(normalStyle));
 
-                // Add hover effect using the constant styles
-                refillButton.setOnMouseEntered(e -> {
-                    refillButton.setStyle(hoverStyle);
-                });
-
-                refillButton.setOnMouseExited(e -> {
-                    refillButton.setStyle(normalStyle);
-                });
-
-                // Store references for the lambda expressions
-                final Label finalStatusLabel = statusLabel;
-                final ProgressBar finalLevelBar = levelBar;
-
-                // Handle refill button click - improved with animation
+                // Handle refill button click - simple animation
                 refillButton.setOnAction(e -> {
-                    // Create a filling animation
+                    // Simple fill animation
                     Timeline fillAnimation = new Timeline();
-
-                    // Current progress value - must be effectively final
-                    final double currentValue = finalLevelBar.getProgress();
-
-                    // Add keyframes for smooth filling animation
-                    for (int i = 0; i <= 20; i++) { // More steps for smoother animation
-                        // Need to make i effectively final for use in lambda
-                        final int index = i;
-
-                        double newValue = currentValue + ((1.0 - currentValue) * index / 20.0);
-                        fillAnimation.getKeyFrames().add(
-                                new KeyFrame(Duration.millis(index * 30),
-                                        new KeyValue(finalLevelBar.progressProperty(), newValue)
-                                )
-                        );
-
-                        // Change color during animation - avoiding lambda issues
-                        if (index < 10) {
-                            final String colorStyle = "-fx-accent: #" + String.format("%02x", 147 + index * 5) + "70DB;";
-                            fillAnimation.getKeyFrames().add(
-                                    new KeyFrame(Duration.millis(index * 30),
-                                            new KeyValue(finalLevelBar.styleProperty(), colorStyle)
-                                    )
-                            );
-                        } else {
-                            final String colorStyle = "-fx-accent: #9370" + String.format("%02x", 219 - (index-10) * 5) + ";";
-                            fillAnimation.getKeyFrames().add(
-                                    new KeyFrame(Duration.millis(index * 30),
-                                            new KeyValue(finalLevelBar.styleProperty(), colorStyle)
-                                    )
-                            );
-                        }
-                    }
-
-                    // Final color
+                    
+                    // Animate to 100%
                     fillAnimation.getKeyFrames().add(
-                            new KeyFrame(Duration.millis(600),
-                                    new KeyValue(finalLevelBar.styleProperty(), "-fx-accent: #9370DB;")
-                            )
+                        new KeyFrame(Duration.millis(500),
+                            new KeyValue(levelBar.progressProperty(), 1.0)
+                        )
                     );
-
-                    // Add a slight scaling animation for feedback
-                    ScaleTransition scale = new ScaleTransition(Duration.millis(200), refillButton);
-                    scale.setFromX(1.0);
-                    scale.setFromY(1.0);
-                    scale.setToX(0.95);
-                    scale.setToY(0.95);
-                    scale.setCycleCount(2);
-                    scale.setAutoReverse(true);
-
-                    // Play the animations
+                    
                     fillAnimation.play();
-                    scale.play();
-
-                    // Update status temporarily - need to use a final copy
-                    final String oldStatus = finalStatusLabel.getText();
-                    finalStatusLabel.setText("REFILLING");
-                    finalStatusLabel.setTextFill(Color.rgb(0, 100, 200)); // Blue during refill
-
-                    // Add visual feedback with a particle burst
-                    showRefillParticles();
-
-                    // Reset status after a short delay
-                    PauseTransition statusReset = new PauseTransition(Duration.millis(700));
-                    statusReset.setOnFinished(event -> {
-                        finalStatusLabel.setText(oldStatus);
-                        finalStatusLabel.setTextFill(Color.rgb(0, 100, 0)); // Back to green
-                    });
-                    statusReset.play();
-
                     logger.info("Pesticide refilled to 100%");
                 });
 
-                // Add all components to the vertical box
-                pesticideBox.getChildren().addAll(
-                       titleContainer,
-                        statusLabel,
-                        levelLabel,
-                        progressContainer,
-                        refillButton
-                );
-
-                // Add drop shadow
-                DropShadow shadow = new DropShadow();
-                shadow.setColor(Color.rgb(0, 0, 0, 0.3));
-                shadow.setRadius(8);
-                shadow.setOffsetY(3);
-                pesticideBox.setEffect(shadow);
+                // Add the label, level bar and refill button to the box
+                pesticideBox.getChildren().addAll(titleLabel, levelBar, refillButton);
 
                 // Add to the scene
                 anchorPane.getChildren().add(pesticideBox);
 
-                // Position it at the adjusted position - exactly where shown in screenshot
-                // Using exact coordinates from the screenshot
+                // Position it at the same location as before
                 positionPesticideBoxExactLocation(pesticideBox);
 
-                // Store references for later updates
-                this.pesticideStatusLabel = statusLabel;
+                // Store references for later updates (keep same interface)
+                this.pesticideStatusLabel = null; // No status label in simple version
                 this.pesticideLevelBar = levelBar;
 
-                logger.info("Enhanced vertical pesticide system box created");
+                logger.info("Simple pesticide system box created");
             } catch (Exception e) {
                 logger.error("Error creating pesticide status box: " + e.getMessage());
                 e.printStackTrace();

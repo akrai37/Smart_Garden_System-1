@@ -32,7 +32,7 @@ public class HelloApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/com/example/ooad_project/hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1200, 800);
         scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
-        stage.setTitle("DIA Organics - Smart Garden");
+        stage.setTitle("DigiGarden - Smart Garden ");
         stage.setScene(scene) ;
         stage.show();
         initializeBackgroundServices();
@@ -45,7 +45,7 @@ public class HelloApplication extends Application {
         Runnable wateringSystem = new WateringSystem();
         Runnable temperatureSystem = new TemperatureSystem();
         Runnable pesticideSystem = new PesticideSystem();
-        // DaySystem daySystem = DaySystem.getInstance(); // Commented out as it's not used
+        DaySystem daySystem = DaySystem.getInstance(); // Initialize DaySystem to start day counter
 
         ThreadManager.run(wateringSystem);
         ThreadManager.run(temperatureSystem);
