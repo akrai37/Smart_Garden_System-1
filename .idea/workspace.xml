@@ -4,7 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e30642a5-40fd-478a-8fc6-708f82d25ab7" name="Changes" comment="" />
+    <list default="true" id="e30642a5-40fd-478a-8fc6-708f82d25ab7" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/DayLogger.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/DayLogger.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/GardenAPI.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/GardenAPI.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/GardenUIController.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/GardenUIController.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/PesticideSystem.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/PesticideSystem.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/TemperatureSystem.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/TemperatureSystem.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/WateringSystem.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/WateringSystem.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/mediumCarrot.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/mediumCarrot.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/smallCarrot.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/smallCarrot.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/smallLily.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/smallLily.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/smallMaple.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/smallMaple.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/smallOak.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/smallOak.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/smallPine.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/smallPine.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/smallRose.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/smallRose.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/smallSpinach.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/smallSpinach.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/smallTulip.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/smallTulip.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/smallZucchini.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/smallZucchini.png" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -28,24 +46,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/akrai/Desktop/Smart_Garden_System-1&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.HelloApplication.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/akrai/Desktop/Smart_Garden_System-1/src/main/resources/images",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/images" />
       <recent name="$PROJECT_DIR$/src/main" />
       <recent name="$PROJECT_DIR$/src/main/java" />
       <recent name="$PROJECT_DIR$/src/main/java/com/example/ooad_project" />
