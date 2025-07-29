@@ -12,148 +12,57 @@
       <change beforePath="$PROJECT_DIR$/logs/PesticideSystem.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/PesticideSystem.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/TemperatureSystem.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/TemperatureSystem.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/WateringSystem.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/WateringSystem.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ooad_project/GardenUIController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ooad_project/GardenUIController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ooad_project/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ooad_project/HelloApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/ooad_project/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/ooad_project/hello-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/images/farmer.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/farmer.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/images/rr2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/images/rrr.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/rrr.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/images/sun.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/org/apache/logging/log4j/core/config/plugins/Log4j2Plugins.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/API/SmartGardenAPI.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/API/SmartGardenAPIInterface.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/DaySystem.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Events/CoolTemperatureEvent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Events/DayUpdateEvent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Events/HeatTemperatureEvent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Events/ParasiteDamageEvent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Events/ParasiteDisplayEvent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Events/ParasiteEvent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Events/PesticideApplicationEvent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Events/PlantHealthUpdateEvent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Events/PlantImageUpdateEvent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Events/RainEvent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Events/SprinklerEvent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Events/TemperatureEvent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/GardenGrid.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/GardenUIController$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/GardenUIController$1Raindrop.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/GardenUIController$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/GardenUIController$3.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/GardenUIController$4.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/GardenUIController$5.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/GardenUIController$6.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/GardenUIController$7.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/GardenUIController$8.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/GardenUIController$RainDrop.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/GardenUIController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/HelloApplication.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/LoggerAppender.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Parasite/Children/Aphids.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Parasite/Children/Crow.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Parasite/Children/Locust.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Parasite/Children/Rat.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Parasite/Children/Slugs.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Parasite/Parasite.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Parasite/ParasiteFactory.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Parasite/ParasiteManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Plant/Children/Flower.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Plant/Children/Tree.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Plant/Children/Vegetable.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Plant/Plant.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Plant/PlantManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/SubSystems/PesticideSystem.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/SubSystems/TemperatureSystem.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/SubSystems/WateringSystem.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/ThreadUtils/EventBus.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/ThreadUtils/ThreadManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/hello-view.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/Parasites/aphidsDetected.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/Parasites/crowDetected.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/Parasites/locustDetected.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/Parasites/noParasite.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/Parasites/parasiteDetected.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/Parasites/ratDetected.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/Parasites/slugDetected.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/Temperature/coldTemperature.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/Temperature/hotTemperature.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/Temperature/normalTemperature.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/abc.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/abc1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/aphids.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/b5.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/back.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/back1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/back2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/back33.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/backgroundImage.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/cool.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/crow.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/def.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/farmer.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/happy.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/heat.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/largeCarrot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/largeLily.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/largeMaple.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/largeOak.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/largeRose.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/largelily.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/largepine.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/largespinach.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/largetulip.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/largezucchini.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/largezucchini.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/leaves.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/lily.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/locust.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/mediumCarrot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/mediumLily.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/mediumMaple.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/mediumOak.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/mediumPine.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/mediumRose.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/mediumSpinach.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/mediumTree.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/mediumTulip.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/mediumZucchini.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/mediumlily.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/mediumspinach.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/pControl.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/pControl1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/pestControl.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/picture.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/rain.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/rat.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/rr.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/rr1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/rr11.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/rr2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/rr3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/rrr.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/rrrr.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/sad.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/slugs.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/smallCarrot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/smallLily.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/smallMaple.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/smallOak.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/smallPine.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/smallRose.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/smallSpinach.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/smallTulip.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/smallZucchini.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/smalllily.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/smallspinach.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/smalltulip.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/smallzucchini.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/spray.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/sprinkler.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/sun.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/w.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/log4j2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/module-info.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/API/SmartGardenAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/API/SmartGardenAPI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/DaySystem.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/DaySystem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Events/CoolTemperatureEvent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Events/CoolTemperatureEvent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Events/DayUpdateEvent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Events/DayUpdateEvent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Events/HeatTemperatureEvent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Events/HeatTemperatureEvent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Events/ParasiteDamageEvent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Events/ParasiteDamageEvent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Events/ParasiteDisplayEvent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Events/ParasiteDisplayEvent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Events/ParasiteEvent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Events/ParasiteEvent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Events/PesticideApplicationEvent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Events/PesticideApplicationEvent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Events/PlantHealthUpdateEvent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Events/PlantHealthUpdateEvent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Events/PlantImageUpdateEvent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Events/PlantImageUpdateEvent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Events/RainEvent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Events/RainEvent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Events/SprinklerEvent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Events/SprinklerEvent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Events/TemperatureEvent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Events/TemperatureEvent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/GardenGrid.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/GardenGrid.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/GardenUIController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/GardenUIController$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/GardenUIController$1Raindrop.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/GardenUIController$1Raindrop.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/GardenUIController$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/GardenUIController$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/GardenUIController$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/GardenUIController$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/GardenUIController$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/GardenUIController$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/GardenUIController$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/GardenUIController$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/GardenUIController$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/GardenUIController$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/GardenUIController$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/GardenUIController$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/GardenUIController$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/GardenUIController$8.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/GardenUIController$RainDrop.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/GardenUIController$RainDrop.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/GardenUIController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/GardenUIController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/HelloApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/HelloApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/LoggerAppender.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/LoggerAppender.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Parasite/Children/Aphids.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Parasite/Children/Aphids.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Parasite/Children/Crow.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Parasite/Children/Crow.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Parasite/Children/Locust.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Parasite/Children/Locust.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Parasite/Children/Rat.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Parasite/Children/Rat.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Parasite/Children/Slugs.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Parasite/Children/Slugs.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Parasite/Parasite.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Parasite/Parasite.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Parasite/ParasiteFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Parasite/ParasiteFactory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Parasite/ParasiteManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Parasite/ParasiteManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Plant/Children/Flower.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Plant/Children/Flower.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Plant/Children/Tree.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Plant/Children/Tree.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Plant/Children/Vegetable.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Plant/Children/Vegetable.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Plant/Plant.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Plant/Plant.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Plant/PlantManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Plant/PlantManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/SubSystems/PesticideSystem.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/SubSystems/PesticideSystem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/SubSystems/TemperatureSystem.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/SubSystems/TemperatureSystem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/SubSystems/WateringSystem.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/SubSystems/WateringSystem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/ThreadUtils/EventBus.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/ThreadUtils/EventBus.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/ThreadUtils/ThreadManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/ThreadUtils/ThreadManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/hello-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/module-info.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -178,22 +87,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/akrai/Desktop/Smart_Garden_System-1&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.HelloApplication.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "/Users/vaishnavipatil/VS Code Projects/Smart_Garden_System-1",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main" />
@@ -222,6 +134,14 @@
       </method>
     </configuration>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.27812.49" />
+        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-IU-251.27812.49" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="e30642a5-40fd-478a-8fc6-708f82d25ab7" name="Changes" comment="" />
@@ -229,8 +149,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1753468571645</updated>
+      <workItem from="1753740991568" duration="102000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

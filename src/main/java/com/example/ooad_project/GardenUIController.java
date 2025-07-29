@@ -106,14 +106,14 @@ public class GardenUIController {
 
     @FXML
     private Rectangle treePlaceholder;
-    @FXML
-    private Rectangle treeTrunk;
-    @FXML
-    private Line rightBranch1;
-    @FXML
-    private Line rightBranch2;
-    @FXML
-    private Line leftBranch;
+    // @FXML
+    // private Rectangle treeTrunk; // Removed to hide trunk
+    // @FXML
+    // private Line rightBranch1; // Removed to hide branches
+    // @FXML
+    // private Line rightBranch2; // Removed to hide branches
+    // @FXML
+    // private Line leftBranch; // Removed to hide branches
     private final Random random = new Random();
     private GardenGrid gardenGrid;
 
@@ -123,9 +123,9 @@ public class GardenUIController {
     @FXML
     private HBox menuBar;
     private HBox parasiteStatusContainer;
-    private TranslateTransition parasiteStatusAnimation;
 
-    private PathTransition parasitePathTransition;
+
+
     private Label pesticideStatusLabel;
     private ProgressBar pesticideLevelBar;
 
@@ -207,7 +207,8 @@ public class GardenUIController {
         removeVegLabelById();
         removeFlowerLabelById();
         removeTreeLabelById();
-        setupSimpleTreeMenu();
+        // setupSimpleTreeMenu(); // Commented out to remove brown trunk
+        setupMenuButtonsOnly(); // Setup only the three buttons without trunk
 
         // Load plants data
         loadStyledPlantsData();
@@ -227,12 +228,10 @@ public class GardenUIController {
         //   flowerMenuButton.setPickOnBounds(true);/home/hp/Downloads/back2.png
 
 
-//         Load the background image
-//         Load the background image
-        Image backgroundImage = new Image(getClass().getResourceAsStream("/images/rrr.png"));
+        // Set Background.jpg as the background image
+        Image backgroundImage = new Image(getClass().getResourceAsStream("/images/Background.jpg"));
 
-
-        // Create an ImageView
+        // Create an ImageView for the background
         ImageView imageView = new ImageView(backgroundImage);
         imageView.setPreserveRatio(false);
         imageView.setOpacity(0.9);
@@ -248,20 +247,22 @@ public class GardenUIController {
             imageView.setFitHeight(newVal.doubleValue());
         });
 
-        // Add ColumnConstraints
+        // Rest of initialization continues...
+
+        // Add ColumnConstraints - smaller size
         gridPane.getColumnConstraints().clear();
         for (int col = 0; col < gardenGrid.getNumCols(); col++) {
             ColumnConstraints colConst = new ColumnConstraints();
-            colConst.setPrefWidth(80);
+            colConst.setPrefWidth(60); // Reduced from 80 to 60
             colConst.setHgrow(Priority.SOMETIMES); // Allow some growth
             gridPane.getColumnConstraints().add(colConst);
         }
 
-        // Add RowConstraints with better spacing
+        // Add RowConstraints with smaller size
         gridPane.getRowConstraints().clear();
         for (int row = 0; row < gardenGrid.getNumRows(); row++) {
             RowConstraints rowConst = new RowConstraints();
-            rowConst.setPrefHeight(80);
+            rowConst.setPrefHeight(60); // Reduced from 80 to 60
             rowConst.setVgrow(Priority.SOMETIMES); // Allow some growth
             gridPane.getRowConstraints().add(rowConst);
         }
@@ -273,7 +274,7 @@ public class GardenUIController {
         rainCanvas = new Canvas(1000, 800);
         anchorPane.getChildren().add(rainCanvas); // Add the canvas to the AnchorPane
         rainDrops = new ArrayList<>();
-        addVerticalTextToTrunk();
+        // addVerticalTextToTrunk(); // Removed vertical trunk text
         //gridPane.setStyle("-fx-grid-lines-visible: true; -fx-border-color: brown; -fx-border-width: 2;");
 
         // Load plants data from JSON file and populate MenuButtons
@@ -473,8 +474,8 @@ public class GardenUIController {
         String imageFile = plant.getCurrentImage();
         Image image = new Image(getClass().getResourceAsStream("/images/" + imageFile));
         ImageView imageView = new ImageView(image);
-        imageView.setFitHeight(45); // Slightly larger
-        imageView.setFitWidth(45);
+        imageView.setFitHeight(35); // Adjusted for smaller grid cells (reduced from 45)
+        imageView.setFitWidth(35);
 
         // Add drop shadow for better visibility
         javafx.scene.effect.DropShadow dropShadow = new javafx.scene.effect.DropShadow();
@@ -899,8 +900,8 @@ public class GardenUIController {
             String imageName = plant.getCurrentImage();
             Image newImage = new Image(getClass().getResourceAsStream("/images/" + imageName));
             ImageView newImageView = new ImageView(newImage);
-            newImageView.setFitHeight(40);  // Match the cell size in the grid
-            newImageView.setFitWidth(40);
+            newImageView.setFitHeight(35);  // Match the smaller cell size
+            newImageView.setFitWidth(35);
 
             // Create a pane to center the image
             StackPane pane = new StackPane();
@@ -1024,95 +1025,6 @@ public class GardenUIController {
 //        });
 //        pauseRain.play();
 //    }
-
-    private void addVerticalTextToTrunk() {
-        Platform.runLater(() -> {
-            try {
-                // Create a VBox to stack the letters vertically
-                VBox textVBox = new VBox(5); // 5 pixels spacing between letters
-                textVBox.setAlignment(Pos.CENTER);
-
-                // Create individual letters
-                String[] letters = {"A", "d", "d"};
-
-                for (String letter : letters) {
-                    Text letterText = new Text(letter);
-
-                    // Style each letter
-                    letterText.setFill(javafx.scene.paint.Color.WHITE);
-                    letterText.setStroke(javafx.scene.paint.Color.rgb(70, 40, 20, 0.9)); // Brown stroke
-                    letterText.setStrokeWidth(1.5);
-                    letterText.setFont(javafx.scene.text.Font.font("Arial", javafx.scene.text.FontWeight.BOLD, 20));
-
-                    // Add shadow for better visibility
-                    javafx.scene.effect.DropShadow shadow = new javafx.scene.effect.DropShadow();
-                    shadow.setColor(javafx.scene.paint.Color.rgb(0, 0, 0, 0.7));
-                    shadow.setRadius(3);
-                    shadow.setOffsetX(2);
-                    shadow.setOffsetY(2);
-                    letterText.setEffect(shadow);
-
-                    // Add letter to the VBox
-                    textVBox.getChildren().add(letterText);
-                }
-
-                // Position the text on the trunk
-                // Note: Adjust these coordinates to match your trunk's position
-                double trunkX = anchorPane.getWidth() - 63; // Position on the right side like in your screenshot
-                double trunkY = 250; // Upper part of the trunk
-
-                textVBox.setLayoutX(trunkX);
-                textVBox.setLayoutY(trunkY);
-
-                // Add the VBox to the 8
-                anchorPane.getChildren().add(textVBox);
-
-                // Add a subtle pulsing animation to draw attention
-                javafx.animation.ScaleTransition scaleTransition = new javafx.animation.ScaleTransition(
-                        Duration.millis(1500), textVBox);
-                scaleTransition.setFromX(1.0);
-                scaleTransition.setFromY(1.0);
-                scaleTransition.setToX(1.1);
-                scaleTransition.setToY(1.1);
-                scaleTransition.setCycleCount(javafx.animation.Animation.INDEFINITE);
-                scaleTransition.setAutoReverse(true);
-                scaleTransition.play();
-
-                // Make the text clickable
-                textVBox.setOnMouseClicked(event -> {
-                    // You can add code here to show your plant selection menu
-                    logger.info("ADD ME text clicked, could show plant selection menu here");
-                });
-
-                // Add hover effect to change letter colors on hover
-                textVBox.setOnMouseEntered(event -> {
-                    textVBox.setCursor(javafx.scene.Cursor.HAND);
-
-                    // Change all letters to yellow on hover
-                    for (Node node : textVBox.getChildren()) {
-                        if (node instanceof Text) {
-                            ((Text) node).setFill(javafx.scene.paint.Color.YELLOW);
-                        }
-                    }
-                });
-
-                textVBox.setOnMouseExited(event -> {
-                    textVBox.setCursor(javafx.scene.Cursor.DEFAULT);
-
-                    // Change back to white when not hovering
-                    for (Node node : textVBox.getChildren()) {
-                        if (node instanceof Text) {
-                            ((Text) node).setFill(javafx.scene.paint.Color.WHITE);
-                        }
-                    }
-                });
-
-            } catch (Exception e) {
-                logger.error("Error adding vertical stacked text to trunk: " + e.getMessage());
-                e.printStackTrace();
-            }
-        });
-    }
 
     private void showSunnyWeather() {
         // Stop rain if it's active
@@ -1510,32 +1422,32 @@ public class GardenUIController {
 
                 // Find or create the status label
                 if (parasiteStatusLabel == null) {
-                    createParasiteStatusWithPathAnimation();
+                    createStaticParasiteStatus();
                 }
 
                 if (parasiteStatusLabel != null) {
                     // Load the parasite image
                     Image parasiteImage = new Image(getClass().getResourceAsStream(parasiteImagePath));
                     ImageView iconView = new ImageView(parasiteImage);
-                    iconView.setFitHeight(24);
-                    iconView.setFitWidth(24);
+                    iconView.setFitHeight(20);
+                    iconView.setFitWidth(20);
 
                     // Update the label
-                    parasiteStatusLabel.setText(event.getParasite().getName() + " detected");
+                    parasiteStatusLabel.setText(event.getParasite().getName() + " detected!");
                     parasiteStatusLabel.setGraphic(iconView);
-                    parasiteStatusLabel.setTextFill(Color.rgb(180, 0, 0));
+                    parasiteStatusLabel.setTextFill(Color.WHITE);
 
-                    // Update style for alert state
+                    // Update style for alert state - red background
                     parasiteStatusLabel.setBackground(new Background(new BackgroundFill(
-                            Color.rgb(255, 240, 240, 0.9),
-                            new CornerRadii(20),
+                            Color.rgb(220, 20, 20, 0.9), // Bright red for alert
+                            new CornerRadii(15),
                             Insets.EMPTY
                     )));
 
                     parasiteStatusLabel.setBorder(new Border(new BorderStroke(
-                            Color.rgb(230, 0, 0, 0.7),
+                            Color.WHITE,
                             BorderStrokeStyle.SOLID,
-                            new CornerRadii(20),
+                            new CornerRadii(15),
                             new BorderWidths(2)
                     )));
 
@@ -1573,11 +1485,11 @@ public class GardenUIController {
         setupMenuButtonAnimation(flowerMenuButton);
         setupMenuButtonAnimation(vegetableMenuButton);
 
-        // Add hover effect for trunk and branches
-        setupTreePartHoverEffect(treeTrunk);
-        setupTreePartHoverEffect(rightBranch1);
-        setupTreePartHoverEffect(rightBranch2);
-        setupTreePartHoverEffect(leftBranch);
+        // Add hover effect for trunk and branches - COMMENTED OUT TO REMOVE TRUNK
+        // setupTreePartHoverEffect(treeTrunk);
+        // setupTreePartHoverEffect(rightBranch1);
+        // setupTreePartHoverEffect(rightBranch2);
+        // setupTreePartHoverEffect(leftBranch);
     }
 
     private void setupMenuButtonAnimation(MenuButton button) {
@@ -1679,47 +1591,40 @@ public class GardenUIController {
                     // Create an ImageView for the happy icon
                     Image happyImage = new Image(getClass().getResourceAsStream("/images/Parasites/noParasite.png"));
                     ImageView happyImageView = new ImageView(happyImage);
-                    happyImageView.setFitHeight(24);
-                    happyImageView.setFitWidth(24);
+                    happyImageView.setFitHeight(20);
+                    happyImageView.setFitWidth(20);
 
                     // Update the Label directly
                     parasiteStatusLabel.setText("No Parasites");
                     parasiteStatusLabel.setGraphic(happyImageView);
-                    parasiteStatusLabel.setTextFill(Color.rgb(0, 120, 0));
+                    parasiteStatusLabel.setTextFill(Color.WHITE);
 
-                    // Reset style
+                    // Reset to green style
                     parasiteStatusLabel.setBackground(new Background(new BackgroundFill(
-                            Color.rgb(255, 255, 255, 0.85),
-                            new CornerRadii(20),
+                            Color.rgb(34, 139, 34, 0.9), // Forest green with transparency
+                            new CornerRadii(15),
                             Insets.EMPTY
                     )));
 
                     parasiteStatusLabel.setBorder(new Border(new BorderStroke(
-                            Color.rgb(0, 150, 0, 0.7),
+                            Color.WHITE,
                             BorderStrokeStyle.SOLID,
-                            new CornerRadii(20),
+                            new CornerRadii(15),
                             new BorderWidths(2)
                     )));
 
                     logger.info("Successfully updated existing parasite status to 'No Parasites'");
-
-                    // Make sure animation is running
-                    if (parasitePathTransition != null &&
-                            parasitePathTransition.getStatus() != Animation.Status.RUNNING) {
-                        parasitePathTransition.play();
-                        logger.info("Restarted parasite status animation");
-                    }
                 } else {
                     logger.warn("Could not find parasite status label in the scene, creating new one");
                     // Create a new one
-                    createParasiteStatusWithPathAnimation();
+                    createStaticParasiteStatus();
                 }
             } catch (Exception e) {
                 logger.error("Error updating parasite status to 'No Parasites': " + e.getMessage());
                 e.printStackTrace();
 
                 // Create a new label as fallback
-                createParasiteStatusWithPathAnimation();
+                createStaticParasiteStatus();
             }
         });
     }
@@ -1787,9 +1692,6 @@ public class GardenUIController {
                 translateTransition.setToX(-statusLabel.prefWidth(-1) - 50); // Move to just off the left edge
                 translateTransition.setCycleCount(Animation.INDEFINITE); // Repeat indefinitely
                 translateTransition.setInterpolator(Interpolator.LINEAR); // Constant speed
-
-                // Store reference to animation
-                parasiteStatusAnimation = translateTransition;
 
                 // Start the animation
                 translateTransition.play();
@@ -1910,6 +1812,145 @@ public class GardenUIController {
 //            vegetableMenuButton.getItems().add(menuItem);
 //        }
 //    }
+
+    // Method to setup only the three menu buttons without the trunk
+    private void setupMenuButtonsOnly() {
+        try {
+            // Get anchor dimensions
+            double anchorWidth = anchorPane.getWidth() > 0 ? anchorPane.getWidth() : 1187.0;
+            double anchorHeight = anchorPane.getHeight() > 0 ? anchorPane.getHeight() : 780.0;
+
+            // Position buttons on the RIGHT side of the screen
+            double buttonX = anchorWidth - 150; // Position on right side (150px from right edge)
+            double buttonStartY = 200; // Start position from top
+            double spacing = 160; // Spacing between buttons
+
+            // Remove any existing menu button elements to prevent duplicates (updated for rectangles)
+            anchorPane.getChildren().removeIf(node ->
+                    node instanceof StackPane && node.getLayoutX() > anchorWidth - 200);
+
+            // Create smaller green RECTANGLES for each button (all green now)
+            Rectangle treeRectangle = createEnhancedRectangleButton("#228B22");
+            Rectangle flowerRectangle = createEnhancedRectangleButton("#228B22");
+            Rectangle vegRectangle = createEnhancedRectangleButton("#228B22");
+
+            // Texts for button labels with larger font
+            Label treeLabel = createEnhancedButtonLabel("Tree");
+            Label flowerLabel = createEnhancedButtonLabel("Flower");
+            Label vegLabel = createEnhancedButtonLabel("Veg");
+
+            // Create stackpanes to hold rectangles and labels
+            StackPane treeButton = new StackPane(treeRectangle, treeLabel);
+            StackPane flowerButton = new StackPane(flowerRectangle, flowerLabel);
+            StackPane vegButton = new StackPane(vegRectangle, vegLabel);
+
+            // Position the rectangle buttons vertically on the RIGHT side
+            treeButton.setLayoutX(buttonX);
+            treeButton.setLayoutY(buttonStartY);
+
+            flowerButton.setLayoutX(buttonX);
+            flowerButton.setLayoutY(buttonStartY + spacing);
+
+            vegButton.setLayoutX(buttonX);
+            vegButton.setLayoutY(buttonStartY + spacing * 2);
+
+            // Create context menus with functional plant selection
+            ContextMenu treeMenu = createFunctionalMenuForPlants(plantManager.getTrees());
+            ContextMenu flowerMenu = createFunctionalMenuForPlants(plantManager.getFlowers());
+            ContextMenu vegMenu = createFunctionalMenuForPlants(plantManager.getVegetables());
+
+            // Style the context menus
+            styleContextMenu(treeMenu);
+            styleContextMenu(flowerMenu);
+            styleContextMenu(vegMenu);
+
+            // Add click handlers to the rectangle buttons - positioned to show on the left of buttons
+            treeButton.setOnMouseClicked(e -> {
+                treeMenu.show(treeButton, e.getScreenX() - 250, e.getScreenY());
+            });
+
+            flowerButton.setOnMouseClicked(e -> {
+                flowerMenu.show(flowerButton, e.getScreenX() - 250, e.getScreenY());
+            });
+
+            vegButton.setOnMouseClicked(e -> {
+                vegMenu.show(vegButton, e.getScreenX() - 250, e.getScreenY());
+            });
+
+            // Add visual feedback when hovering (updated for rectangles)
+            addEnhancedHoverEffectForRectangles(treeButton, treeRectangle);
+            addEnhancedHoverEffectForRectangles(flowerButton, flowerRectangle);
+            addEnhancedHoverEffectForRectangles(vegButton, vegRectangle);
+
+            // Add all button elements to the scene (NO TRUNK!)
+            anchorPane.getChildren().addAll(treeButton, flowerButton, vegButton);
+
+            log4jLogger.info("Menu buttons setup completed successfully on RIGHT side (without trunk)");
+
+        } catch (Exception e) {
+            log4jLogger.error("Failed to set up menu buttons: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    // Method to create functional context menus for plant selection
+    private <T extends Plant> ContextMenu createFunctionalMenuForPlants(List<T> plants) {
+        ContextMenu menu = new ContextMenu();
+
+        for (T plant : plants) {
+            MenuItem item = new MenuItem(plant.getName());
+
+            try {
+                // Add image if available with larger size
+                Image image = new Image(getClass().getResourceAsStream("/images/" + plant.getCurrentImage()), 40, 40, true, true);
+                ImageView imageView = new ImageView(image);
+
+                // Add a border around the image
+                StackPane imageContainer = new StackPane();
+                Rectangle border = new Rectangle(44, 44);
+                border.setArcWidth(8);
+                border.setArcHeight(8);
+                border.setFill(javafx.scene.paint.Color.TRANSPARENT);
+                border.setStroke(javafx.scene.paint.Color.LIGHTGRAY);
+                border.setStrokeWidth(2);
+
+                imageContainer.getChildren().addAll(border, imageView);
+                item.setGraphic(imageContainer);
+            } catch (Exception e) {
+                log4jLogger.warn("Could not load image for " + plant.getName());
+            }
+
+            // Style the menu item with larger font and better padding
+            item.setStyle(
+                    "-fx-padding: 10px 20px; " +
+                            "-fx-font-size: 16px; " +
+                            "-fx-font-weight: normal; " +
+                            "-fx-cursor: hand;"
+            );
+
+            // Add functional plant selection action
+            final String plantName = plant.getName();
+            final String imagePath = plant.getCurrentImage();
+
+            item.setOnAction(e -> {
+                log4jLogger.info("User selected plant: " + plantName + " - Adding to garden...");
+                try {
+                    addPlantToGrid(plantName, imagePath);
+                    log4jLogger.info("Successfully added " + plantName + " to garden grid");
+                } catch (Exception ex) {
+                    log4jLogger.error("Failed to add plant " + plantName + " to grid: " + ex.getMessage());
+                    ex.printStackTrace();
+                }
+            });
+
+            // Add to menu
+            menu.getItems().add(item);
+        }
+
+        return menu;
+    }
+
+    // ...existing code...
 
     private CustomMenuItem createImageMenuItem(String name, String imagePath) {
         logger.info("3");
@@ -2320,6 +2361,43 @@ public class GardenUIController {
     }
 
 
+    private Rectangle createEnhancedRectangleButton(String baseColor) {
+        // Create a smaller rectangle with sharp corners
+        Rectangle rectangle = new Rectangle(80, 50); // Width: 80px, Height: 50px (made smaller)
+
+        // Create a linear gradient for a 3D effect
+        javafx.scene.paint.LinearGradient gradient = new javafx.scene.paint.LinearGradient(
+                0, 0, 0, 1, true, javafx.scene.paint.CycleMethod.NO_CYCLE,
+                new javafx.scene.paint.Stop(0, javafx.scene.paint.Color.web(baseColor).brighter().brighter()),
+                new javafx.scene.paint.Stop(0.5, javafx.scene.paint.Color.web(baseColor)),
+                new javafx.scene.paint.Stop(1, javafx.scene.paint.Color.web(baseColor).darker())
+        );
+
+        rectangle.setFill(gradient);
+
+        // Add a thick white border
+        rectangle.setStroke(javafx.scene.paint.Color.WHITE);
+        rectangle.setStrokeWidth(4);
+
+        // Sharp corners (no arc width/height set = sharp corners by default)
+        rectangle.setArcWidth(0);
+        rectangle.setArcHeight(0);
+
+        // Add a drop shadow and glow for depth
+        javafx.scene.effect.DropShadow dropShadow = new javafx.scene.effect.DropShadow();
+        dropShadow.setColor(javafx.scene.paint.Color.rgb(0, 0, 0, 0.5));
+        dropShadow.setRadius(12);
+        dropShadow.setOffsetX(4);
+        dropShadow.setOffsetY(4);
+
+        javafx.scene.effect.Glow glow = new javafx.scene.effect.Glow(0.4);
+        glow.setInput(dropShadow);
+
+        rectangle.setEffect(glow);
+
+        return rectangle;
+    }
+
     private Circle createEnhancedCircleButton(String baseColor) {
         // Create a larger circle
         Circle circle = new Circle(60); // Increased size from 50 to 60
@@ -2544,6 +2622,50 @@ public class GardenUIController {
             button.setCursor(javafx.scene.Cursor.DEFAULT);
         });
     }
+
+    // Hover effect method specifically for rectangle buttons
+    private void addEnhancedHoverEffectForRectangles(StackPane button, Rectangle rectangle) {
+        // Store original effect
+        javafx.scene.effect.Effect originalEffect = rectangle.getEffect();
+
+        // Create scale transitions
+        ScaleTransition growTransition = new ScaleTransition(Duration.millis(200), button);
+        growTransition.setToX(1.15);
+        growTransition.setToY(1.15);
+
+        ScaleTransition shrinkTransition = new ScaleTransition(Duration.millis(200), button);
+        shrinkTransition.setToX(1.0);
+        shrinkTransition.setToY(1.0);
+
+        button.setOnMouseEntered(e -> {
+            // Enhanced glow effect on hover for rectangles
+            javafx.scene.effect.Glow enhancedGlow = new javafx.scene.effect.Glow(0.8);
+            javafx.scene.effect.DropShadow shadow = new javafx.scene.effect.DropShadow();
+            shadow.setColor(javafx.scene.paint.Color.WHITE);
+            shadow.setRadius(25);
+            enhancedGlow.setInput(shadow);
+            rectangle.setEffect(enhancedGlow);
+
+            // Scale up
+            growTransition.playFromStart();
+
+            // Change cursor
+            button.setCursor(javafx.scene.Cursor.HAND);
+        });
+
+        button.setOnMouseExited(e -> {
+            // Restore original effect
+            rectangle.setEffect(originalEffect);
+
+            // Scale back
+            shrinkTransition.playFromStart();
+
+            // Reset cursor
+            button.setCursor(javafx.scene.Cursor.DEFAULT);
+        });
+    }
+
+    // ...existing code...
 
     // Create a colored circle button
     private Circle createCircleButton(String colorCode) {
@@ -2898,75 +3020,68 @@ public class GardenUIController {
 //        gridPane.setVgap(3); // Vertical gap
 //    }
     private void createSimpleGradientGrid(GridPane gridPane, int numRows, int numCols) {
-        // Enhanced color palette for better visibility against the background
-        javafx.scene.paint.Color[] colors = {
-                javafx.scene.paint.Color.web("#e8f5e9", 0.65),  // Very light green with transparency
-                javafx.scene.paint.Color.web("#c8e6c9", 0.55),  // Light green with transparency
-                javafx.scene.paint.Color.web("#a5d6a7", 0.45),  // Medium light green with transparency
-                javafx.scene.paint.Color.web("#81c784", 0.75)   // Medium green with transparency
-        };
+        // Single uniform background color for all cells
+        javafx.scene.paint.Color uniformCellColor = javafx.scene.paint.Color.web("#f0f8f0", 0.7); // Light green with transparency
 
         for (int row = 0; row < numRows; row++) {
             for (int col = 0; col < numCols; col++) {
-                int colorIndex = (row + col) % colors.length;
-
                 StackPane cell = new StackPane();
-                cell.setPrefSize(40, 20);
+                cell.setPrefSize(55, 55); // Smaller size (reduced from 40x20)
 
-                // Create a more vibrant background color with rounded corners
+                // Create uniform background color with slightly rounded corners
                 javafx.scene.layout.BackgroundFill backgroundFill = new javafx.scene.layout.BackgroundFill(
-                        colors[colorIndex],
-                        new CornerRadii(10),  // More rounded corners
+                        uniformCellColor,
+                        new CornerRadii(5),  // Slightly rounded corners
                         Insets.EMPTY
                 );
 
-                // Apply the background
+                // Apply the uniform background
                 cell.setBackground(new Background(backgroundFill));
 
-                // Add a more prominent border
+                // Add plain black border
                 cell.setBorder(new Border(new BorderStroke(
-                        javafx.scene.paint.Color.rgb(56, 142, 60, 0.5),  // Darker green border
+                        javafx.scene.paint.Color.BLACK,  // Plain black border
                         BorderStrokeStyle.SOLID,
-                        new CornerRadii(10),
-                        new BorderWidths(2)  // Thicker border
+                        new CornerRadii(5),
+                        new BorderWidths(1)  // Standard border width
                 )));
 
-                // Add a more prominent drop shadow effect
+                // Add subtle drop shadow effect
                 javafx.scene.effect.DropShadow dropShadow = new javafx.scene.effect.DropShadow();
-                dropShadow.setColor(javafx.scene.paint.Color.rgb(0, 0, 0, 0.25));  // More visible shadow
-                dropShadow.setRadius(4);  // Larger radius
+                dropShadow.setColor(javafx.scene.paint.Color.rgb(0, 0, 0, 0.15));  // Subtle shadow
+                dropShadow.setRadius(2);  // Small radius
                 dropShadow.setOffsetX(0);
-                dropShadow.setOffsetY(2);
+                dropShadow.setOffsetY(1);
                 cell.setEffect(dropShadow);
 
                 gridPane.add(cell, col, row);
             }
         }
 
-        gridPane.setHgap(4);  // Slightly larger gap
-        gridPane.setVgap(4);
-        gridPane.setPadding(new Insets(8, 8, 8, 8));  // More padding
+        gridPane.setHgap(3);  // Smaller gap between cells
+        gridPane.setVgap(3);
+        gridPane.setPadding(new Insets(5, 5, 5, 5));  // Smaller padding
 
-        // Apply enhanced styling to the grid
+        // Apply styling to the grid container
         gridPane.setBackground(new Background(new BackgroundFill(
-                javafx.scene.paint.Color.rgb(240, 255, 240, 0.6),  // Light green tint with transparency
-                new CornerRadii(15),  // More rounded corners
+                javafx.scene.paint.Color.TRANSPARENT,  // Transparent background
+                CornerRadii.EMPTY,
                 Insets.EMPTY
         )));
 
         gridPane.setBorder(new Border(new BorderStroke(
-                javafx.scene.paint.Color.rgb(56, 142, 60, 0.7),  // Darker, more visible border
+                javafx.scene.paint.Color.BLACK,  // Plain black border for grid
                 BorderStrokeStyle.SOLID,
-                new CornerRadii(15),
-                new BorderWidths(3)  // Thicker border
+                new CornerRadii(8),
+                new BorderWidths(2)  // Border around entire grid
         )));
 
-        // More prominent outer glow/shadow for the entire grid
+        // Subtle shadow for the entire grid
         javafx.scene.effect.DropShadow gridShadow = new javafx.scene.effect.DropShadow();
-        gridShadow.setColor(javafx.scene.paint.Color.rgb(0, 100, 0, 0.3));  // Green-tinted shadow
-        gridShadow.setRadius(12);
+        gridShadow.setColor(javafx.scene.paint.Color.rgb(0, 0, 0, 0.2));  // Subtle black shadow
+        gridShadow.setRadius(5);
         gridShadow.setOffsetX(0);
-        gridShadow.setOffsetY(3);
+        gridShadow.setOffsetY(2);
         gridPane.setEffect(gridShadow);
     }
 
@@ -3178,9 +3293,6 @@ public class GardenUIController {
                 parasiteStatusContainer = new HBox();
                 parasiteStatusContainer.getChildren().add(parasiteValueLabel);
 
-                // Create and start the animation
-                animateParasiteStatusLabel(parasiteValueLabel, anchorWidth, anchorHeight, groundHeight);
-
                 logger.info("Enhanced ground with parasite status display created successfully");
 
                 // Set the initial status to "No Parasites"
@@ -3203,164 +3315,14 @@ public class GardenUIController {
                             (label.getText().contains("No Parasites") ||
                                     label.getText().contains("detected"))) {
 
-                        logger.info("Found parasite label, applying force animation");
-
-                        // Get anchor dimensions
-                        double width = anchorPane.getWidth() > 0 ? anchorPane.getWidth() : 500;
-                        double height = anchorPane.getHeight() > 0 ? anchorPane.getHeight() : 1000;
-
-                        // Apply animation directly
-                        animateParasiteStatusLabel(label, width, height, 80);
+                        logger.info("Found parasite label, no animation needed (static design)");
                         return;
                     }
                 }
             }
 
-            logger.warn("No parasite label found for forced animation");
+            logger.warn("No parasite label found");
         });
-    }
-
-    // Animate the parasite status label across the ground
-    private void animateParasiteStatusLabel(Label statusLabel, double anchorWidth, double anchorHeight, double groundHeight) {
-        try {
-            // For debugging, let's make the label visually distinctive
-            statusLabel.setStyle("-fx-background-color: rgba(255, 255, 255, 0.9); -fx-padding: 8px 15px; -fx-background-radius: 20px;");
-
-            // Stop any existing animations
-            if (parasitePathTransition != null) {
-                parasitePathTransition.stop();
-            }
-
-            // Create a completely new zigzag path with very obvious movement
-            Path zigzagPath = new Path();
-
-            // Start at the right edge
-            MoveTo startPoint = new MoveTo(anchorWidth, anchorHeight - groundHeight - 30);
-            zigzagPath.getElements().add(startPoint);
-
-            // Create obvious zigzag segments
-            double segmentWidth = 60;
-            double amplitude = 50; // Very large amplitude to be clearly visible
-
-            int numSegments = (int) (anchorWidth / segmentWidth) + 1;
-
-            for (int i = 0; i < numSegments; i++) {
-                double x = anchorWidth - (i * segmentWidth);
-                double baseY = anchorHeight - groundHeight - 30;
-
-                // Make a sharper zigzag
-                double midX = x - (segmentWidth / 2);
-                double downY = baseY + amplitude;
-
-                LineTo down = new LineTo(midX, downY);
-                zigzagPath.getElements().add(down);
-
-                LineTo up = new LineTo(x - segmentWidth, baseY);
-                zigzagPath.getElements().add(up);
-            }
-
-            // Create a new path transition with direct reference
-            PathTransition transition = new PathTransition();
-            transition.setDuration(Duration.seconds(10)); // Faster to see the effect
-            transition.setPath(zigzagPath);
-            transition.setNode(statusLabel);
-            transition.setOrientation(PathTransition.OrientationType.NONE);
-            transition.setCycleCount(Animation.INDEFINITE);
-            transition.setAutoReverse(true);
-
-            // For debugging, print when animation starts
-            logger.info("Starting zigzag animation for parasite label");
-
-            // Start the animation immediately
-            transition.play();
-
-            // Store reference
-            parasitePathTransition = transition;
-
-        } catch (Exception e) {
-            logger.error("Error in zigzag animation: " + e.getMessage(), e);
-        }
-    }
-
-    // If you have existing animations that need to be stopped first,
-// add this helper method to stop them before starting new ones
-    private void stopExistingParasiteAnimations() {
-        if (parasiteStatusAnimation != null) {
-            parasiteStatusAnimation.stop();
-            parasiteStatusAnimation = null;
-        }
-
-        if (parasitePathTransition != null) {
-            parasitePathTransition.stop();
-            parasitePathTransition = null;
-        }
-    }
-
-    // Add this method to ensure the parasite status is displayed correctly
-// Call this when you need to create a new parasite status label
-    private void createZigzagParasiteStatus() {
-        try {
-            // Get window dimensions
-            double anchorWidth = anchorPane.getWidth();
-            double anchorHeight = anchorPane.getHeight();
-            double groundHeight = 80;
-
-            // Use default values if dimensions aren't available
-            if (anchorWidth <= 0) anchorWidth = 1000;
-            if (anchorHeight <= 0) anchorHeight = 700;
-
-            // Create "No Parasites" status
-            Image noParasiteImage = new Image(getClass().getResourceAsStream("/images/Parasites/noParasite.png"));
-            ImageView parasiteImageView = new ImageView(noParasiteImage);
-            parasiteImageView.setFitHeight(24);
-            parasiteImageView.setFitWidth(24);
-
-            // Create label with proper styling
-            Label statusLabel = new Label("No Parasites");
-            statusLabel.setGraphic(parasiteImageView);
-            statusLabel.setFont(Font.font("System", FontWeight.NORMAL, 14));
-            statusLabel.setTextFill(Color.rgb(0, 120, 0));
-            statusLabel.setContentDisplay(ContentDisplay.LEFT);
-            statusLabel.setPadding(new Insets(5, 15, 5, 15));
-
-            // Add background and border
-            statusLabel.setBackground(new Background(new BackgroundFill(
-                    Color.rgb(255, 255, 255, 0.85),
-                    new CornerRadii(20),
-                    Insets.EMPTY
-            )));
-
-            statusLabel.setBorder(new Border(new BorderStroke(
-                    Color.rgb(0, 150, 0, 0.7),
-                    BorderStrokeStyle.SOLID,
-                    new CornerRadii(20),
-                    new BorderWidths(2)
-            )));
-
-            // Add shadow effect
-            DropShadow shadow = new DropShadow(8, Color.rgb(0, 0, 0, 0.5));
-            statusLabel.setEffect(shadow);
-
-            // Position the label initially at the right edge of the screen
-            statusLabel.setLayoutX(anchorWidth);
-            statusLabel.setLayoutY(anchorHeight - groundHeight - 30);
-
-            // Add the label to the scene
-            anchorPane.getChildren().add(statusLabel);
-
-            // Save reference for later use
-            parasiteStatusLabel = statusLabel;
-
-            // Stop any existing animations
-            stopExistingParasiteAnimations();
-
-            // Start zigzag animation
-            animateParasiteStatusLabel(statusLabel, anchorWidth, anchorHeight, groundHeight);
-
-        } catch (Exception e) {
-            logger.error("Error creating zigzag parasite status: " + e.getMessage());
-            e.printStackTrace();
-        }
     }
 
 // For ground decorations
@@ -3412,15 +3374,12 @@ public class GardenUIController {
             // Add shadow
             newStatusLabel.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.5)));
 
-            // Position it
-            newStatusLabel.setLayoutX(300); // Middle of screen
-            newStatusLabel.setLayoutY(anchorHeight - groundHeight - 30);
+            // Position it in upper right corner (static design)
+            newStatusLabel.setLayoutX(anchorWidth - 200);
+            newStatusLabel.setLayoutY(20);
 
             // Add to scene
             anchorPane.getChildren().add(newStatusLabel);
-
-            // Animate it
-            animateParasiteStatusLabel(newStatusLabel, anchorWidth, anchorHeight, groundHeight);
 
             // Update the container reference
             if (parasiteStatusContainer == null) {
@@ -3502,18 +3461,18 @@ public class GardenUIController {
             LineTo closePath = new LineTo(0, anchorHeight);
             groundPath.getElements().add(closePath);
 
-            // Create a gradient for the ground (green to brown)
+            // Create a light green gradient for the ground (all light green as requested)
             LinearGradient groundGradient = new LinearGradient(
                     0, 0,           // startX, startY (top)
                     0, 1,           // endX, endY   (bottom)
                     true,           // proportional to shape size
                     CycleMethod.NO_CYCLE,
-                    new Stop(0.0, Color.web("#3c4d35")),
-                    new Stop(0.2, Color.web("#006400")),   // Dark green at left
-                    new Stop(0.3, Color.web("#228B22")),   // Forest green
-                    new Stop(0.4, Color.web("#6B8E23")),   // Olive green
-                    new Stop(0.6, Color.web("#9ACD32")),   // Yellow-green
-                    new Stop(0.9, Color.web("#eedfaf"))  // Metallic gold
+                    new Stop(0.0, Color.web("#c8e6c9")),   // Light green
+                    new Stop(0.2, Color.web("#a5d6a7")),   // Light green
+                    new Stop(0.3, Color.web("#81c784")),   // Light green
+                    new Stop(0.4, Color.web("#4caf50")),   // Light green
+                    new Stop(0.6, Color.web("#66bb6a")),   // Light green
+                    new Stop(0.9, Color.web("#8bc34a"))    // Light green
 
             );
 
@@ -3729,7 +3688,7 @@ public class GardenUIController {
                 }
 
                 // Create parasite status label
-                createParasiteStatusWithPathAnimation();
+                createStaticParasiteStatus();
                 PauseTransition delay = new PauseTransition(Duration.millis(100));
                 delay.setOnFinished(e -> addSprinklersToGround());
                 delay.play();
@@ -4548,88 +4507,58 @@ public class GardenUIController {
     }
 
     // Create parasite status with path animation
-    private void createParasiteStatusWithPathAnimation() {
+    private void createStaticParasiteStatus() {
         try {
-            // 1) Remove existing parasite status label and stop its animation if it exists
+            // Remove existing parasite status label if it exists
             if (parasiteStatusLabel != null && anchorPane.getChildren().contains(parasiteStatusLabel)) {
                 anchorPane.getChildren().remove(parasiteStatusLabel);
-                if (parasitePathTransition != null) {
-                    parasitePathTransition.stop();
-                }
             }
 
-            // 2) Get window dimensions (or use default if not yet rendered)
+            // Get window dimensions (or use default if not yet rendered)
             double anchorWidth = anchorPane.getWidth();
             double anchorHeight = anchorPane.getHeight();
             if (anchorWidth <= 0) anchorWidth = 1000;
             if (anchorHeight <= 0) anchorHeight = 700;
 
-            // 3) Calculate Y-position in the middle of the ground
-            double groundHeight = 80;
-            double labelYPosition = anchorHeight - groundHeight / 2 - 10;
-
-            // 4) Create a larger label with purple background
+            // Create a static label positioned in the upper right corner
             Label statusLabel = new Label("No Parasites");
-            statusLabel.setFont(Font.font("System", FontWeight.BOLD, 20));  // Larger font
-            statusLabel.setTextFill(Color.BLACK);                            // White text
-            statusLabel.setPadding(new Insets(10, 20, 10, 20));             // Extra padding
+            statusLabel.setFont(Font.font("System", FontWeight.BOLD, 16));
+            statusLabel.setTextFill(Color.WHITE);
+            statusLabel.setPadding(new Insets(8, 15, 8, 15));
 
-            // 5) Add icon
+            // Add icon
             Image noParasiteImage = new Image(getClass().getResourceAsStream("/images/Parasites/noParasite.png"));
             ImageView parasiteImageView = new ImageView(noParasiteImage);
-            parasiteImageView.setFitHeight(24);
-            parasiteImageView.setFitWidth(24);
+            parasiteImageView.setFitHeight(20);
+            parasiteImageView.setFitWidth(20);
             statusLabel.setGraphic(parasiteImageView);
             statusLabel.setContentDisplay(ContentDisplay.LEFT);
 
-            // 6) Purple background, white border, drop shadow
+            // Green background for no parasite status, rounded corners, subtle shadow
             statusLabel.setBackground(new Background(new BackgroundFill(
-                    Color.LIGHTSTEELBLUE,
-                    new CornerRadii(20),
+                    Color.rgb(34, 139, 34, 0.9), // Forest green with transparency
+                    new CornerRadii(15),
                     Insets.EMPTY
             )));
             statusLabel.setBorder(new Border(new BorderStroke(
                     Color.WHITE,
                     BorderStrokeStyle.SOLID,
-                    new CornerRadii(20),
+                    new CornerRadii(15),
                     new BorderWidths(2)
             )));
-            statusLabel.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.5)));
+            statusLabel.setEffect(new DropShadow(5, Color.rgb(0, 0, 0, 0.3)));
 
-            // 7) Create a path (right to left) along the ground area
-            Path horizontalPath = new Path();
-            MoveTo startPoint = new MoveTo(anchorWidth - 100, labelYPosition);
-            LineTo endPoint = new LineTo(350, labelYPosition);
-            horizontalPath.getElements().addAll(startPoint, endPoint);
+            // Position in upper right corner
+            statusLabel.setLayoutX(anchorWidth - 200);
+            statusLabel.setLayoutY(20);
 
-            // 8) Add the label to the scene and store it
+            // Add the label to the scene and store it
             anchorPane.getChildren().add(statusLabel);
             parasiteStatusLabel = statusLabel;
 
-            // 9) Create a PathTransition for slower horizontal movement
-            PathTransition pathTransition = new PathTransition();
-            pathTransition.setDuration(Duration.seconds(40));               // Slower horizontal speed
-            pathTransition.setPath(horizontalPath);
-            pathTransition.setNode(statusLabel);
-            pathTransition.setOrientation(PathTransition.OrientationType.NONE);
-            pathTransition.setCycleCount(PathTransition.INDEFINITE);
-            pathTransition.setInterpolator(Interpolator.LINEAR);
-
-            // 10) Create a small vertical oscillation (up/down) while moving
-            TranslateTransition verticalOscillation = new TranslateTransition(Duration.seconds(2), statusLabel);
-            verticalOscillation.setFromY(-5);
-            verticalOscillation.setToY(5);
-            verticalOscillation.setCycleCount(TranslateTransition.INDEFINITE);
-            verticalOscillation.setAutoReverse(true);
-
-            // 11) Store reference to the path transition and start both animations
-            parasitePathTransition = pathTransition;
-            pathTransition.play();
-            verticalOscillation.play();
-
-            logger.info("Parasite status with path animation (ground area) created successfully");
+            logger.info("Static parasite status created successfully");
         } catch (Exception e) {
-            logger.error("Error creating parasite status with path animation: " + e.getMessage());
+            logger.error("Error creating static parasite status: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -4740,11 +4669,11 @@ public class GardenUIController {
         pathTransition.play();
     }
 
-    // Updated method to show "No Parasites" status
-    private void setupParasiteZigzagAnimation() {
+    // Updated method to show "No Parasites" status (now static)
+    private void setupParasiteStaticDisplay() {
         // Add a delay to ensure the anchor pane is fully initialized
         PauseTransition delay = new PauseTransition(Duration.millis(500));
-        delay.setOnFinished(e -> createZigzagParasiteStatus());
+        delay.setOnFinished(e -> createStaticParasiteStatus());
         delay.play();
     }
 

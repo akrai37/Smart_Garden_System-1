@@ -1,3 +1,5 @@
+/* Background image is now set via Java code - CSS background color removed */
+
 .menu-button {
     -fx-background-radius: 30px;
     -fx-cursor: hand;
@@ -15,40 +17,47 @@
 }
 
 /* Menu Item Styling */
+/* Context menu styling */
 .context-menu {
-    -fx-background-color: rgba(255, 255, 255, 0.95);
-    -fx-background-radius: 15px;
-    -fx-padding: 8px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 3);
+    -fx-background-color: white;
+    -fx-background-radius: 6px;
+    -fx-padding: 6px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.15), 6, 0, 0, 2);
 }
 
+/* Menu item styling */
 .menu-item {
-    -fx-background-radius: 10px;
-    -fx-padding: 8px 12px;
+    -fx-background-radius: 4px;
+    -fx-padding: 6px 10px;
+    -fx-font-size: 13px;
 }
 
 .menu-item:hover {
-    -fx-background-color: #e8f5e9;
+    -fx-background-color: #f0f0f0;
 }
 
 .menu-item:focused {
-    -fx-background-color: #c8e6c9;
+    -fx-background-color: #d6ffd6;
 }
 
 .menu-item .label {
-    -fx-font-size: 14px;
-    -fx-padding: 0 8px;
+    -fx-font-size: 13px;
+    -fx-padding: 0 6px;
 }
 
 /* Tooltip styling */
 .tooltip {
-    -fx-background-color: rgba(50, 50, 50, 0.9);
+    -fx-background-color: rgba(40, 40, 40, 0.85);
     -fx-text-fill: white;
-    -fx-background-radius: 6px;
-    -fx-padding: 5px 8px;
+    -fx-background-radius: 4px;
+    -fx-padding: 4px 6px;
     -fx-font-size: 12px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 2);
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 4, 0, 0, 1);
 }
+
+
+/* Tooltip styling */
+
 
 /* Tree Parts Styling */
 #treeTrunk, #rightBranch1, #rightBranch2, #leftBranch {

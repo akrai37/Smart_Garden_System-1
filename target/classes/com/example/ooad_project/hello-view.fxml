@@ -51,21 +51,21 @@
             <!-- Circular Menu Buttons - positions will be set in the controller -->
             <MenuButton fx:id="treeMenuButton"
                         text="Tree"
-                        prefHeight="160.0"
-                        prefWidth="60.0"
-                        style="-fx-background-radius: 30px; -fx-background-color: #2E8B57; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 0;"/>
+                        prefHeight="100.0"
+                        prefWidth="30.0"
+                        style="-fx-background-radius: 30px; -fx-background-color:rgb(232, 244, 237); -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 0;"/>
 
             <MenuButton fx:id="flowerMenuButton"
                         text="Flower"
-                        prefHeight="60.0"
-                        prefWidth="60.0"
-                        style="-fx-background-radius: 30px; -fx-background-color: #FF69B4; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 0;"/>
+                        prefHeight="100"
+                        prefWidth="30"
+                        style="-fx-background-radius: 30px; -fx-background-color:rgb(232, 244, 237); -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 0;"/>
 
             <MenuButton fx:id="vegetableMenuButton"
                         text="Veg"
-                        prefHeight="60.0"
-                        prefWidth="60.0"
-                        style="-fx-background-radius: 30px; -fx-background-color: #FF8C00; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 0;"/>
+                        prefHeight="100"
+                        prefWidth="30"
+                        style="-fx-background-radius: 30px; -fx-background-color:rgb(232, 244, 237); -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 0;"/>
 
             <VBox layoutY="35.0" spacing="5" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="280.0">
                 <!-- Weather Title with enhanced effects -->

@@ -1,0 +1,7 @@
+This is an example file showing where to place new images.
+Replace this file with your actual image file.
+
+To add a new image:
+1. Delete this .txt file
+2. Place your image file (e.g., myNewImage.png) in this same location
+3. Reference it in Java code using: "/images/myNewImage.png"
