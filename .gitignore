@@ -1,25 +1,27 @@
-# Ignore build artifacts
+# === Build Artifacts ===
 target/
+bin/
+out/
 *.class
+*.jar
+
+# === OS Specific ===
 .DS_Store
 
-# IDEs
+# === IDE Files ===
 .idea/
 *.iml
 .vscode/
 
-# Logs
+# === Logs and Temp Files ===
 *.log
-
-# Temporary files
 *.tmp
 *.swp
+logs/
 
-# Maven
-/logs/
-/*.log
-!.mvn/wrapper/maven-wrapper.jar
+# === Maven ===
+.mvn/
+!/.mvn/wrapper/maven-wrapper.jar
 
-# JavaFX-specific
-bin/
-out/
+# === JavaFX / Misc ===
+*.launch

@@ -5,23 +5,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e30642a5-40fd-478a-8fc6-708f82d25ab7" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/DayLogger.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/DayLogger.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/GardenAPI.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/GardenAPI.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/GardenUIController.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/GardenUIController.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/PesticideSystem.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/PesticideSystem.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/TemperatureSystem.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/TemperatureSystem.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/WateringSystem.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/WateringSystem.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/images/mediumCarrot.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/mediumCarrot.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/images/smallCarrot.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/smallCarrot.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/images/smallLily.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/smallLily.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/images/smallMaple.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/smallMaple.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/images/smallOak.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/smallOak.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/images/smallPine.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/smallPine.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/images/smallRose.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/smallRose.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/images/smallSpinach.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/smallSpinach.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/images/smallTulip.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/smallTulip.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/images/smallZucchini.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/smallZucchini.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ooad_project/Parasite/Children/Aphids.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ooad_project/Parasite/Children/Aphids.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ooad_project/Parasite/Children/Crow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ooad_project/Parasite/Children/Crow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ooad_project/Parasite/Children/Locust.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ooad_project/Parasite/Children/Locust.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ooad_project/Parasite/Children/Rat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ooad_project/Parasite/Children/Rat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ooad_project/Parasite/Children/Slugs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ooad_project/Parasite/Children/Slugs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ooad_project/Plant/Children/Flower.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ooad_project/Plant/Children/Flower.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ooad_project/Plant/Children/Tree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ooad_project/Plant/Children/Tree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ooad_project/Plant/Plant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ooad_project/Plant/Plant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ooad_project/Plant/PlantManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ooad_project/Plant/PlantManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/OOAD_Project-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/OOAD_Project-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Parasite/Children/Aphids.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Parasite/Children/Aphids.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Parasite/Children/Crow.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Parasite/Children/Crow.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Parasite/Children/Locust.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Parasite/Children/Locust.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Parasite/Children/Rat.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Parasite/Children/Rat.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Parasite/Children/Slugs.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Parasite/Children/Slugs.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Plant/Children/Flower.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Plant/Children/Flower.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Plant/Children/Tree.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Plant/Children/Tree.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Plant/Plant.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Plant/Plant.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Plant/PlantManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ooad_project/Plant/PlantManager.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +63,7 @@
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "Merging main",
     "last_opened_file_path": "/Users/akrai/Desktop/Smart_Garden_System-1/src/main/resources/images",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
