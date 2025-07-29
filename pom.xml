@@ -66,9 +66,9 @@
                 <version>3.11.0</version>
                 <configuration>
 
-                    <release>21</release>
-                    <source>21</source>
-                    <target>21</target>
+                    <release>24</release>
+                    <source>24</source>
+                    <target>24</target>
                 </configuration>
             </plugin>
             <plugin>
