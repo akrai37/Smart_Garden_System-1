@@ -4,6 +4,7 @@ package com.example.ooad_project.Plant;
 import com.example.ooad_project.Events.PlantHealthUpdateEvent;
 import com.example.ooad_project.Events.PlantImageUpdateEvent;
 import com.example.ooad_project.ThreadUtils.EventBus;
+import java.lang.Math;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,6 +16,9 @@ import java.util.ArrayList;
  * All flowers, trees, and vegetables use this.
  */
 public abstract class Plant {
+    protected double health;
+    protected final double maxHealth = 100.0;
+    protected HealthBar healthBar;
 
     private final String botanicalName;
     private final int hydrationRequirement;
@@ -37,6 +41,8 @@ public abstract class Plant {
     private int gardenColumnIndex = -1;
 
     public Plant(String name, int waterRequirement, String imageName, int temperatureRequirement, ArrayList<String> vulnerableTo, int healthSmall, int healthMedium, int healthFull, ArrayList<String> allImages) {
+        this.health = maxHealth;
+        this.healthBar = new HealthBar(maxHealth);
         this.botanicalName = name;
         this.hydrationRequirement = waterRequirement;
         this.currentImageFilePath = imageName;
@@ -55,6 +61,24 @@ public abstract class Plant {
     public synchronized void addWater(int amount) {
         this.collectedMoisture = Math.min(collectedMoisture + amount, hydrationRequirement);
         this.isFullyHydrated = collectedMoisture >= hydrationRequirement;
+    }
+
+    public void takeDamage(double amount) {
+        health = Math.max(0, health - amount);
+        healthBar.updateHealth(health);
+    }
+
+    public void heal(double amount) {
+        health = Math.min(maxHealth, health + amount);
+        healthBar.updateHealth(health);
+    }
+
+    public HealthBar getHealthBar() {
+        return healthBar;
+    }
+
+    public double getHealth() {
+        return health;
     }
 
     public synchronized void healPlant(int healAmount) {
@@ -80,28 +104,21 @@ public abstract class Plant {
 
     public synchronized void setCurrentHealth(int health) {
         int previousStage = getHealthStage();
-
         int oldHealth = this.vitality;
 
-        this.vitality = health;
+        int clampedHealth = Math.max(0, Math.min((int) maxHealth, health));
+        this.vitality = clampedHealth;
+
+        healthBar.updateHealth(this.vitality);
 
         if (this.vitality <= 0) {
-            this.vitality = 0;
             EventBus.publish("PlantDeathEvent", this);
             return;
         }
 
-
-        EventBus.publish("PlantHealthUpdateEvent", new PlantHealthUpdateEvent(this.gardenRowIndex, this.gardenColumnIndex, oldHealth, this.vitality));
-
-        int currentStage = getHealthStage();
-
-        // Update plant appearance if health changed enough
-        if (previousStage != currentStage) {
-            updatePlantImage(currentStage);
-            logger.info("Plant: {} at position ({}, {}) updated to new health stage: {}, image updated to {}", this.botanicalName, this.gardenRowIndex, this.gardenColumnIndex, currentStage, this.currentImageFilePath);
-        }
+        // additional logic if needed
     }
+
 
     /**
      * Changes how the plant looks based on its health.
@@ -215,6 +232,8 @@ public abstract class Plant {
     public ArrayList<String> getAllImages() {
         return visualAssetLibrary;
     }
+
+
 
 
 

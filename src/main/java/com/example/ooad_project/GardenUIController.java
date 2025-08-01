@@ -5,6 +5,7 @@ import com.example.ooad_project.Events.*;
 import com.example.ooad_project.Parasite.Parasite;
 import com.example.ooad_project.Parasite.ParasiteManager;
 import com.example.ooad_project.Plant.Children.Flower;
+import com.example.ooad_project.Plant.HealthBar;
 import com.example.ooad_project.Plant.Plant;
 import com.example.ooad_project.Plant.Children.Tree;
 import com.example.ooad_project.Plant.Children.Vegetable;
@@ -474,8 +475,8 @@ public class GardenUIController {
         String imageFile = plant.getCurrentImage();
         Image image = new Image(getClass().getResourceAsStream("/images/" + imageFile));
         ImageView imageView = new ImageView(image);
-        imageView.setFitHeight(35); // Adjusted for smaller grid cells (reduced from 45)
-        imageView.setFitWidth(35);
+        imageView.setFitHeight(28);
+        imageView.setFitWidth(28);
 
         // Add drop shadow for better visibility
         javafx.scene.effect.DropShadow dropShadow = new javafx.scene.effect.DropShadow();
@@ -485,8 +486,14 @@ public class GardenUIController {
         dropShadow.setOffsetY(1);
         imageView.setEffect(dropShadow);
 
-        StackPane pane = new StackPane(imageView);
-        pane.setStyle("-fx-alignment: center;");
+        StackPane pane = new StackPane();
+
+        pane.getChildren().add(imageView);
+
+        HealthBar healthBar = plant.getHealthBar();
+        StackPane.setAlignment(healthBar, Pos.TOP_LEFT);
+        StackPane.setMargin(healthBar, new Insets(3, 0, 0, 3));
+        pane.getChildren().add(healthBar);
 
         // Add a scale transition when adding plants
         ScaleTransition growTransition = new ScaleTransition(Duration.millis(600), imageView);
@@ -662,6 +669,12 @@ public class GardenUIController {
             int col = event.getCol();
             int damage = event.getDamage();
 
+            Plant plant = gardenGrid.getPlant(row, col);
+            if (plant != null) {
+                int current = plant.getCurrentHealth();
+                plant.setCurrentHealth(current - damage);  // 💥 This updates the health bar
+            }
+
             // Create a pane to hold the damage display
             StackPane damagePane = new StackPane();
 
@@ -703,7 +716,7 @@ public class GardenUIController {
             GridPane.setRowIndex(damagePane, row);
             GridPane.setColumnIndex(damagePane, col);
             GridPane.setHalignment(damagePane, HPos.CENTER);  // Center horizontally
-            GridPane.setValignment(damagePane, VPos.TOP);     // Position at the top of the cell
+            GridPane.setValignment(damagePane, VPos.BOTTOM);     // Position at the top of the cell
 
             // Add margin to push the damage number upward, away from plants
             GridPane.setMargin(damagePane, new Insets(2, 0, 0, 0));
@@ -878,9 +891,7 @@ public class GardenUIController {
         logger.info("Day: " + logDay + " Plant image updated at row " + event.getPlant().getRow() + " and column "
                 + event.getPlant().getCol() + " to " + event.getPlant().getCurrentImage());
 
-//        Be sure to wrap the code in Platform.runLater() to update the UI
-//        This is because the event is being handled in a different thread
-//        and we need to update the UI in the JavaFX Application Thread
+        // Be sure to wrap the code in Platform.runLater() to update the UI
         Platform.runLater(() -> {
 
             Plant plant = event.getPlant();
@@ -889,7 +900,7 @@ public class GardenUIController {
             int row = plant.getRow();
             int col = plant.getCol();
 
-            // Find the ImageView for the plant in the grid and remove it
+            // Remove existing UI node at that grid location
             gridPane.getChildren().removeIf(node -> {
                 Integer nodeRow = GridPane.getRowIndex(node);
                 Integer nodeCol = GridPane.getColumnIndex(node);
@@ -900,16 +911,26 @@ public class GardenUIController {
             String imageName = plant.getCurrentImage();
             Image newImage = new Image(getClass().getResourceAsStream("/images/" + imageName));
             ImageView newImageView = new ImageView(newImage);
-            newImageView.setFitHeight(35);  // Match the smaller cell size
+            newImageView.setFitHeight(35);
             newImageView.setFitWidth(35);
 
-            // Create a pane to center the image
+            // Create a pane for both image and health box
             StackPane pane = new StackPane();
+
+// ✅ Add the plant image first (centered by default)
             pane.getChildren().add(newImageView);
+
+// ✅ Add health box on top-left
+            HealthBar healthBar = plant.getHealthBar();
+            StackPane.setAlignment(healthBar, Pos.TOP_LEFT);
+            StackPane.setMargin(healthBar, new Insets(4, 0, 0, 4));
+            pane.getChildren().add(healthBar);
+
+// ✅ Add pane to grid
             gridPane.add(pane, col, row);
+
         });
     }
-
 
 //    private void changeRainUI(RainEvent event) {
 //        // Start rain animation
@@ -1929,6 +1950,12 @@ public class GardenUIController {
                         // Create a pane to center the image
                         StackPane pane = new StackPane();
                         pane.getChildren().add(plantView);
+
+                        HealthBar healthBar = plant.getHealthBar();
+                        StackPane.setAlignment(healthBar, Pos.TOP_LEFT);
+                        StackPane.setMargin(healthBar, new Insets(4, 0, 0, 4));
+                        pane.getChildren().add(healthBar);
+
                         gridPane.add(pane, col, row);
 
                         // Optionally update UI here
@@ -5497,7 +5524,7 @@ public class GardenUIController {
                 );
 
                 // Add simple black label with larger font
-                Label titleLabel = new Label("Pesticide Refill");
+                Label titleLabel = new Label("Healing Potion");
                 titleLabel.setStyle(
                     "-fx-text-fill: black;" +
                     "-fx-font-size: 12px;" +  // Increased font size for larger box
