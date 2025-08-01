@@ -20,9 +20,9 @@
       "allImages": ["smallMaple.png", "mediumMaple.png", "largeMaple.png"],
       "temperatureRequirement": 60,
       "vulnerableTo": ["Aphids"],
-      "healthSmall": 10,
-      "healthMedium": 15,
-      "healthFull": 25
+      "healthSmall": 50,
+      "healthMedium": 100,
+      "healthFull": 150
     },
     {
       "name": "Pine",
