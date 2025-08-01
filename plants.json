@@ -20,9 +20,9 @@
       "allImages": ["smallMaple.png", "mediumMaple.png", "largeMaple.png"],
       "temperatureRequirement": 60,
       "vulnerableTo": ["Aphids"],
-      "healthSmall": 50,
-      "healthMedium": 100,
-      "healthFull": 150
+      "healthSmall": 10,
+      "healthMedium": 15,
+      "healthFull": 25
     },
     {
       "name": "Pine",
@@ -53,9 +53,9 @@
         "Slugs",
         "Aphids"
       ],
-      "healthSmall": 30,
-      "healthMedium": 60,
-      "healthFull": 90
+      "healthSmall": 20,
+      "healthMedium": 30,
+      "healthFull": 40
     },
     {
       "name": "Zucchini",

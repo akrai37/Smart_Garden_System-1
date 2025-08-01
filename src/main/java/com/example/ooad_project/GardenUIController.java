@@ -412,19 +412,112 @@ public class GardenUIController {
             int col = plant.getCol();
             System.out.println("🪦The dead plant was removed from the garden (" + row + "," + col + ")");
 
-            boolean removed = gridPane.getChildren().removeIf(node -> {
-                Integer nodeRow = GridPane.getRowIndex(node);
-                Integer nodeCol = GridPane.getColumnIndex(node);
-                boolean match = nodeRow != null && nodeCol != null && nodeRow == row && nodeCol == col;
-                //if (match) System.out.println("✅ Removed UI node at (" + row + "," + col + ")");
-                return match;
-            });
-
-            if (!removed) {
-                System.out.println("❌ No UI node found at (" + row + "," + col + ")");
-            }
+            // Show "Dead!" text before removing the plant
+            showDeadText(row, col, plant);
         });
 
+    }
+
+    private void showDeadText(int row, int col, Plant plant) {
+        // Create a pane to hold the "Dead!" text
+        StackPane deadPane = new StackPane();
+        deadPane.setPrefSize(60, 30);
+
+        // Create a background for better visibility
+        Rectangle background = new Rectangle(50, 25);
+        background.setFill(javafx.scene.paint.Color.rgb(139, 69, 19, 0.9)); // Dark brown background
+        background.setArcWidth(8);
+        background.setArcHeight(8);
+        background.setStroke(javafx.scene.paint.Color.BLACK);
+        background.setStrokeWidth(2);
+
+        // Add drop shadow to the background
+        javafx.scene.effect.DropShadow bgShadow = new javafx.scene.effect.DropShadow();
+        bgShadow.setColor(javafx.scene.paint.Color.rgb(0, 0, 0, 0.7));
+        bgShadow.setRadius(6);
+        bgShadow.setOffsetY(3);
+        background.setEffect(bgShadow);
+
+        // Create the "Dead!" label
+        Label deadLabel = new Label("Dead!");
+        deadLabel.setTextFill(javafx.scene.paint.Color.WHITE);
+        deadLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 14px; -fx-font-family: serif;");
+
+        // Add drop shadow to the text for better readability
+        javafx.scene.effect.DropShadow textShadow = new javafx.scene.effect.DropShadow();
+        textShadow.setColor(javafx.scene.paint.Color.BLACK);
+        textShadow.setRadius(2);
+        textShadow.setOffsetX(1);
+        textShadow.setOffsetY(1);
+        deadLabel.setEffect(textShadow);
+
+        // Center the label in the pane
+        StackPane.setAlignment(deadLabel, Pos.CENTER);
+
+        // Add background and label to the pane
+        deadPane.getChildren().addAll(background, deadLabel);
+
+        // Set the pane's position in the grid
+        GridPane.setRowIndex(deadPane, row);
+        GridPane.setColumnIndex(deadPane, col);
+        GridPane.setHalignment(deadPane, HPos.CENTER);
+        GridPane.setValignment(deadPane, VPos.CENTER);
+
+        // Add to grid
+        gridPane.getChildren().add(deadPane);
+
+        // Set view order to appear on top
+        deadPane.setViewOrder(-2.0);
+
+        // Add entrance animation - scale up with a slight bounce
+        ScaleTransition scaleIn = new ScaleTransition(Duration.millis(300), deadPane);
+        scaleIn.setFromX(0.1);
+        scaleIn.setFromY(0.1);
+        scaleIn.setToX(1.2);
+        scaleIn.setToY(1.2);
+
+        // Add a slight bounce back
+        ScaleTransition bounce = new ScaleTransition(Duration.millis(200), deadPane);
+        bounce.setFromX(1.2);
+        bounce.setFromY(1.2);
+        bounce.setToX(1.0);
+        bounce.setToY(1.0);
+
+        // Create a sequence for the entrance animation
+        SequentialTransition entrance = new SequentialTransition(scaleIn, bounce);
+
+        // Add a fade out animation
+        FadeTransition fadeOut = new FadeTransition(Duration.millis(500), deadPane);
+        fadeOut.setFromValue(1.0);
+        fadeOut.setToValue(0.0);
+
+        // Show "Dead!" for 2 seconds, then fade out and remove plant
+        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+        pause.setOnFinished(e -> {
+            fadeOut.setOnFinished(fadeEvent -> {
+                // Remove the "Dead!" text
+                gridPane.getChildren().remove(deadPane);
+                
+                // Now remove the actual plant from the UI
+                boolean removed = gridPane.getChildren().removeIf(node -> {
+                    Integer nodeRow = GridPane.getRowIndex(node);
+                    Integer nodeCol = GridPane.getColumnIndex(node);
+                    boolean match = nodeRow != null && nodeCol != null && nodeRow == row && nodeCol == col;
+                    return match;
+                });
+
+                if (!removed) {
+                    System.out.println("❌ No UI node found at (" + row + "," + col + ")");
+                }
+                
+                logger.info("Day: " + logDay + " Dead plant removed from UI at row " + row + " and column " + col);
+            });
+            fadeOut.play();
+        });
+
+        // Play the entrance animation, then start the pause
+        entrance.setOnFinished(e -> pause.play());
+        entrance.play();
     }
 
     private void handlePlantHealthUpdateEvent(PlantHealthUpdateEvent event) {
