@@ -7,6 +7,7 @@ import com.example.ooad_project.SubSystems.TemperatureSystem;
 import com.example.ooad_project.SubSystems.WateringSystem;
 import com.example.ooad_project.ThreadUtils.ThreadManager;
 import com.example.ooad_project.Parasite.ParasiteManager;
+import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 
@@ -53,46 +54,47 @@ public class HelloApplication extends Application {
 
     }
 
-
-    //    This is for testing the API
-//    I assume Prof is going to do something similar
+    //temp and rain events are now random
     private void runAPIScheduledTasks() {
         SmartGardenAPI api = new SmartGardenAPI();
         api.initializeGarden();
         Random rand = new Random();
 
-//        This is for testing the parasites thread
+        // Randomly schedule rain and temperature
+        scheduleRandomRain(api, rand);
+        scheduleRandomTemperature(api, rand);
+
+        // Schedule parasite event every 10 seconds
         ParasiteManager parasiteManager = ParasiteManager.getInstance();
-
-//        Schedule rain every 15 seconds
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(60), ev -> {
-//            the api.rain is from the SmartGardenAPI
-            api.rain(rand.nextInt(40));
-        }));
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
-
-
-//        Schedule temperature every 10 seconds
-        Timeline timeline2 = new Timeline(new KeyFrame(Duration.seconds(40), ev -> {
-//            the api.temperature is from the SmartGardenAPI
-            api.temperature(rand.nextInt(70));
-        }));
-        timeline2.setCycleCount(Timeline.INDEFINITE);
-        timeline2.play();
-
-        // Schedule parasite every 10 seconds
-        Timeline timeline3 = new Timeline(new KeyFrame(Duration.seconds(10), ev -> {
+        Timeline parasiteTimeline = new Timeline(new KeyFrame(Duration.seconds(10), ev -> {
             List<Parasite> parasites = parasiteManager.getParasites();
             if (!parasites.isEmpty()) {
                 Parasite randomParasite = parasites.get(rand.nextInt(parasites.size()));
-                api.parasite(randomParasite.getName()); // Use a random parasite
+                api.parasite(randomParasite.getName());
             }
         }));
-        timeline3.setCycleCount(Timeline.INDEFINITE);
-        timeline3.play();
+        parasiteTimeline.setCycleCount(Timeline.INDEFINITE);
+        parasiteTimeline.play();
+    }
 
+    private void scheduleRandomRain(SmartGardenAPI api, Random rand) {
+        int delay = 30 + rand.nextInt(61); // 30–90 seconds
+        PauseTransition pause = new PauseTransition(Duration.seconds(delay));
+        pause.setOnFinished(e -> {
+            api.rain(rand.nextInt(40)); // 0–39 mm rain
+            scheduleRandomRain(api, rand); // Reschedule recursively
+        });
+        pause.play();
+    }
 
+    private void scheduleRandomTemperature(SmartGardenAPI api, Random rand) {
+        int delay = 20 + rand.nextInt(41); // 20–60 seconds
+        PauseTransition pause = new PauseTransition(Duration.seconds(delay));
+        pause.setOnFinished(e -> {
+            api.temperature(50 + rand.nextInt(26)); // 50–75 °F
+            scheduleRandomTemperature(api, rand); // Reschedule recursively
+        });
+        pause.play();
     }
 
     private void runAPIScheduledTasksWithoutJavaFX() {

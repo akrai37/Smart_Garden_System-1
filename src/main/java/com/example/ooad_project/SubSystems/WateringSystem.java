@@ -21,13 +21,23 @@ public class WateringSystem implements Runnable {
     public void run() {
         while (true) {
             try {
-                Thread.sleep(1000); // Check every second
+                // Sleep for a random duration between 30s to 90s
+                int delay = 30 + (int) (Math.random() * 61); // 30–90 sec
+                Thread.sleep(delay * 1000L);
+
+                // Random rain amount between 5mm to 30mm
+                int rainAmount = 5 + (int) (Math.random() * 26); // 5–30
+                EventBus.publish("RainEvent", new RainEvent(rainAmount));
+
+                logger.info("Day: " + currentDay + " ⛈️ Triggered random rain of " + rainAmount + "mm after " + delay + " seconds");
+
             } catch (InterruptedException e) {
                 logger.error("Watering System interrupted");
-                return; // Exit if interrupted
+                return;
             }
         }
     }
+
 
     public WateringSystem() {
         logger.info("Watering System Initialized");
