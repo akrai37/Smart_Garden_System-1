@@ -21,7 +21,7 @@ public class DaySystem {
         logger.info("Day System Initialized");
         scheduler = Executors.newScheduledThreadPool(1);
         currentDay = 0;  // Start at Day 0
-        scheduler.scheduleAtFixedRate(this::endOfDayActions, 0, 5, TimeUnit.SECONDS);
+        scheduler.scheduleAtFixedRate(this::endOfDayActions, 0, 20, TimeUnit.SECONDS);
     }
 
     public static synchronized DaySystem getInstance() {

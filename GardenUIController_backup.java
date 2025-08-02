@@ -108,7 +108,14 @@ public class GardenUIController {
 
     @FXML
     private Rectangle treePlaceholder;
-
+    // @FXML
+    // private Rectangle treeTrunk; // Removed to hide trunk
+    // @FXML
+    // private Line rightBranch1; // Removed to hide branches
+    // @FXML
+    // private Line rightBranch2; // Removed to hide branches
+    // @FXML
+    // private Line leftBranch; // Removed to hide branches
     private final Random random = new Random();
     private GardenGrid gardenGrid;
 
@@ -168,9 +175,19 @@ public class GardenUIController {
         showOptimalTemperature();
 
         showNoParasites();
-      
+        // Place this after showNoParasites()
+        //  Platform.runLater(this::animateParasiteStatus);
+        //  setupParasiteAnimation();
+        // Remove the unwanted Veg label in top left
+        //PauseTransition delay1 = new PauseTransition(Duration.millis(200));
+      //  delay1.setOnFinished(e -> {
+            // Initialize any delayed elements
+            //  initializeParasiteStatusWithGround();
+
+            // Add our simple pesticide system box
             createEnhancedVerticalPesticideBox();
-    
+      //  });
+       // delay1.play();
 
         Platform.runLater(() -> {
             // This is a drastic approach but should work to remove any top-left labels
@@ -259,7 +276,12 @@ public class GardenUIController {
         rainCanvas = new Canvas(1000, 800);
         anchorPane.getChildren().add(rainCanvas); // Add the canvas to the AnchorPane
         rainDrops = new ArrayList<>();
- 
+        // addVerticalTextToTrunk(); // Removed vertical trunk text
+        //gridPane.setStyle("-fx-grid-lines-visible: true; -fx-border-color: brown; -fx-border-width: 2;");
+
+        // Load plants data from JSON file and populate MenuButtons
+        //loadPlantsData();
+//        loadParasitesData();
 
         log4jLogger.info("GardenUIController initialized");
 
@@ -355,6 +377,37 @@ public class GardenUIController {
             gc.fillOval(drop.x, drop.y, 3, 15); // Raindrop shape (x, y, width, height)
         }
     }
+
+    // Stop rain animation after 5 seconds
+
+
+//    public void createColoredGrid(GridPane gridPane, int numRows, int numCols) {
+//        double cellWidth = 80;  // Width of each cell
+//        double cellHeight = 80; // Height of each cell
+//
+//        // Loop through rows and columns to create cells
+//        for (int row = 0; row < numRows; row++) {
+//            for (int col = 0; col < numCols; col++) {
+//                // Create a StackPane for each cell
+//                StackPane cell = new StackPane();
+//
+//                // Set preferred size of the cell
+//                cell.setPrefSize(cellWidth, cellHeight);
+//
+//                // Set a unique border color for each cell
+//                Color borderColor = Color.BROWN; // Function to generate random colors
+//                cell.setBorder(new Border(new BorderStroke(
+//                        borderColor,
+//                        BorderStrokeStyle.SOLID,
+//                        CornerRadii.EMPTY,
+//                        new BorderWidths(2) // Border thickness
+//                )));
+//
+//                // Add the cell to the GridPane
+//                gridPane.add(cell, col, row);
+//            }
+//        }
+//    }
 
 
     private void handlePlantDeathUIChangeEvent(Plant plant) {
@@ -967,20 +1020,135 @@ public class GardenUIController {
             // Create a pane for both image and health box
             StackPane pane = new StackPane();
 
-// Add the plant image first (centered by default)
+// ✅ Add the plant image first (centered by default)
             pane.getChildren().add(newImageView);
 
-// Add health box on top-left
+// ✅ Add health box on top-left
             HealthBar healthBar = plant.getHealthBar();
             StackPane.setAlignment(healthBar, Pos.TOP_LEFT);
             StackPane.setMargin(healthBar, new Insets(4, 0, 0, 4));
             pane.getChildren().add(healthBar);
 
-// Add pane to grid
+// ✅ Add pane to grid
             gridPane.add(pane, col, row);
 
         });
     }
+
+//    private void changeRainUI(RainEvent event) {
+//        // Start rain animation
+//        startRainAnimation();
+//
+//        logger.info("Day: " + logDay + " Displayed rain event with amount: " + event.getAmount() + "mm");
+//
+//        Platform.runLater(() -> {
+//            // Stop sun animation if running
+//            stopSunAnimation();
+//
+//            // Hide sun if visible
+//            if (sunImageView != null) {
+//                sunImageView.setVisible(false);
+//            }
+//
+//            // Create or update cloud group
+//            if (cloudGroup == null) {
+//                cloudGroup = new Group();
+//                anchorPane.getChildren().add(cloudGroup);
+//            } else {
+//                cloudGroup.getChildren().clear();
+//            }
+//
+//            // Add multiple clouds with different positions
+//            addMultipleClouds(cloudGroup, event.getAmount());
+//
+//            // Set the text with the rain amount in small blue font
+//            rainStatusLabel.setGraphic(null); // Remove any existing graphics
+//            rainStatusLabel.setText(event.getAmount() + "mm");
+//            rainStatusLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #1E90FF; -fx-font-weight: bold;");
+//
+//            // Create a pause transition
+//            PauseTransition pause = new PauseTransition(Duration.seconds(5));
+//            pause.setOnFinished(e -> {
+//                // Update UI to reflect no rain after the event ends
+//                showSunnyWeather();
+//            });
+//            pause.play();
+//        });
+//    }
+//
+//    // New method to add multiple clouds
+//    private void addMultipleClouds(Group cloudGroup, int rainAmount) {
+//        // Load cloud image
+//        Image cloudImage = new Image(getClass().getResourceAsStream("/images/rain.png"));
+//
+//        // Add 8 clouds with different positions and sizes
+//        Random random = new Random();
+//        for (int i = 0; i < 4; i++) {
+//            ImageView cloudView = new ImageView(cloudImage);
+//
+//            // Vary cloud size
+//            double sizeVariation = 0.6 + (random.nextDouble() * 0.8); // 0.6 to 1.4 size factor
+//            cloudView.setFitHeight(70 * sizeVariation);
+//            cloudView.setFitWidth(70 * sizeVariation);
+//
+//            // Position clouds across the top area
+//            double xPos = 50 + (i * 100) + (random.nextDouble() * 40 - 20);
+//            double yPos = 20 + (random.nextDouble() * 60);
+//
+//            cloudView.setLayoutX(xPos);
+//            cloudView.setLayoutY(yPos);
+//
+//            // Add a subtle cloud drift animation
+//            TranslateTransition drift = new TranslateTransition(Duration.seconds(10 + random.nextDouble() * 5), cloudView);
+//            drift.setByX(random.nextDouble() * 40 - 20); // Drift slightly left or right
+//            drift.setAutoReverse(true);
+//            drift.setCycleCount(TranslateTransition.INDEFINITE);
+//            drift.play();
+//
+//            // Add drop shadow for depth
+//            javafx.scene.effect.DropShadow shadow = new javafx.scene.effect.DropShadow();
+//            shadow.setColor(javafx.scene.paint.Color.rgb(0, 0, 0, 0.3));
+//            shadow.setRadius(5);
+//            shadow.setOffsetY(3);
+//            cloudView.setEffect(shadow);
+//
+//            // Add cloud to group
+//            cloudGroup.getChildren().add(cloudView);
+//
+//            // Add cloud entrance animation
+//            FadeTransition fadeIn = new FadeTransition(Duration.millis(500 + i * 100), cloudView);
+//            fadeIn.setFromValue(0);
+//            fadeIn.setToValue(1);
+//            fadeIn.play();
+//        }
+//    }
+//
+//    // Update stopRainAfterFiveSeconds method
+//    private void stopRainAfterFiveSeconds() {
+//        PauseTransition pauseRain = new PauseTransition(Duration.seconds(1));
+//        pauseRain.setOnFinished(event -> {
+//            // Clear the canvas and stop the animation
+//            if (rainAnimation != null) {
+//                rainAnimation.stop();
+//            }
+//            if (rainCanvas != null && rainCanvas.getGraphicsContext2D() != null) {
+//                rainCanvas.getGraphicsContext2D().clearRect(0, 0, 1000, 800);
+//            }
+//
+//            // Fade out clouds if present
+//            if (cloudGroup != null) {
+//                FadeTransition fadeOut = new FadeTransition(Duration.seconds(1.5), cloudGroup);
+//                fadeOut.setFromValue(1.0);
+//                fadeOut.setToValue(0.0);
+//                fadeOut.setOnFinished(e -> {
+//                    anchorPane.getChildren().remove(cloudGroup);
+//                    cloudGroup = null;
+//                });
+//                fadeOut.play();
+//            }
+//        });
+//        pauseRain.play();
+//    }
 
     private void showSunnyWeather() {
         // Stop rain if it's active
@@ -1039,6 +1207,17 @@ public class GardenUIController {
         final double centerX = 130; // Center of orbit
         final double centerY = 150; // Center of orbit
 
+        // Visualize the orbit path (optional - comment out if you don't want to see it)
+    /*
+    if (sunOrbitPath == null) {
+        sunOrbitPath = new Circle(centerX, centerY, orbitRadius);
+        sunOrbitPath.setFill(null);
+        sunOrbitPath.setStroke(javafx.scene.paint.Color.LIGHTYELLOW);
+        sunOrbitPath.setStrokeWidth(1);
+        sunOrbitPath.setOpacity(0.3);
+        anchorPane.getChildren().add(sunOrbitPath);
+    }
+    */
 
         // Create animation timer for sun movement
         sunAnimationTimer = new AnimationTimer() {
@@ -1383,6 +1562,54 @@ public class GardenUIController {
         });
     }
 
+//    private void loadPlantsData() {
+//        // Clear existing items
+//        treeMenuButton.getItems().clear();
+//        flowerMenuButton.getItems().clear();
+//        vegetableMenuButton.getItems().clear();
+//
+//        // Load trees with styled menu items
+//        for (Tree tree : plantManager.getTrees()) {
+//            MenuItem menuItem = createStyledMenuItem(tree.getName(), tree.getCurrentImage());
+//            menuItem.setOnAction(e -> addPlantToGrid(tree.getName(), tree.getCurrentImage()));
+//            treeMenuButton.getItems().add(menuItem);
+//        }
+//
+//        // Load flowers with styled menu items
+//        for (Flower flower : plantManager.getFlowers()) {
+//            MenuItem menuItem = createStyledMenuItem(flower.getName(), flower.getCurrentImage());
+//            menuItem.setOnAction(e -> addPlantToGrid(flower.getName(), flower.getCurrentImage()));
+//            flowerMenuButton.getItems().add(menuItem);
+//        }
+//
+//        // Load vegetables with styled menu items
+//        for (Vegetable vegetable : plantManager.getVegetables()) {
+//            MenuItem menuItem = createStyledMenuItem(vegetable.getName(), vegetable.getCurrentImage());
+//            menuItem.setOnAction(e -> addPlantToGrid(vegetable.getName(), vegetable.getCurrentImage()));
+//            vegetableMenuButton.getItems().add(menuItem);
+//        }
+//    }
+
+//    private MenuItem createStyledMenuItem(String name, String imagePath) {
+//        MenuItem menuItem = new MenuItem(name);
+//
+//        try {
+//            // Try to load an image with a scaled-down size
+//            Image image = new Image(getClass().getResourceAsStream("/images/" + imagePath), 24, 24, true, true);
+//            ImageView imageView = new ImageView(image);
+//            menuItem.setGraphic(imageView);
+//        } catch (Exception e) {
+//            // If image loading fails, just use text
+//            log4jLogger.error("Failed to load image for menu item: " + name);
+//        }
+//
+//        // Add padding and styling
+//        menuItem.setStyle("-fx-padding: 8px 12px; -fx-font-size: 14px;");
+//
+//        return menuItem;
+//    }
+
+    // Update method for showing no parasites
     // Update the existing showNoParasites method to use path transition
     private void showNoParasites() {
         logger.info("Day: " + logDay + " Displayed no parasites status");
@@ -1587,6 +1814,21 @@ public class GardenUIController {
         delay.setOnFinished(e -> fixParasiteStatus());
         delay.play();
     }
+    //    This is the method that will populate the menu buttons with the plant data
+//    private void loadPlantsData() {
+//        for (Tree tree : plantManager.getTrees()) {
+//            MenuItem menuItem = new MenuItem(tree.getName());
+//            treeMenuButton.getItems().add(menuItem);
+//        }
+//        for (Flower flower : plantManager.getFlowers()) {
+//            MenuItem menuItem = new MenuItem(flower.getName());
+//            flowerMenuButton.getItems().add(menuItem);
+//        }
+//        for (Vegetable vegetable : plantManager.getVegetables()) {
+//            MenuItem menuItem = new MenuItem(vegetable.getName());
+//            vegetableMenuButton.getItems().add(menuItem);
+//        }
+//    }
 
     // Method to setup the three menu buttons in a horizontal line
     private void setupMenuButtonsOnly() {
@@ -1984,6 +2226,10 @@ public class GardenUIController {
         styleContextMenus();
     }
 
+    // A simpler alternative for the entire tree menu setup
+    // Replace your existing setupSimpleTreeMenu method with this fixed version
+    // Replace this method in your code to fix the flower menu
+    // Replace this method in your code to fix the flower menu using direct popup
     // Fix the variable initialization in the setupSimpleTreeMenu method
     private void setupSimpleTreeMenu() {
         try {
@@ -2655,6 +2901,44 @@ public class GardenUIController {
         });
     }
 
+    // Update the setupCircularMenuButtons method to ensure text is visible
+//    private void setupCircularMenuButtons() {
+//        // Add tooltips to menu buttons
+//        Tooltip.install(treeMenuButton, new Tooltip("Add Trees to your garden"));
+//        Tooltip.install(flowerMenuButton, new Tooltip("Add Flowers to your garden"));
+//        Tooltip.install(vegetableMenuButton, new Tooltip("Add Vegetables to your garden"));
+//
+//        // Set the popup direction for each menu button
+//        treeMenuButton.setPopupSide(Side.RIGHT);
+//        flowerMenuButton.setPopupSide(Side.LEFT);
+//        vegetableMenuButton.setPopupSide(Side.BOTTOM);
+//
+//        // Ensure text is centered and visible
+//        treeMenuButton.setContentDisplay(ContentDisplay.CENTER);
+//        flowerMenuButton.setContentDisplay(ContentDisplay.CENTER);
+//        vegetableMenuButton.setContentDisplay(ContentDisplay.CENTER);
+//
+//        // Add hover animations
+//        addHoverAnimation(treeMenuButton);
+//        addHoverAnimation(flowerMenuButton);
+//        addHoverAnimation(vegetableMenuButton);
+//
+//        // Add styling for context menus
+//        styleContextMenus();
+//    }
+
+//    private void addHoverAnimation(MenuButton button) {
+//        ScaleTransition growTransition = new ScaleTransition(Duration.millis(150), button);
+//        growTransition.setToX(1.1);
+//        growTransition.setToY(1.1);
+//
+//        ScaleTransition shrinkTransition = new ScaleTransition(Duration.millis(150), button);
+//        shrinkTransition.setToX(1.0);
+//        shrinkTransition.setToY(1.0);
+//
+//        button.setOnMouseEntered(e -> growTransition.playFromStart());
+//        button.setOnMouseExited(e -> shrinkTransition.playFromStart());
+//    }
 
     private void styleContextMenus() {
         // Apply styling to dropdown menus when they appear
@@ -2727,7 +3011,37 @@ public class GardenUIController {
         return menuItem;
     }
 
-
+    //    private void createColoredGrid(GridPane gridPane, int numRows, int numCols) {
+//        double cellWidth = 80;  // Width of each cell
+//        double cellHeight = 80; // Height of each cell
+//
+//        // Loop through rows and columns to create cells
+//        for (int row = 0; row < numRows; row++) {
+//            for (int col = 0; col < numCols; col++) {
+//                // Create a StackPane for each cell
+//                StackPane cell = new StackPane();
+//
+//                // Set preferred size of the cell
+//                cell.setPrefSize(cellWidth, cellHeight);
+//
+//                // Set a softer, semi-transparent fill for the grid cells
+//                cell.setStyle(
+//                        "-fx-background-color: rgba(220, 255, 220, 0.7); " + // Light green with 70% opacity
+//                                "-fx-background-radius: 5px; " + // Slightly rounded corners
+//                                "-fx-border-color: rgba(139, 69, 19, 0.5); " + // Brown border with 50% opacity
+//                                "-fx-border-width: 1.5px; " + // Thinner border
+//                                "-fx-border-radius: 5px;" // Matching rounded corners for border
+//                );
+//
+//                // Add the cell to the GridPane
+//                gridPane.add(cell, col, row);
+//            }
+//        }
+//
+//        // Add spacing between cells
+//        gridPane.setHgap(3); // Horizontal gap
+//        gridPane.setVgap(3); // Vertical gap
+//    }
     private void createSimpleGradientGrid(GridPane gridPane, int numRows, int numCols) {
         // Single uniform background color for all cells
         javafx.scene.paint.Color uniformCellColor = javafx.scene.paint.Color.web("#f0f8f0", 0.7); // Light green with transparency
@@ -3034,6 +3348,11 @@ public class GardenUIController {
         });
     }
 
+// For ground decorations
+// [Keep this method as is from your previous implementation]
+
+    // Update method for showing no parasites
+
 
     // Method to create a new parasite status label if needed
     private void createNewParasiteStatusLabel(String text, String imagePath, Color textColor) {
@@ -3204,6 +3523,38 @@ public class GardenUIController {
         }
     }
 
+    // Updated method to position sprinklers with second one touching ground
+//    private void addSprinklersToGround() {
+//        Platform.runLater(() -> {
+//            try {
+//                logger.info("Adding sprinklers to ground area");
+//
+//                // Get window dimensions
+//                double anchorWidth = anchorPane.getWidth();
+//                double anchorHeight = anchorPane.getHeight();
+//
+//                // Use default values if dimensions aren't available yet
+//                if (anchorWidth <= 0) anchorWidth = 1000;
+//                if (anchorHeight <= 0) anchorHeight = 700;
+//
+//                // Define ground height and positions for sprinklers
+//                double groundHeight = 60; // REDUCED from 80 to 60
+//                double groundTop = anchorHeight - groundHeight;
+//
+//                // Create first sprinkler on left side (pop-up style)
+//                createPopUpSprinkler(120, groundTop - 15, true);
+//
+//                // Create second sprinkler further to the left (impact style)
+//                // Position adjusted to touch the ground - no y offset
+//                createImpactSprinkler(280, groundTop, true);
+//
+//                logger.info("Successfully added two different sprinklers to ground area");
+//            } catch (Exception e) {
+//                logger.error("Error adding sprinklers to ground: " + e.getMessage());
+//                e.printStackTrace();
+//            }
+//        });
+//    }
 
     // Add decorative elements to the ground
     private void addGroundDecorations(Path groundPath, double anchorWidth, double anchorHeight, double groundHeight) {
@@ -3372,6 +3723,7 @@ public class GardenUIController {
         });
     }
 
+    // Updated method to create and animate sprinklers with different designs
     // Updated method to position sprinklers directly on the wavy ground
     private void addSprinklersToGround() {
         Platform.runLater(() -> {
@@ -3385,6 +3737,9 @@ public class GardenUIController {
                 // Use default values if dimensions aren't available yet
                 if (anchorWidth <= 0) anchorWidth = 1000;
                 if (anchorHeight <= 0) anchorHeight = 700;
+
+                // From your screenshot, we can see the ground is wavy
+                // We'll use fixed Y-positions that match the ground curve
 
                 // First sprinkler (left) - position on the ground curve
                 double sprinkler1X = 120;
@@ -3473,6 +3828,433 @@ public class GardenUIController {
             e.printStackTrace();
         }
     }
+
+    // Method to add roses and plants to the ground - COMMENTED OUT TO REMOVE FLOWERS FROM GROUND
+    /*
+    private void addPlantsToGround(double anchorWidth, double anchorHeight) {
+        try {
+            // Add roses and other plants along the ground
+
+            // Create a rose on the left side
+            createRose(180, anchorHeight - 55);
+
+            // Create another rose on the right side
+            createRose(420, anchorHeight - 55);
+
+            // Create a small bush on the center-left
+            //createBush(240, anchorHeight - 50);
+
+            // Create some flowers
+            createFlowerPatch(340, anchorHeight - 60);
+
+            // Create a small decorative plant on the far right
+            createDecorativePlant(500, anchorHeight - 60);
+
+            logger.info("Added roses and plants to ground area");
+        } catch (Exception e) {
+            logger.error("Error adding plants to ground: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    */
+
+    // FLOWER CREATION METHODS COMMENTED OUT TO REMOVE FLOWERS FROM GROUND
+    /*
+    // Create a rose with stem and flower
+    private void createRose(double x, double y) {
+        Group roseGroup = new Group();
+
+        // Create stem
+        Rectangle stem = new Rectangle(x - 1.5, y - 30, 3, 30);
+        stem.setFill(Color.rgb(40, 100, 40)); // Dark green
+
+        // Create leaves (2-3 small leaves on the stem)
+        for (int i = 0; i < 2; i++) {
+            double leafY = y - 10 - (i * 10);
+            double leafSide = (i % 2 == 0) ? -1 : 1; // Alternate sides
+
+            // Create a leaf using a polygon for a more natural shape
+            Polygon leaf = new Polygon();
+            leaf.getPoints().addAll(
+                    x, leafY,                        // Stem attachment point
+                    x + (leafSide * 10), leafY - 5,  // Tip of leaf
+                    x + (leafSide * 7), leafY - 2,   // Side point
+                    x + (leafSide * 3), leafY - 3    // Base curve
+            );
+            leaf.setFill(Color.rgb(50, 150, 50)); // Green
+
+            roseGroup.getChildren().add(leaf);
+        }
+
+        // Create rose flower (multiple petals in a circle)
+        double flowerSize = 7;
+        Color roseColor = Color.rgb(220, 50, 80); // Rose red
+
+        // Center bud
+        Circle centerBud = new Circle(x, y - 35, flowerSize - 2);
+        centerBud.setFill(roseColor.darker());
+
+        // Add to group
+        roseGroup.getChildren().addAll(stem, centerBud);
+
+        // Create petals around the center
+        int numPetals = 8;
+        for (int i = 0; i < numPetals; i++) {
+            double angle = i * (360.0 / numPetals);
+            double radian = Math.toRadians(angle);
+
+            double petalX = x + Math.cos(radian) * (flowerSize - 2);
+            double petalY = (y - 35) + Math.sin(radian) * (flowerSize - 2);
+
+            Circle petal = new Circle(petalX, petalY, flowerSize);
+            petal.setFill(roseColor);
+
+            roseGroup.getChildren().add(petal);
+        }
+
+        // Add drop shadow
+        DropShadow shadow = new DropShadow();
+        shadow.setColor(Color.rgb(0, 0, 0, 0.5));
+        shadow.setRadius(3);
+        shadow.setOffsetY(2);
+        roseGroup.setEffect(shadow);
+
+        // Add to scene with high view order to ensure visibility
+        anchorPane.getChildren().add(roseGroup);
+        roseGroup.setViewOrder(-1500);
+    }
+
+    // Create a small bush
+    private void createBush(double x, double y) {
+        Group bushGroup = new Group();
+
+        // Create several overlapping circular sections for the bush
+        int numSections = 6;
+        double bushWidth = 30;
+        double bushHeight = 25;
+
+        for (int i = 0; i < numSections; i++) {
+            double sectionX = x - (bushWidth / 2) + (i * (bushWidth / (numSections - 1)));
+            double sectionY = y - (bushHeight * 0.7);
+            double sectionSize = 8 + (Math.random() * 4);
+
+            // Vary the height a little
+            if (i % 2 == 0) {
+                sectionY -= 3;
+            }
+
+            Circle section = new Circle(sectionX, sectionY, sectionSize);
+
+            // Vary the green shade slightly
+            int greenVariation = (int) (Math.random() * 30);
+            section.setFill(Color.rgb(
+                    50 + greenVariation,
+                    120 + greenVariation,
+                    50 + (greenVariation / 2)
+            ));
+
+            bushGroup.getChildren().add(section);
+        }
+
+        // Create a thin trunk/stem visible at the bottom
+        Rectangle trunk = new Rectangle(x - 2, y - 5, 4, 5);
+        trunk.setFill(Color.rgb(80, 60, 30));
+        bushGroup.getChildren().add(trunk);
+
+        // Add drop shadow
+        DropShadow shadow = new DropShadow();
+        shadow.setColor(Color.rgb(0, 0, 0, 0.5));
+        shadow.setRadius(3);
+        shadow.setOffsetY(2);
+        bushGroup.setEffect(shadow);
+
+        // Add to scene
+        anchorPane.getChildren().add(bushGroup);
+        bushGroup.setViewOrder(-1500);
+    }
+
+    // Create a patch of small flowers
+    private void createFlowerPatch(double x, double y) {
+        Group flowerGroup = new Group();
+
+        // Add several small flowers in a cluster
+        int numFlowers = 5;
+        double spreadX = 25;
+        double spreadY = 15;
+
+        for (int i = 0; i < numFlowers; i++) {
+            double flowerX = x - (spreadX / 2) + (Math.random() * spreadX);
+            double flowerY = y - (Math.random() * spreadY);
+
+            // Choose flower color - mix of colors for variety
+            Color[] flowerColors = {
+                    Color.rgb(255, 255, 100), // Yellow
+                    Color.rgb(255, 100, 255), // Pink
+                    Color.rgb(100, 100, 255), // Blue
+                    Color.rgb(255, 150, 50)   // Orange
+            };
+            Color flowerColor = flowerColors[(int) (Math.random() * flowerColors.length)];
+
+            // Create flower stem
+            Line stem = new Line(flowerX, flowerY, flowerX, flowerY - 10 - (Math.random() * 5));
+            stem.setStroke(Color.rgb(50, 120, 50));
+            stem.setStrokeWidth(1.5);
+            flowerGroup.getChildren().add(stem);
+
+            // Create flower center
+            Circle center = new Circle(flowerX, stem.getEndY(), 2);
+            center.setFill(Color.rgb(200, 150, 0));
+            flowerGroup.getChildren().add(center);
+
+            // Create petals
+            int numPetals = 5 + (int) (Math.random() * 3);
+            for (int j = 0; j < numPetals; j++) {
+                double angle = j * (360.0 / numPetals);
+                double radian = Math.toRadians(angle);
+
+                double petalX = flowerX + Math.cos(radian) * 4;
+                double petalY = stem.getEndY() + Math.sin(radian) * 4;
+
+                Circle petal = new Circle(petalX, petalY, 3);
+                petal.setFill(flowerColor);
+
+                flowerGroup.getChildren().add(petal);
+            }
+        }
+
+        // Add drop shadow for depth
+        DropShadow shadow = new DropShadow();
+        shadow.setColor(Color.rgb(0, 0, 0, 0.4));
+        shadow.setRadius(2);
+        shadow.setOffsetY(1);
+        flowerGroup.setEffect(shadow);
+
+        // Add to scene
+        anchorPane.getChildren().add(flowerGroup);
+        flowerGroup.setViewOrder(-1500);
+    }
+
+    // Create a decorative plant (like a small fern or ornamental grass)
+    private void createDecorativePlant(double x, double y) {
+        Group plantGroup = new Group();
+
+        // Create a small base/soil mound
+        Circle soilMound = new Circle(x, y, 8);
+        soilMound.setFill(Color.rgb(100, 70, 40)); // Brown soil
+        plantGroup.getChildren().add(soilMound);
+
+        // Add plant stems/blades
+        int numStems = 7;
+        for (int i = 0; i < numStems; i++) {
+            double angle = -60 - (i * (60.0 / numStems)); // Spread from -60 to -120 degrees
+            double radian = Math.toRadians(angle);
+
+            double stemLength = 15 + (Math.random() * 10);
+
+            // Create a curved path for the stem
+            Path stemPath = new Path();
+
+            MoveTo start = new MoveTo(x, y);
+            stemPath.getElements().add(start);
+
+            double controlX = x + Math.cos(radian) * (stemLength * 0.5);
+            double controlY = y + Math.sin(radian) * (stemLength * 0.5);
+            double endX = x + Math.cos(radian) * stemLength;
+            double endY = y + Math.sin(radian) * stemLength;
+
+            QuadCurveTo curve = new QuadCurveTo(controlX, controlY, endX, endY);
+            stemPath.getElements().add(curve);
+
+            stemPath.setStroke(Color.rgb(50 + (int) (Math.random() * 30),
+                    120 + (int) (Math.random() * 30),
+                    50));
+            stemPath.setStrokeWidth(1 + Math.random());
+            stemPath.setStrokeLineCap(StrokeLineCap.ROUND);
+
+            plantGroup.getChildren().add(stemPath);
+        }
+
+        // Add shadow
+        DropShadow shadow = new DropShadow();
+        shadow.setColor(Color.rgb(0, 0, 0, 0.4));
+        shadow.setRadius(3);
+        shadow.setOffsetY(2);
+        plantGroup.setEffect(shadow);
+
+        // Add to scene
+        anchorPane.getChildren().add(plantGroup);
+        plantGroup.setViewOrder(-1500);
+    }
+
+    // Updated water animation for better visibility
+    private void animateSprinklerWater(Group sprinklerGroup, double x, double y) {
+        // Create a group for water particles
+        Group waterGroup = new Group();
+        sprinklerGroup.getChildren().add(waterGroup);
+
+        // Create a timeline for spraying water particles
+        Timeline waterAnimation = new Timeline(
+                new KeyFrame(Duration.millis(80), event -> {
+                    // Create a fan pattern of water
+                    for (int i = -4; i <= 4; i++) {
+                        double angle = -90 + (i * 15); // -150 to -30 degrees
+
+                        // Random chance to skip some drops for natural effect
+                        if (Math.random() < 0.7) {
+                            addWaterDroplet(waterGroup, x, y, angle);
+                        }
+                    }
+                })
+        );
+        waterAnimation.setCycleCount(Timeline.INDEFINITE);
+        waterAnimation.play();
+
+        // Add cycling behavior
+        Timeline cycleAnimation = new Timeline(
+                new KeyFrame(Duration.seconds(4), e -> {
+                    waterAnimation.pause();
+                    waterGroup.getChildren().clear();
+                }),
+                new KeyFrame(Duration.seconds(6), e -> {
+                    waterAnimation.play();
+                })
+        );
+        cycleAnimation.setCycleCount(Timeline.INDEFINITE);
+        cycleAnimation.play();
+    }
+
+    // Create water droplets with improved visibility
+    private void addWaterDroplet(Group waterGroup, double x, double y, double angle) {
+        // Convert angle to radians
+        double radian = Math.toRadians(angle);
+
+        // Create a water droplet
+        Circle droplet = new Circle(2.5 + Math.random());
+
+        // Use bright blue color with some transparency
+        droplet.setFill(Color.rgb(0, 160, 255, 0.7 + Math.random() * 0.3));
+
+        // Add a slight outline for better visibility
+        droplet.setStroke(Color.rgb(0, 100, 220, 0.5));
+        droplet.setStrokeWidth(0.5);
+
+        // Set initial position
+        droplet.setCenterX(x);
+        droplet.setCenterY(y);
+
+        // Add to group
+        waterGroup.getChildren().add(droplet);
+
+        // Set an extremely high view order
+        droplet.setViewOrder(-3000);
+
+        // Create arc path animation
+        double speed = 0.8 + Math.random() * 0.4; // Duration in seconds
+        double distance = 30 + Math.random() * 20; // Distance the droplet travels
+
+        // Create timeline animation with 15 steps
+        Timeline animation = new Timeline();
+        int steps = 15;
+
+        for (int i = 0; i <= steps; i++) {
+            double t = i / (double) steps;
+
+            // Calculate position along arc path with gravity
+            double pathX = x + (distance * t * Math.cos(radian));
+            double pathY = y + (distance * t * Math.sin(radian)) + (20 * t * t); // Add gravity
+
+            // Gradually reduce opacity near the end
+            double opacity = (i < steps * 0.7) ?
+                    (0.7 + Math.random() * 0.3) :
+                    ((1 - (i - steps * 0.7) / (steps * 0.3)) * 0.7);
+
+            // Add keyframe
+            animation.getKeyFrames().add(
+                    new KeyFrame(Duration.seconds(speed * t),
+                            new KeyValue(droplet.centerXProperty(), pathX),
+                            new KeyValue(droplet.centerYProperty(), pathY),
+                            new KeyValue(droplet.opacityProperty(), opacity)
+                    )
+            );
+        }
+
+        // Remove when done
+        animation.setOnFinished(e -> waterGroup.getChildren().remove(droplet));
+
+        // Play the animation
+        animation.play();
+    }
+    // Simplified water animation for visibility
+
+
+    // Create highly visible water droplets
+    private void addVisibleWaterDroplet(Group waterGroup, double x, double y, double angle) {
+        // Convert angle to radians
+        double radian = Math.toRadians(angle);
+
+        // Create a larger, more visible droplet
+        Circle droplet = new Circle(3);
+
+        // Use a bright blue color that's easy to see
+        droplet.setFill(Color.rgb(0, 150, 255, 0.8));
+
+        // Add a stroke for extra visibility
+        droplet.setStroke(Color.rgb(0, 100, 200, 0.5));
+        droplet.setStrokeWidth(1);
+
+        // Set initial position at the nozzle
+        droplet.setCenterX(x);
+        droplet.setCenterY(y);
+
+        // Add to the water group
+        waterGroup.getChildren().add(droplet);
+
+        // Set a high view order to ensure droplets are visible
+        droplet.setViewOrder(-2000);
+
+        // Calculate a simple arc path for the water
+        double speed = 1.0 + Math.random() * 0.5; // Consistent speed
+        double distance = 40 + Math.random() * 20; // Moderate distance
+
+        // Create animation timeline for the droplet
+        Timeline timeline = new Timeline();
+
+        // Add keyframes for the motion - 10 steps for smooth movement
+        int steps = 10;
+        for (int i = 0; i <= steps; i++) {
+            double t = i / (double) steps;
+
+            // Calculate position along the arc
+            double dx = distance * t * Math.cos(radian);
+            double dy = distance * t * Math.sin(radian) + (15 * t * t); // Add gravity
+
+            double newX = x + dx;
+            double newY = y + dy;
+
+            // Add keyframe
+            timeline.getKeyFrames().add(
+                    new KeyFrame(Duration.seconds(speed * t),
+                            new KeyValue(droplet.centerXProperty(), newX),
+                            new KeyValue(droplet.centerYProperty(), newY)
+                    )
+            );
+
+            // Add fade out toward the end
+            if (i > steps * 0.7) {
+                double opacity = 1 - ((i - steps * 0.7) / (steps * 0.3));
+                timeline.getKeyFrames().add(
+                        new KeyFrame(Duration.seconds(speed * t),
+                                new KeyValue(droplet.opacityProperty(), opacity)
+                        )
+                );
+            }
+        }
+
+        // Remove the droplet when animation completes
+        timeline.setOnFinished(e -> waterGroup.getChildren().remove(droplet));
+
+    }
+    */ // END OF COMMENTED FLOWER METHODS
 
     // Updated water animation for better visibility - MOVED OUT OF COMMENT BLOCK
     private void animateSprinklerWater(Group sprinklerGroup, double x, double y) {
@@ -4519,6 +5301,11 @@ public class GardenUIController {
     }
 
 
+
+
+
+
+
     private void positionPesticideBoxExactLocation(Pane pesticideBox) {
         try {
             // Get the width and height of the anchor pane
@@ -4529,6 +5316,10 @@ public class GardenUIController {
             if (anchorWidth <= 0) anchorWidth = 1187.0;
             if (anchorHeight <= 0) anchorHeight = 780.0;
 
+            // Position aligned below the vertical menu buttons
+            // Menu buttons are now positioned vertically starting at Y = 200
+            // Tree button: Y = 200, Flower button: Y = 270, Veg button: Y = 340
+            // Each button has width 80px and height 50px, so veg button ends at Y = 390
             // Button left edge is at (anchorWidth - 150), so center is at (anchorWidth - 150 + 40) = (anchorWidth - 110)
             double buttonCenterX = anchorWidth - 110; // Center of vertical menu buttons
             double yPos = 390 + 15; // Below vertical menu buttons + gap
@@ -4547,6 +5338,114 @@ public class GardenUIController {
             pesticideBox.setLayoutY(405); // Below vertical menu buttons with new spacing
         }
     }
+
+    /*
+    // Commented out - not used in simplified pesticide box
+    private void showRefillParticles() {
+        // Find the position of the pesticide box
+        double pestX = 0;
+        double pestY = 0;
+
+        // Try to find the box by looking for the level bar
+        if (pesticideLevelBar != null) {
+            try {
+                Bounds bounds = pesticideLevelBar.localToScene(pesticideLevelBar.getBoundsInLocal());
+                pestX = bounds.getMinX() + bounds.getWidth() / 2;
+                pestY = bounds.getMinY() + bounds.getHeight() / 2;
+            } catch (Exception e) {
+                // Use fallback position
+                pestX = anchorPane.getWidth() - 100;
+                pestY = anchorPane.getHeight() - 1200;
+            }
+        }
+
+        // Create a group for particles
+        Group particleGroup = new Group();
+        anchorPane.getChildren().add(particleGroup);
+
+        // Generate particles
+        final double centerX = pestX;
+        final double centerY = pestY;
+
+        // Create particles
+        for (int i = 0; i < 20; i++) {
+            // Create a small circle for the particle
+            Circle particle = new Circle(2 + random.nextDouble() * 3);
+
+            // Random color between blue and purple
+            Color color = Color.rgb(
+                    100 + random.nextInt(100), // R
+                    100 + random.nextInt(100), // G
+                    200 + random.nextInt(55),  // B
+                    0.7 + random.nextDouble() * 0.3 // Alpha
+            );
+
+            particle.setFill(color);
+
+            // Position at the center
+            particle.setCenterX(centerX);
+            particle.setCenterY(centerY);
+
+            // Add to the group
+            particleGroup.getChildren().add(particle);
+
+            // Calculate random direction
+            double angle = random.nextDouble() * 360;
+            double distance = 30 + random.nextDouble() * 50;
+
+            // Calculate end position
+            double endX = centerX + distance * Math.cos(Math.toRadians(angle));
+            double endY = centerY + distance * Math.sin(Math.toRadians(angle));
+
+            // Create movement animation
+            Timeline timeline = new Timeline();
+
+            // Add keyframes for movement and fading
+            timeline.getKeyFrames().add(
+                    new KeyFrame(Duration.ZERO,
+                            new KeyValue(particle.centerXProperty(), centerX),
+                            new KeyValue(particle.centerYProperty(), centerY),
+                            new KeyValue(particle.opacityProperty(), 1.0)
+                    )
+            );
+
+            // Move in an arc rather than straight line
+            // Add more keyframes for curved motion
+            for (int j = 1; j < 10; j++) {
+                double t = j / 10.0;
+                double arcX = centerX + (endX - centerX) * t;
+                double arcY = centerY + (endY - centerY) * t - Math.sin(Math.PI * t) * 20; // Arc upward
+
+                timeline.getKeyFrames().add(
+                        new KeyFrame(Duration.millis(800 * t),
+                                new KeyValue(particle.centerXProperty(), arcX),
+                                new KeyValue(particle.centerYProperty(), arcY)
+                        )
+                );
+            }
+
+            // Final position with fade out
+            timeline.getKeyFrames().add(
+                    new KeyFrame(Duration.millis(800),
+                            new KeyValue(particle.centerXProperty(), endX),
+                            new KeyValue(particle.centerYProperty(), endY),
+                            new KeyValue(particle.opacityProperty(), 0.0)
+                    )
+            );
+
+            // Play the animation
+            timeline.play();
+
+            // Remove particle and group when done
+            timeline.setOnFinished(e -> {
+                particleGroup.getChildren().remove(particle);
+                if (particleGroup.getChildren().isEmpty()) {
+                    anchorPane.getChildren().remove(particleGroup);
+                }
+            });
+        }
+    }
+    */
 
 
 

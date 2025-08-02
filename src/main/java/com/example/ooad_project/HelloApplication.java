@@ -66,7 +66,7 @@ public class HelloApplication extends Application {
 
         // Schedule parasite event every 10 seconds
         ParasiteManager parasiteManager = ParasiteManager.getInstance();
-        Timeline parasiteTimeline = new Timeline(new KeyFrame(Duration.seconds(10), ev -> {
+        Timeline parasiteTimeline = new Timeline(new KeyFrame(Duration.seconds(20), ev -> {
             List<Parasite> parasites = parasiteManager.getParasites();
             if (!parasites.isEmpty()) {
                 Parasite randomParasite = parasites.get(rand.nextInt(parasites.size()));

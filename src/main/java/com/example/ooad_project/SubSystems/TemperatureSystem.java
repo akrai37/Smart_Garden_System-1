@@ -36,7 +36,7 @@ public class TemperatureSystem implements Runnable{
                 if (plant != null) {
                     int tempDiff = currentTemperature - plant.getTemperatureRequirement();
                     if (tempDiff > 0) {
-                        EventBus.publish("Day: " + currentDay + " CoolTemperatureEvent", new CoolTemperatureEvent(plant.getRow(), plant.getCol(), Math.abs(tempDiff)));
+                        EventBus.publish("CoolTemperatureEvent", new CoolTemperatureEvent(plant.getRow(), plant.getCol(), Math.abs(tempDiff)));
                         logger.info("Day: " + currentDay + " Temperature system cooled {} at position ({}, {}) by {} degrees F.", plant.getName(), i, j, Math.abs(tempDiff));
                         EventBus.publish("SprinklerEvent", new SprinklerEvent(plant.getRow(), plant.getCol(), tempDiff));
                         logger.info("Day: " + currentDay + " Sprinklers started at position ({}, {}) to cool down the plant.", i, j);
