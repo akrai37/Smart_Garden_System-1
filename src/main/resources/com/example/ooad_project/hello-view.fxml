@@ -114,6 +114,36 @@
                 </Text>
                 <Label fx:id="parasiteStatusLabel" text="No Parasites" style="-fx-font-family: serif; -fx-font-size: 25px; -fx-font-weight: bold; -fx-text-fill: green;" alignment="CENTER_RIGHT"/>
             </VBox>
+
+            <!-- System Status VBox at the right bottom -->
+            <VBox spacing="8" AnchorPane.rightAnchor="20.0" AnchorPane.bottomAnchor="50.0" alignment="BOTTOM_RIGHT">
+                <!-- Cooling Status Box
+                <VBox spacing="5" 
+                      style="-fx-background-color: #E6F3FF; 
+                             -fx-border-color: #4A90E2; 
+                             -fx-border-width: 2px; 
+                             -fx-border-style: solid;
+                             -fx-padding: 10px;
+                             -fx-background-radius: 8px;
+                             -fx-border-radius: 8px;
+                             -fx-min-width: 200px;
+                             -fx-pref-width: 200px;">
+                    <Label fx:id="coolingStatusLabel" text="" 
+                           style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #4A90E2; -fx-text-alignment: center;"/>
+                </VBox> -->
+                
+                <!-- Sprinkler Status Box -->
+                            <!-- System Status Messages (without boxes) -->
+            <VBox spacing="5" AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="40">
+                <!-- Cooling Status Message -->
+                <Label fx:id="coolingStatusLabel" text="" 
+                       style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #003366; -fx-text-alignment: center;"/>
+                
+                <!-- Sprinkler Status Message -->
+                <Label fx:id="sprinklerStatusLabel" text="" 
+                       style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #003366; -fx-text-alignment: center;"/>
+            </VBox>
+            </VBox>
         </children>
     </AnchorPane>
 </StackPane>

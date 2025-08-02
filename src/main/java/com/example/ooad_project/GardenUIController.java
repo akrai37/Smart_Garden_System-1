@@ -67,6 +67,10 @@ public class GardenUIController {
     private Label temperatureStatusLabel;
     @FXML
     private Label parasiteStatusLabel;
+    @FXML
+    private Label coolingStatusLabel;
+    @FXML
+    private Label sprinklerStatusLabel;
 
     @FXML
     private GridPane gridPane;
@@ -84,6 +88,7 @@ public class GardenUIController {
     int flag = 0;
     int logDay = 0;
     DayUpdateEvent dayChangeEvent;
+    private boolean isCoolingActive = false; // Track if cooling is currently active
 
 
     private static class RainDrop {
@@ -168,6 +173,9 @@ public class GardenUIController {
         showOptimalTemperature();
 
         showNoParasites();
+      
+        // Initialize system status labels as hidden
+        initializeSystemStatusLabels();
       
             createEnhancedVerticalPesticideBox();
     
@@ -836,6 +844,12 @@ public class GardenUIController {
 
         logger.info("Day: " + currentDay + " Displayed plant cooled at row " + event.getRow() + " and column " + event.getCol() + " by " + event.getTempDiff());
 
+        // Set cooling active flag and update cooling status label
+        isCoolingActive = true;
+        Platform.runLater(() -> {
+            showCoolingStatus();
+        });
+
         Platform.runLater(() -> {
             int row = event.getRow();
             int col = event.getCol();
@@ -853,7 +867,11 @@ public class GardenUIController {
             gridPane.getChildren().add(coolImageView);
 
             PauseTransition pause = new PauseTransition(Duration.seconds(5)); // Set duration to 10 seconds
-            pause.setOnFinished(e -> gridPane.getChildren().remove(coolImageView));
+            pause.setOnFinished(e -> {
+                gridPane.getChildren().remove(coolImageView);
+                // Reset cooling flag when animation finishes
+                isCoolingActive = false;
+            });
             pause.play();
         });
     }
@@ -862,6 +880,13 @@ public class GardenUIController {
     private void handleSprinklerEvent(SprinklerEvent event) {
 
         logger.info("Day: " + currentDay + " Displayed Sprinkler activated at row " + event.getRow() + " and column " + event.getCol() + " with water amount " + event.getWaterNeeded());
+
+        // Only show sprinkler status if cooling is not active (regular watering)
+        Platform.runLater(() -> {
+            if (!isCoolingActive) {
+                showSprinklerStatus();
+            }
+        });
 
         Platform.runLater(() -> {
             int row = event.getRow();
@@ -5163,6 +5188,57 @@ public class GardenUIController {
             }
         });
         pt.play();
+    }
+
+    // Methods to show and hide system status messages
+    private void showCoolingStatus() {
+        if (coolingStatusLabel != null) {
+            coolingStatusLabel.setText("Temperature system is cooling the plants");
+            coolingStatusLabel.setVisible(true);
+            
+            // Hide the message after 5 seconds
+            PauseTransition coolStatusPause = new PauseTransition(Duration.seconds(5));
+            coolStatusPause.setOnFinished(e -> hideCoolingStatus());
+            coolStatusPause.play();
+        }
+    }
+
+    private void hideCoolingStatus() {
+        if (coolingStatusLabel != null) {
+            coolingStatusLabel.setText("");
+            coolingStatusLabel.setVisible(false);
+        }
+    }
+
+    private void showSprinklerStatus() {
+        if (sprinklerStatusLabel != null) {
+            sprinklerStatusLabel.setText("Regular sprinkler watering of plants");
+            sprinklerStatusLabel.setVisible(true);
+            
+            // Hide the message after 3 seconds
+            PauseTransition sprinklerStatusPause = new PauseTransition(Duration.seconds(3));
+            sprinklerStatusPause.setOnFinished(e -> hideSprinklerStatus());
+            sprinklerStatusPause.play();
+        }
+    }
+
+    private void hideSprinklerStatus() {
+        if (sprinklerStatusLabel != null) {
+            sprinklerStatusLabel.setText("");
+            sprinklerStatusLabel.setVisible(false);
+        }
+    }
+
+    // Initialize system status labels to be hidden by default
+    private void initializeSystemStatusLabels() {
+        if (coolingStatusLabel != null) {
+            coolingStatusLabel.setText("");
+            coolingStatusLabel.setVisible(false);
+        }
+        if (sprinklerStatusLabel != null) {
+            sprinklerStatusLabel.setText("");
+            sprinklerStatusLabel.setVisible(false);
+        }
     }
 
 }

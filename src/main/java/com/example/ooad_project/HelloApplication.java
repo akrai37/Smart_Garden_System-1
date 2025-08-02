@@ -60,11 +60,10 @@ public class HelloApplication extends Application {
         api.initializeGarden();
         Random rand = new Random();
 
-        // Randomly schedule rain and temperature
-        scheduleRandomRain(api, rand);
+        // Only schedule temperature - rain is handled by WateringSystem
         scheduleRandomTemperature(api, rand);
 
-        // Schedule parasite event every 10 seconds
+        // Schedule parasite event every 20 seconds
         ParasiteManager parasiteManager = ParasiteManager.getInstance();
         Timeline parasiteTimeline = new Timeline(new KeyFrame(Duration.seconds(20), ev -> {
             List<Parasite> parasites = parasiteManager.getParasites();
@@ -75,16 +74,6 @@ public class HelloApplication extends Application {
         }));
         parasiteTimeline.setCycleCount(Timeline.INDEFINITE);
         parasiteTimeline.play();
-    }
-
-    private void scheduleRandomRain(SmartGardenAPI api, Random rand) {
-        int delay = 30 + rand.nextInt(61); // 30–90 seconds
-        PauseTransition pause = new PauseTransition(Duration.seconds(delay));
-        pause.setOnFinished(e -> {
-            api.rain(rand.nextInt(40)); // 0–39 mm rain
-            scheduleRandomRain(api, rand); // Reschedule recursively
-        });
-        pause.play();
     }
 
     private void scheduleRandomTemperature(SmartGardenAPI api, Random rand) {
@@ -106,14 +95,9 @@ public class HelloApplication extends Application {
         ParasiteManager parasiteManager = ParasiteManager.getInstance();
 
         // Create a scheduled executor service
-        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(4);
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(3);
 
-        // Schedule rain every 60 seconds
-        scheduler.scheduleAtFixedRate(() -> {
-            int rainAmount = rand.nextInt(40);
-            System.out.println("Triggering rain with amount: " + rainAmount);
-            api.rain(rainAmount);
-        }, 0, 60, TimeUnit.SECONDS);
+        // Rain is handled by WateringSystem - no need to schedule here
 
         // Schedule temperature every 40 seconds
         scheduler.scheduleAtFixedRate(() -> {
