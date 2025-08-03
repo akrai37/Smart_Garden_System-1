@@ -121,6 +121,11 @@ public class WateringSystem implements Runnable {
         logger.info("Day: " + currentDay + " In total Sprinkled {} plants", counter);
 //        gardenGrid.printAllPlantStats();
     }
+
+    public static boolean isRaining() {
+        return isCurrentlyRaining.get();
+    }
+
 }
 
 

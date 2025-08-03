@@ -11,6 +11,7 @@ import com.example.ooad_project.Plant.Plant;
 import com.example.ooad_project.Plant.Children.Tree;
 import com.example.ooad_project.Plant.Children.Vegetable;
 import com.example.ooad_project.Plant.PlantManager;
+import com.example.ooad_project.SubSystems.WateringSystem;
 import com.example.ooad_project.ThreadUtils.EventBus;
 import javafx.animation.*;
 import javafx.application.Platform;
@@ -488,9 +489,12 @@ public class GardenUIController {
         // Hard-coded positions for plants as specified in the layout
         Object[][] gardenLayout = {
                 {"Oak", 0, 1}, {"Maple", 0, 5}, {"Pine", 0, 6},
-                {"Tomato", 1, 6}, {"Carrot", 2, 2}, {"Lettuce", 1, 0},
-                {"Sunflower", 3, 1}, {"Rose", 4, 4}, {"Jasmine", 4, 6},
-                {"Oak", 4, 6}, {"Tomato", 3, 0}, {"Sunflower", 4, 3}  // Adjusted invalid rows
+                {"Zucchini", 1, 6}, {"Carrot", 2, 2}, {"Lettuce", 1, 0},
+                {"Spinach", 3, 1}, {"Zucchini", 4, 4},
+                {"Lily", 2, 4}, {"Carrot", 3,5}, {"Tulip", 4, 3} ,
+                {"Tulip", 1,0}, {"Rose", 3, 0}, {"Sunflower", 4, 2} ,
+                {"Pine", 2,6}, {"Maple", 2,4}, {"Lily", 4, 4},{"Carrot", 2, 2},
+                {"Zucchini", 4, 4}, {"Spinach", 0,4}, {"Lily", 1, 2},{"Oak", 4, 6}
         };
 
         Platform.runLater(() -> {
@@ -1226,16 +1230,24 @@ public class GardenUIController {
         pauseRain.play();
     }
 
-
     private void changeTemperatureUI(TemperatureEvent event) {
         logger.info("Day: " + logDay + " Temperature changed to: " + event.getAmount() + "°F");
 
         Platform.runLater(() -> {
+            // Always run the PauseTransition — to reset back to 'Optimal'
+            PauseTransition pause = new PauseTransition(Duration.seconds(5));
+            pause.setOnFinished(e -> showOptimalTemperature());
+            pause.play();
+
+            // Skip updating if it's raining
+            if (WateringSystem.isRaining()) {
+                return;
+            }
+
             int temp = event.getAmount();
             String tempText;
             javafx.scene.paint.Color textColor;
 
-            // Set text and color based on temperature
             if (temp <= 50) {
                 tempText = temp + "°F (Cold)";
                 textColor = javafx.scene.paint.Color.BLUE;
@@ -1247,10 +1259,9 @@ public class GardenUIController {
                 textColor = javafx.scene.paint.Color.GREEN;
             }
 
-            // Clear any graphic and set simple text
             temperatureStatusLabel.setGraphic(null);
             temperatureStatusLabel.setText(tempText);
-            
+
             String colorHex;
             if (temp <= 50) {
                 colorHex = "#4169E1"; // Royal blue for cold
@@ -1259,17 +1270,8 @@ public class GardenUIController {
             } else {
                 colorHex = "#228B22"; // Forest green for optimal
             }
-            
-            temperatureStatusLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: " + 
-                                          colorHex + ";");
 
-            // Create a pause transition of 5 seconds
-            PauseTransition pause = new PauseTransition(Duration.seconds(5));
-            pause.setOnFinished(e -> {
-                // Update UI to reflect optimal temperature after the event ends
-                showOptimalTemperature();
-            });
-            pause.play();
+            temperatureStatusLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: " + colorHex + ";");
         });
     }
 
