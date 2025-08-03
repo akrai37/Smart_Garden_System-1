@@ -2,7 +2,6 @@ package com.example.ooad_project;
 
 import com.example.ooad_project.API.SmartGardenAPI;
 import com.example.ooad_project.Events.*;
-import com.example.ooad_project.Events.PesticideApplicationEvent;
 import com.example.ooad_project.Parasite.Parasite;
 import com.example.ooad_project.Parasite.ParasiteManager;
 import com.example.ooad_project.Plant.Children.Flower;
@@ -28,8 +27,6 @@ import javafx.scene.effect.GaussianBlur;
 import javafx.scene.paint.Color;
 import javafx.scene.Group;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -311,11 +308,11 @@ public class GardenUIController {
                 // Use the enhanced cell effect with yellow dots and purple glow for better visibility
                 showEnhancedCellEffect(pestEvent.getRow(), pestEvent.getCol());
 
-                // Decrease pesticide level slightly with each use
-                if (pesticideLevelBar != null) {
-                    double currentLevel = pesticideLevelBar.getProgress();
-                    updatePesticideLevel(currentLevel - 0.05);
-                }
+                // Keep pesticide level full - no decrease needed
+                // if (pesticideLevelBar != null) {
+                //     double currentLevel = pesticideLevelBar.getProgress();
+                //     updatePesticideLevel(currentLevel - 0.05);
+                // }
             }
         });
 
@@ -4059,11 +4056,11 @@ public class GardenUIController {
                 // Update the status to active
                 updatePesticideStatus("ACTIVE", true);
 
-                // Decrease the pesticide level
-                if (pesticideLevelBar != null) {
-                    double currentLevel = pesticideLevelBar.getProgress();
-                    updatePesticideLevel(currentLevel - 0.05);
-                }
+                // Keep pesticide level full - no decrease needed
+                // if (pesticideLevelBar != null) {
+                //     double currentLevel = pesticideLevelBar.getProgress();
+                //     updatePesticideLevel(currentLevel - 0.05);
+                // }
 
                 // Find the cell at this position
                 StackPane cellPane = null;
@@ -4225,11 +4222,11 @@ public class GardenUIController {
                 // Update the status to active
                 updatePesticideStatus("ACTIVE", true);
 
-                // Decrease the pesticide level by a small amount
-                if (pesticideLevelBar != null) {
-                    double currentLevel = pesticideLevelBar.getProgress();
-                    updatePesticideLevel(currentLevel - 0.05);
-                }
+                // Keep pesticide level full - no decrease needed
+                // if (pesticideLevelBar != null) {
+                //     double currentLevel = pesticideLevelBar.getProgress();
+                //     updatePesticideLevel(currentLevel - 0.05);
+                // }
 
                 // Create a group for spray particles
                 Group sprayGroup = new Group();
@@ -4371,11 +4368,11 @@ public class GardenUIController {
                 // Update the status to active
                 updatePesticideStatus("ACTIVE", true);
 
-                // Decrease the pesticide level
-                if (pesticideLevelBar != null) {
-                    double currentLevel = pesticideLevelBar.getProgress();
-                    updatePesticideLevel(currentLevel - 0.05);
-                }
+                // Keep pesticide level full - no decrease needed
+                // if (pesticideLevelBar != null) {
+                //     double currentLevel = pesticideLevelBar.getProgress();
+                //     updatePesticideLevel(currentLevel - 0.05);
+                // }
 
                 // Find the cell at this position
                 StackPane cellPane = null;
@@ -4739,11 +4736,11 @@ public class GardenUIController {
     private void createEnhancedVerticalPesticideBox() {
         Platform.runLater(() -> {
             try {
-                // Create the main container - larger rectangular VBox with curved corners
+                // Create the main container - smaller VBox since no button needed
                 VBox pesticideBox = new VBox(8);
                 pesticideBox.setPadding(new Insets(15));
-                pesticideBox.setPrefWidth(140); // Increased width for rectangular shape
-                pesticideBox.setPrefHeight(110); // Increased height
+                pesticideBox.setPrefWidth(140); // Keep same width
+                pesticideBox.setPrefHeight(80); // Reduced height since no button
                 pesticideBox.setAlignment(Pos.CENTER);
 
                 // Rectangular styling with curved corners
@@ -4764,64 +4761,18 @@ public class GardenUIController {
                 );
                 titleLabel.setAlignment(Pos.CENTER);
 
-                // Add larger level indicator (progress bar)
-                ProgressBar levelBar = new ProgressBar(0.8); // Start at 80%
+                // Add larger level indicator (progress bar) - always full
+                ProgressBar levelBar = new ProgressBar(1.0); // Start at 100% and keep it full
                 levelBar.setPrefWidth(110); // Wider progress bar
-                levelBar.setPrefHeight(12);  // Slightly taller
-                levelBar.setStyle("-fx-accent: #4CAF50;"); // Simple green color
+                levelBar.setPrefHeight(12);  // Slightly tall
+               levelBar.setStyle("-fx-accent: #D8BFD8;"); // Light purple color for the bar
 
                 // Make progress bar visible
                 levelBar.setVisible(true);
                 levelBar.setManaged(true);
-                
-                // Add a larger refill button
-                Button refillButton = new Button("Refill");
-                refillButton.setPrefWidth(90); // Wider button
-                refillButton.setPrefHeight(25); // Taller button
-                refillButton.setStyle(
-                    "-fx-background-color: #e0e0e0;" +
-                    "-fx-border-color: #999999;" +
-                    "-fx-border-width: 1;" +
-                    "-fx-border-radius: 8;" +  // More curved button corners
-                    "-fx-text-fill: #333333;" +
-                    "-fx-font-size: 11px;" +   // Larger font for button
-                    "-fx-font-weight: bold;" + // Bold button text
-                    "-fx-padding: 6 12 6 12;"  // More padding
-                );
 
-                // Simple hover effect with updated styling
-                final String normalStyle = refillButton.getStyle();
-                final String hoverStyle = 
-                    "-fx-background-color: #d0d0d0;" +
-                    "-fx-border-color: #999999;" +
-                    "-fx-border-width: 1;" +
-                    "-fx-border-radius: 8;" +
-                    "-fx-text-fill: #333333;" +
-                    "-fx-font-size: 11px;" +
-                    "-fx-font-weight: bold;" +
-                    "-fx-padding: 6 12 6 12;";
-
-                refillButton.setOnMouseEntered(e -> refillButton.setStyle(hoverStyle));
-                refillButton.setOnMouseExited(e -> refillButton.setStyle(normalStyle));
-
-                // Handle refill button click - simple animation
-                refillButton.setOnAction(e -> {
-                    // Simple fill animation
-                    Timeline fillAnimation = new Timeline();
-                    
-                    // Animate to 100%
-                    fillAnimation.getKeyFrames().add(
-                        new KeyFrame(Duration.millis(500),
-                            new KeyValue(levelBar.progressProperty(), 1.0)
-                        )
-                    );
-                    
-                    fillAnimation.play();
-                    logger.info("Pesticide refilled to 100%");
-                });
-
-                // Add the label, level bar and refill button to the box
-                pesticideBox.getChildren().addAll(titleLabel, levelBar, refillButton);
+                // Add only the label and level bar to the box (no refill button)
+                pesticideBox.getChildren().addAll(titleLabel, levelBar);
 
                 // Add to the scene
                 anchorPane.getChildren().add(pesticideBox);
@@ -4853,11 +4804,11 @@ public class GardenUIController {
                 // Show "ACTIVE" status
                 updatePesticideStatus("ACTIVE", true);
 
-                // Decrease the pesticide level
-                if (pesticideLevelBar != null) {
-                    double currentLevel = pesticideLevelBar.getProgress();
-                    updatePesticideLevel(currentLevel - 0.1); // Larger decrease for more visual feedback
-                }
+                // Keep pesticide level full - no decrease needed
+                // if (pesticideLevelBar != null) {
+                //     double currentLevel = pesticideLevelBar.getProgress();
+                //     updatePesticideLevel(currentLevel - 0.1); // Larger decrease for more visual feedback
+                // }
 
                 // Display application particles from pesticide box to cell
                 showApplicationTrail(row, col);
@@ -5195,7 +5146,7 @@ public class GardenUIController {
     // Methods to show and hide system status messages
     private void showCoolingStatus() {
         if (coolingStatusLabel != null) {
-            coolingStatusLabel.setText("Temperature system is cooling the plants");
+            coolingStatusLabel.setText("Sprinkler Activation For Cooling The Plants");
             coolingStatusLabel.setVisible(true);
             
             // Hide the message after 5 seconds
@@ -5214,7 +5165,7 @@ public class GardenUIController {
 
     private void showSprinklerStatus() {
         if (sprinklerStatusLabel != null) {
-            sprinklerStatusLabel.setText("Regular sprinkler watering of plants");
+            sprinklerStatusLabel.setText("Regular Sprinkler Activation");
             sprinklerStatusLabel.setVisible(true);
             
             // Hide the message after 3 seconds

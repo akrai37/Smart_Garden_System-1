@@ -80,7 +80,15 @@ public class HelloApplication extends Application {
         int delay = 20 + rand.nextInt(41); // 20–60 seconds
         PauseTransition pause = new PauseTransition(Duration.seconds(delay));
         pause.setOnFinished(e -> {
-            api.temperature(50 + rand.nextInt(26)); // 50–75 °F
+            // Check if it's currently raining
+            if (WateringSystem.isRaining()) {
+                // If raining, keep temperature in cold range (41-47°F)
+                int coldTemp = 41 + rand.nextInt(7); // 41-47°F
+                api.temperature(coldTemp);
+            } else {
+                // Normal random temperature range (50-75°F)
+                api.temperature(50 + rand.nextInt(26)); // 50–75 °F
+            }
             scheduleRandomTemperature(api, rand); // Reschedule recursively
         });
         pause.play();
