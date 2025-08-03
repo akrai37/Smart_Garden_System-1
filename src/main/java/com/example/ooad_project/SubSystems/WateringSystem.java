@@ -25,8 +25,8 @@ public class WateringSystem implements Runnable {
                 int delay = 30 + (int) (Math.random() * 61); // 30–90 sec
                 Thread.sleep(delay * 1000L);
 
-                // Random rain amount between 5mm to 30mm
-                int rainAmount = 5 + (int) (Math.random() * 26); // 5–30
+                // Random rain amount between 5mm  to  30mm
+                int rainAmount = 5 + (int) (Math.random() * 26); //  5–30
                 EventBus.publish("RainEvent", new RainEvent(rainAmount));
 
 
