@@ -1236,11 +1236,6 @@ public class GardenUIController {
             pause.setOnFinished(e -> showOptimalTemperature());
             pause.play();
 
-            // Skip updating if it's raining
-            if (WateringSystem.isRaining()) {
-                return;
-            }
-
             int temp = event.getAmount();
             String tempText;
             javafx.scene.paint.Color textColor;

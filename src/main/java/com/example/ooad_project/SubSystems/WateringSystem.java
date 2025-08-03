@@ -133,10 +133,6 @@ public class WateringSystem implements Runnable {
 //        gardenGrid.printAllPlantStats();
     }
 
-    public static boolean isRaining() {
-        return isCurrentlyRaining.get();
-    }
-
 }
 
 
