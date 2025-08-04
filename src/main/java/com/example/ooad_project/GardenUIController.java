@@ -489,12 +489,12 @@ public class GardenUIController {
         // Hard-coded positions for plants as specified in the layout
         Object[][] gardenLayout = {
                 {"Oak", 0, 1}, {"Maple", 0, 5}, {"Pine", 0, 6},
-                {"Zucchini", 1, 6}, {"Carrot", 2, 2}, {"Lettuce", 1, 0},
+                {"Zucchini", 1, 6}, {"Carrot", 2, 2},
                 {"Spinach", 3, 1}, {"Zucchini", 4, 4},
-                {"Lily", 2, 4}, {"Carrot", 3,5}, {"Tulip", 4, 3} ,
-                {"Tulip", 1,0}, {"Rose", 3, 0}, {"Sunflower", 4, 2} ,
-                {"Pine", 2,6}, {"Maple", 2,4}, {"Lily", 4, 4},{"Carrot", 2, 2},
-                {"Zucchini", 4, 4}, {"Spinach", 0,4}, {"Lily", 1, 2},{"Oak", 4, 6}
+                {"Carrot", 3,5}, {"Tulip", 4, 3} ,
+                {"Tulip", 1,0}, {"Rose", 3, 0},
+                {"Pine", 2,6}, {"Maple", 2,4}, {"Lily", 4, 2},
+                {"Spinach", 0,4}, {"Lily", 1, 2},{"Oak", 4, 6}
         };
 
         Platform.runLater(() -> {
