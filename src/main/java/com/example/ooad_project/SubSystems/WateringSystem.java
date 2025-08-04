@@ -1,6 +1,7 @@
 package com.example.ooad_project.SubSystems;
 
 import com.example.ooad_project.Events.DayUpdateEvent;
+import com.example.ooad_project.Events.TemperatureEvent;
 import com.example.ooad_project.GardenGrid;
 import com.example.ooad_project.Plant.Plant;
 import com.example.ooad_project.ThreadUtils.EventBus;
@@ -17,6 +18,11 @@ public class WateringSystem implements Runnable {
     private int currentDay;
     // Make this static and volatile to ensure all threads see the same rain status
     private static final AtomicBoolean isCurrentlyRaining = new AtomicBoolean(false);
+    
+    // Public static method to check if it's currently raining
+    public static boolean isRaining() {
+        return isCurrentlyRaining.get();
+    }
     @Override
     public void run() {
         while (true) {
@@ -57,6 +63,11 @@ public class WateringSystem implements Runnable {
         // Set rain state to true when rain starts
         isCurrentlyRaining.set(true);
         logger.info("Day: " + currentDay + " ☔ RAIN STARTED - Sprinklers will be disabled for the next 10 seconds");
+
+        // Drop temperature to a random cold value (41-47°F) when it starts raining
+        int coldTemp = 41 + (int) (Math.random() * 7); // 41-47°F
+        EventBus.publish("TemperatureEvent", new TemperatureEvent(coldTemp));
+        logger.info("Day: " + currentDay + " Temperature dropped to {}°F due to rain", coldTemp);
 
         for (int i = 0; i < gardenGrid.getNumRows(); i++) {
             for (int j = 0; j < gardenGrid.getNumCols(); j++) {
@@ -120,10 +131,6 @@ public class WateringSystem implements Runnable {
 
         logger.info("Day: " + currentDay + " In total Sprinkled {} plants", counter);
 //        gardenGrid.printAllPlantStats();
-    }
-
-    public static boolean isRaining() {
-        return isCurrentlyRaining.get();
     }
 
 }

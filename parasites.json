@@ -22,7 +22,7 @@
       "name": "Aphids",
       "damage": 2,
       "imageName": "aphids.png",
-      "targetPlants": ["Rose", "Tomato", "Lettuce", "Oak", "Maple", "Cedar", "Jasmine", "Spinach"]
+      "targetPlants": ["Rose", "Tomato", "Lettuce", "Oak", "Cedar", "Jasmine", "Spinach", "Zucchini"]
     },
     {
       "name": "Slugs",
