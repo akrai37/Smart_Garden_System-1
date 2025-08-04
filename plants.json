@@ -102,7 +102,7 @@
       "growthRate": "Medium",
       "currentImage": "smallLily.png",
       "allImages": ["smallLily.png", "mediumLily.png", "largeLily.png"],
-      "temperatureRequirement": 60,
+      "temperatureRequirement": 48,
       "vulnerableTo": ["Aphids", "Slugs"],
       "healthSmall": 40,
       "healthMedium": 80,
