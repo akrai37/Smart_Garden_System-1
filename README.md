@@ -11,7 +11,7 @@ and pest detection and treatment.
 - Temperature control with cooler behavior during rain
 - Parasite management with random pest generation and treatment
 - Plant health changes based on water, temperature, and pests
-- Simulated day progression every 60 seconds
+- Simulated day progression every 60 seconds( 1 day = 60 secs)
 - Real-time UI built with JavaFX
 - Event-driven communication using a custom EventBus system
 
@@ -37,5 +37,14 @@ Using IntelliJ or any IDE
 2. Go to `src/main/java/com/example/ooad_project/HelloApplication.java`.
 3. Right-click and select **Run 'HelloApplication.main()'**.
 
+################# Build and Run Instructions
+
+1. Compile the Project:
+ mvn clean compile 
+ 
+ 2. Run the JavaFX Application
+    mvn clean javafx:run      
+
+    
 
 

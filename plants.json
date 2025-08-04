@@ -32,8 +32,8 @@
       "allImages": ["smallPine.png", "mediumPine.png", "largePine.png"],
       "temperatureRequirement": 50,
       "vulnerableTo": ["Locust"],
-      "healthSmall": 50,
-      "healthMedium": 140,
+      "healthSmall": 70,
+      "healthMedium": 120,
       "healthFull": 210
     }
   ],
