@@ -1,4 +1,4 @@
-# Smart_Garden_System-1
+# GreenSense: Automated Plant Health Monitoring
 
 A Java-based computerized gardening system that simulates plant growth, survival, and health 
 under dynamic environmental conditions. Built using Object-Oriented Programming principles, the system 
